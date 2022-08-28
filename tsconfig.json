@@ -1,0 +1,14 @@
+{
+	"compilerOptions": {
+		"target": "ESNext",
+		"module": "ESNext",
+		"moduleResolution": "Node",
+		"jsx": "preserve",
+		"esModuleInterop": true,
+		"strict": true,
+		"noEmit": true,
+		"sourceMap": true,
+		"allowJs": true
+	},
+	"include": ["env.d.ts", "src/**/*"]
+}

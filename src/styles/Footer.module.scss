@@ -1,0 +1,94 @@
+@import './Common.scss';
+
+footer {
+	margin-top: auto;
+	display: flex;
+	padding-top: 30px;
+	width: 100%;
+	overflow: hidden;
+	flex-direction: column;
+	align-items: center;
+
+	> svg {
+		min-width: 1000px;
+		width: 100%;
+		height: 110px;
+
+		> g {
+			> use {
+				$slow: 5;
+
+				@keyframes move-forever {
+					0% {
+						transform: translate3d(-90px, 0, 0);
+					}
+					100% {
+						transform: translate3d(85px, 0, 0);
+					}
+				}
+
+				animation: move-forever calc(25s * $slow)
+					cubic-bezier(0.55, 0.5, 0.45, 0.5) infinite;
+
+				&:nth-child(1) {
+					animation-delay: calc(-2s * $slow);
+					animation-duration: calc(7s * $slow);
+					fill: var(--background-accent-deep-2);
+				}
+
+				&:nth-child(2) {
+					animation-delay: calc(-3s * $slow);
+					animation-duration: calc(10s * $slow);
+					fill: var(--background-accent-deep-1);
+				}
+
+				&:nth-child(3) {
+					animation-delay: calc(-4s * $slow);
+					animation-duration: calc(20s * $slow);
+					fill: var(--background-accent);
+				}
+			}
+		}
+	}
+
+	> .background {
+		background-color: var(--background-accent);
+		padding-top: 10px;
+		display: flex;
+		width: 100%;
+
+		> .content {
+			padding: 0 5% 16px 5%;
+			width: 100%;
+			height: 24px;
+			display: flex;
+			color: var(--text-accent);
+			font-size: 12px;
+			line-height: 16px;
+
+			> .shiftRight {
+				margin-left: auto;
+			}
+
+			> * {
+				margin-left: 15px;
+			}
+
+			> a {
+				color: inherit;
+
+				&:hover {
+					color: var(--text);
+				}
+			}
+
+			@include screen_mobile {
+				justify-content: space-around;
+
+				> .shiftRight {
+					display: none;
+				}
+			}
+		}
+	}
+}

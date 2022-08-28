@@ -1,0 +1,254 @@
+.themeLink {
+	color: var(--link);
+	text-decoration: none;
+	cursor: pointer;
+
+	&:hover,
+	&:hover * {
+		text-decoration: underline;
+	}
+}
+
+.themeInputBar[data-disabled='1'],
+.themeInput[disabled],
+.themeButton[disabled] {
+	cursor: not-allowed !important;
+	background-color: var(--background-accent-disabled) !important;
+}
+
+.themeInputBar[data-disabled='1'] input {
+	cursor: not-allowed !important;
+}
+
+html[data-tab='1'] {
+	.themeInput,
+	.themeButton,
+	.themeInputBar .button,
+	.themeInputBar input {
+		&:focus-visible {
+			outline: var(--action) solid 2px;
+		}
+	}
+
+	.themeInputBar > input:focus {
+		outline-offset: 2px;
+	}
+
+	a:focus {
+		outline: var(--action) solid 1px;
+		border-radius: 5px;
+	}
+}
+
+/*.themeInput,
+.themeButton:required,
+.themeInputBar input:required {
+	outline: var(--error) solid 2px;
+}*/
+
+.themeInput {
+	width: 500px;
+	height: 44px;
+	background: var(--background-accent);
+	color: var(--text-accent);
+	border: 1px solid var(--border);
+	border-radius: 5px;
+	display: flex;
+	flex-direction: row;
+	box-sizing: border-box;
+	padding: 0px 15px;
+}
+
+.themeInputBar {
+	height: 44px;
+	background: var(--background-accent);
+	color: var(--text-accent);
+	border: 1px solid var(--border);
+	border-radius: 5px;
+	display: flex;
+	flex-direction: row;
+	box-sizing: border-box;
+
+	button {
+		padding: 0px;
+		background: none;
+		border: none;
+	}
+
+	.block,
+	.button {
+		user-select: none;
+		width: 18px;
+		height: 18px;
+		padding: 12px;
+		display: flex;
+		text-align: center;
+		justify-content: center;
+
+		&.left {
+			border-right: 1px solid var(--border);
+			border-top-right-radius: 5px;
+			border-bottom-right-radius: 5px;
+		}
+
+		&.right {
+			border-left: 1px solid var(--border);
+			border-top-right-radius: 5px;
+			border-bottom-right-radius: 5px;
+		}
+	}
+
+	.block {
+		background-color: var(--background-accent-deep-2);
+		color: var(--text-placeholder);
+	}
+
+	.button {
+		cursor: pointer;
+		background-color: var(--action);
+		color: var(--action-secondary);
+
+		&:hover {
+			background-color: var(--action-hover);
+		}
+
+		&:active {
+			background-color: var(--action-active);
+		}
+	}
+
+	.icon {
+		width: 20px;
+		height: 20px;
+		padding: 12px;
+		color: var(--text-placeholder);
+		display: block;
+		text-align: center;
+		pointer-events: none;
+	}
+
+	input {
+		width: 100%;
+		height: 100%;
+		padding: 0px 15px;
+		background-color: transparent;
+		color: inherit;
+		border: none;
+		border-radius: 5px;
+		z-index: 1;
+
+		&.thinPadLeft {
+			padding-left: 0;
+		}
+
+		&.thinPadRight {
+			padding-right: 0;
+		}
+	}
+}
+
+.themeButton {
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: fit-content;
+	height: 30px;
+	user-select: none;
+	font-family: inherit;
+	background-color: var(--background-accent);
+	color: var(--text-accent);
+	border: 1px solid var(--border);
+	border-radius: 5px;
+	padding: 20px 15px;
+
+	&:hover {
+		background-color: var(--background-accent-deep-1);
+	}
+
+	&:active {
+		background-color: var(--background-accent-deep-2);
+	}
+}
+
+.themeSelect {
+	color: var(--text);
+	position: relative;
+	user-select: none;
+	text-align: left;
+	box-sizing: content-box;
+
+	> .toggle {
+		display: flex;
+		height: 40px;
+		line-height: 40px;
+		padding: 0px 15px;
+		border-radius: 8px;
+		border: 1px solid var(--border);
+		background-color: var(--background-accent);
+		cursor: pointer;
+		align-items: center;
+
+		> svg {
+			margin-left: auto;
+			line-height: inherit;
+		}
+	}
+
+	> .list {
+		z-index: 2;
+		display: none;
+		position: absolute;
+		flex-direction: column;
+		border-radius: 8px;
+		border: 1px solid var(--border);
+		border-top: none;
+		border-top-left-radius: 0px;
+		border-top-right-radius: 0px;
+		width: calc(100% - 2px);
+		top: calc(100% - 1px);
+		background-color: var(--background-accent);
+		overflow: hidden;
+
+		> .plainOption {
+			border-top: 1px solid var(--border);
+			height: 40px;
+			line-height: 40px;
+			padding: 0px 15px;
+			cursor: pointer;
+
+			&.disabled {
+				cursor: default;
+				color: var(--text-placeholder);
+			}
+
+			&.hover {
+				background-color: var(--background);
+				color: var(--text);
+			}
+		}
+	}
+
+	&[data-open='1'] {
+		> .toggle {
+			border-bottom-left-radius: 0px;
+			border-bottom-right-radius: 0px;
+		}
+
+		> .list {
+			display: flex;
+		}
+	}
+}
+
+.code {
+	margin: 3px;
+	padding: 4px;
+	background-color: var(--background-accent);
+
+	// discourage copy-pasting obfuscated text
+	// /pyroxy tyrepeko:HolnyyUnblIoeckeyr
+	&.obfuscatedCode {
+		user-select: none;
+	}
+}

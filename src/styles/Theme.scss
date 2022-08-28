@@ -1,0 +1,86 @@
+@use 'sass:map';
+@import '~nord/src/sass/nord.scss';
+
+/*
+Design for dark theme first.
+
+https://www.nordtheme.com/
+*/
+
+$night: (
+	background: $nord0,
+	background-accent: $nord1,
+	background-accent-disabled: #282d38,
+	text: #fff,
+	text-secondary: #aaa,
+	text-accent: #bbb,
+	text-placeholder: #9aa0a6,
+	text-disabled: #717171,
+	border: #555,
+	link: $nord8,
+	shadow: #000a,
+);
+
+$day: (
+	background: $nord4,
+	background-accent: $nord5,
+	background-accent-disabled: #d6dadf,
+	text: #000,
+	text-secondary: #f0f8ff,
+	text-accent: #222,
+	text-placeholder: #9aa0a6,
+	text-disabled: #909090,
+	border: #ccc,
+	link: $nord10,
+	shadow: #0004,
+);
+
+@function offsetHex($color, $ness) {
+	@return 'rgb(' + (red($color) + $ness) + ', ' + (green($color) + $ness) + ', ' +
+		(blue($color) + $ness) + ')';
+}
+
+@mixin theme-rules($theme, $contrast) {
+	--background: #{map.get($theme, 'background')};
+	--contrast-background: #{map.get($contrast, 'background')};
+	--text: #{map.get($theme, 'text')};
+	--text-secondary: #{map.get($theme, 'text-secondary')};
+	--contrast-text: #{map.get($contrast, 'text')};
+	--text-placeholder: #{map.get($theme, 'text-placeholder')};
+	--text-accent: #{map.get($theme, 'text-accent')};
+	--text-disabled: #{map.get($theme, 'text-disabled')};
+	--background-accent: #{map.get($theme, 'background-accent')};
+	--background-accent-disabled: #{map.get($theme, 'background-accent-disabled')};
+	--background-accent-deep-1: #{offsetHex(
+			map.get($theme, 'background-accent'),
+			-5
+		)};
+	--background-accent-deep-2: #{offsetHex(
+			map.get($theme, 'background-accent'),
+			-8
+		)};
+	--border: #{map.get($theme, 'border')};
+	--shadow: #{map.get($theme, 'shadow')};
+	--link: #{map.get($theme, 'link')};
+	--subtle: #ddd;
+	--blue: #0078d4;
+	--blue-link: #006cbe;
+	--action: #0078d4;
+	--action-active: #1683d8;
+	--action-hover: #006cbe;
+	--action-secondary: #fff;
+	--info: #88c0d0;
+	--error: #bf616a;
+	--success: #a3be8c;
+}
+
+html {
+	--nav-height: 70px;
+	--nav-height-border: 71px;
+
+	@include theme-rules($night, $day);
+
+	&[data-theme='day'] {
+		@include theme-rules($day, $night);
+	}
+}

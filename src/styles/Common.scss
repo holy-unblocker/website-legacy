@@ -1,0 +1,26 @@
+$scrollbar-width: 16px;
+$fixed-width: calc(100vw - $scrollbar-width);
+
+@mixin screen_mobile {
+	@media only screen and (max-width: 650px) {
+		@content;
+	}
+}
+
+@mixin shimmer($width, $name) {
+	@keyframes #{$name} {
+		0% {
+			background-position: -#{calc($width / 2)} 0px;
+		}
+
+		to {
+			background-position: #{calc($width / 2)} 0px;
+		}
+	}
+}
+
+@include shimmer(240px, shimmer-small);
+@include shimmer(470px, shimmer-card);
+@include shimmer(940px, shimmer-large);
+@include shimmer(1880px, shimmer-larger);
+@include shimmer(200vw, shimmer-wide);

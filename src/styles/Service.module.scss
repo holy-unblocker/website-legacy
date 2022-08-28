@@ -1,0 +1,98 @@
+@use 'sass:selector';
+
+html {
+	&[data-service='1'] {
+		body {
+			overflow: hidden;
+		}
+
+		.service {
+			display: flex;
+		}
+	}
+
+	&[data-appearance='dark'] {
+		.service {
+			background: #000;
+			color: #fff;
+		}
+	}
+
+	.service {
+		display: none;
+		width: 100vw;
+		height: 100vh;
+		flex-direction: column;
+		background: var(--background);
+		position: fixed;
+		user-select: none;
+		left: 0px;
+		top: 0px;
+		z-index: 12;
+
+		> .headless {
+			display: none;
+		}
+
+		> .embed {
+			border: none;
+			width: 100%;
+			height: calc(100% - var(--nav-height-border));
+			background: var(--background);
+
+			&[data-first-load='1'] {
+				background: #fff;
+			}
+		}
+
+		> .buttons {
+			display: flex;
+			width: auto;
+			height: var(--nav-height);
+			border-bottom: var(--border) 1px solid;
+			padding: 0px 18px;
+			user-select: none;
+			box-sizing: border-box;
+			flex: none;
+
+			> .icon {
+				width: 24px;
+				height: 24px;
+				margin: auto 5px;
+				flex: none;
+			}
+
+			> .title {
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				margin: auto 5px;
+				width: 100%;
+			}
+
+			> .shiftRight {
+				margin-left: auto;
+			}
+
+			.button {
+				height: 24px;
+				width: 24px;
+				padding: 5px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				cursor: pointer;
+				background: var(--background);
+				color: var(--slate);
+				position: relative;
+				margin: auto 5px;
+				border-radius: 2px;
+				flex: none;
+
+				&:hover {
+					background-color: var(--background-accent);
+				}
+			}
+		}
+	}
+}

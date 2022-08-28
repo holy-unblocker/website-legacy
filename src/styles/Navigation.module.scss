@@ -1,0 +1,269 @@
+@import './Common.scss';
+
+.nav,
+.content > .menu,
+.content > .cover {
+	z-index: 2;
+}
+
+.nav > .logo,
+.content > .menu > .top > .logo {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: var(--nav-height);
+	padding: 0px 15px;
+	color: inherit;
+	white-space: nowrap;
+	user-select: none;
+
+	> svg {
+		width: inherit;
+		height: inherit;
+	}
+
+	width: 35px;
+
+	@include screen_mobile {
+		position: absolute;
+		left: 0px;
+		right: 0px;
+		margin: auto;
+	}
+}
+
+.nav > .button,
+.content > .menu > .top > .button {
+	box-sizing: content-box;
+	border: none;
+	background: none;
+	width: 20px;
+	height: 20px;
+	margin: auto 5px;
+	border-radius: 2px;
+	padding: 5px;
+	position: relative;
+	flex: none;
+	cursor: pointer;
+	color: var(--text);
+
+	> svg {
+		font-size: 20px;
+	}
+
+	&:hover {
+		background: var(--background-accent);
+	}
+}
+
+.nav {
+	display: flex;
+	width: $fixed-width;
+	height: var(--nav-height);
+	box-sizing: border-box;
+	align-content: center;
+	position: fixed;
+	color: var(--text);
+	border-bottom: var(--border) 1px solid;
+	padding: 0px 18px;
+	text-align: center;
+	background: var(--background);
+	align-items: center;
+
+	> .collapsable {
+		display: flex;
+		flex-direction: row;
+	}
+
+	@include screen_mobile {
+		> .shiftRight {
+			display: none;
+		}
+
+		justify-content: space-between;
+	}
+
+	> .shiftRight {
+		margin-left: auto;
+	}
+}
+
+.content {
+	padding-top: var(--nav-height-border);
+	flex-direction: column;
+	min-height: calc(100vh - var(--nav-height-border));
+	overflow: hidden;
+	display: flex;
+
+	> .cover {
+		background-color: rgba(0, 0, 0, 0.5);
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		transition: opacity 0.3s, visibility 0.3s;
+		opacity: 0;
+		visibility: hidden;
+	}
+
+	> .menu {
+		position: fixed;
+		flex-direction: column;
+		display: flex;
+		visibility: visible;
+		background-color: var(--background);
+		border-right: 1px solid var(--border);
+		left: 0;
+		top: 0;
+		width: 300px;
+		height: 100vh;
+		box-sizing: border-box;
+		transform: translateX(-100%);
+		transition: transform 0.3s, visibility 0.3s 0.3s;
+		overflow: hidden;
+
+		@include screen_mobile {
+			width: 100%;
+			height: 100vh;
+			transition: none;
+
+			> .menuList {
+				width: $fixed-width;
+				padding: 6px 5px;
+
+				> .entry {
+					border-radius: 5px;
+				}
+			}
+		}
+
+		> .top {
+			padding: 0px 18px;
+			padding-left: 18px;
+			height: var(--nav-height);
+			box-sizing: border-box;
+			border-bottom: var(--border) 1px solid;
+			width: $fixed-width;
+			display: flex;
+			flex-direction: row;
+			flex-shrink: 0;
+			position: relative;
+		}
+	}
+}
+
+.menuList {
+	padding: 6px 5px 0px 0px;
+	flex-direction: column;
+	overflow-y: auto;
+	height: 100%;
+	text-align: left;
+	scrollbar-width: thin;
+	--scrollbar-width: 8px;
+
+	> .entry {
+		cursor: pointer;
+		white-space: pre;
+		background-color: transparent;
+		border: none;
+		color: var(--contrast-background);
+		display: flex;
+		align-items: center;
+		font: inherit;
+		font-size: 14px;
+		height: 24px;
+		padding: 10px 25px;
+
+		&[data-selected='1'] {
+			background-color: var(--background-accent-deep-1);
+			> .name {
+				font-weight: bold;
+			}
+		}
+
+		> .icon {
+			width: 24px;
+			height: 24px;
+			margin-right: 15px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+
+			> svg {
+				width: inherit;
+				height: inherit;
+			}
+		}
+
+		&:hover {
+			color: var(--text);
+			background: var(--background-accent);
+
+			&[data-selected='1'] {
+				background: var(--background-accent);
+			}
+		}
+	}
+
+	> .title {
+		font-size: 14px;
+		font-weight: bold;
+		padding: 10px 25px;
+		color: var(--contrast-background);
+	}
+
+	> .bar {
+		margin: 10px 0px;
+		width: 100%;
+		border-bottom: 1px solid var(--text-accent);
+	}
+
+	> .genres {
+		display: flex;
+		flex-wrap: wrap;
+		flex-direction: row;
+		padding: 10px 25px;
+
+		> .entry {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			padding: 2px 8px;
+			margin: 2px;
+			height: 20px;
+			border: 1px solid var(--border);
+			border-radius: 5px;
+			font-size: 13px;
+			font-family: 'Montserrat Alternates';
+			color: var(--text-placeholder);
+			white-space: nowrap;
+
+			&:hover {
+				background-color: var(--background-accent);
+			}
+		}
+	}
+}
+
+html[data-expanded='1'] {
+	body {
+		margin-right: 16px;
+		overflow: hidden;
+	}
+
+	.content {
+		> .menu {
+			transform: translateX(0%);
+		}
+
+		> .cover {
+			opacity: 1;
+			visibility: visible;
+
+			@include screen_mobile {
+				opacity: 0;
+			}
+		}
+	}
+}

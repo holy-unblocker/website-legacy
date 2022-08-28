@@ -1,0 +1,19 @@
+.main {
+	margin: auto;
+	display: flex;
+	flex-direction: column;
+
+	text-align: center;
+
+	> h1 {
+		margin: 0px 0px 10px 0px;
+	}
+
+	> h2 {
+		margin: 0px 0px 20px 0px;
+	}
+
+	.button {
+		margin: 0 auto;
+	}
+}

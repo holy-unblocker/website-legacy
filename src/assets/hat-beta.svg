@@ -1,0 +1,14 @@
+<svg viewBox="0 0 87.1 77.8" xmlns="http://www.w3.org/2000/svg">
+	<defs></defs>
+	<title>Hat </title>
+	<ellipse style="paint-order: stroke; stroke-width: 4px; fill: rgb(76, 86, 106); stroke: rgb(237, 240, 245);" cx="43.572" cy="51.352" rx="41.472" ry="24.375"></ellipse>
+	<path d="M 68.755 14.387 C 68.755 14.878 68.772 50.99 68.772 50.99 C 68.772 50.99 68.755 51.991 68.755 52.504 C 68.755 59.29 57.48 64.791 43.572 64.791 C 29.664 64.791 18.389 59.29 18.389 52.504 C 18.389 51.991 18.389 14.878 18.389 14.387 C 18.389 7.601 29.664 2.1 43.572 2.1 C 57.48 2.1 68.755 7.601 68.755 14.387 Z" style="paint-order: stroke; stroke-width: 4px; stroke: rgb(237, 240, 245); fill: rgb(237, 240, 245);"></path>
+	<path d="M 18.372 20.091 C 28.414 31.671 59.066 31.251 68.772 20.091 L 68.772 50.99 C 68.772 50.99 68.755 51.991 68.755 52.504 C 68.755 59.29 57.48 64.791 43.572 64.791 C 29.664 64.791 18.389 59.29 18.389 52.504 C 18.389 51.991 18.372 20.091 18.372 20.091 Z" style="paint-order: stroke; stroke-width: 4px; stroke: rgb(237, 240, 245); fill: rgb(46, 52, 64);"></path>
+	<ellipse style="paint-order: stroke; stroke-width: 4px; fill: rgb(76, 86, 106);" cx="43.572" cy="14.387" rx="25.183" ry="12.287"></ellipse>
+	<ellipse style="paint-order: stroke; stroke-width: 4px; stroke: rgb(237, 240, 245); fill: rgb(76, 86, 106);" cx="33.142" cy="42.26" rx="5.84" ry="7.949"></ellipse>
+	<ellipse style="paint-order: stroke; stroke-width: 4px; stroke: rgb(237, 240, 245); fill: rgb(76, 86, 106);" cx="54.002" cy="42.26" rx="5.84" ry="7.949"></ellipse>
+	<g transform="matrix(1.337784, 0, 0, 1.445033, 8.486388, 26.774675)">
+		<rect x="11.746" y="16.194" width="46.295" height="18.34" style="fill: rgb(76, 86, 106); stroke: rgb(237, 240, 245); stroke-width: 1.43739px;"></rect>
+		<text font-size="0.999051858847362em" style="fill: rgb(237, 240, 245); font-family: Arial, sans-serif; font-weight: 700; stroke-width: 1.70318px; white-space: pre-wrap; text-align: center; text-anchor: middle;" transform="matrix(1.004437, 0, 0, 1.03933, -7.74444, -42.875137)" x="42.449" y="70.848" width="" height="18.34">BETA</text>
+	</g>
+</svg>
