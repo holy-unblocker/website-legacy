@@ -404,15 +404,15 @@ const webpackConfig = {
 									),
 									presets: [
 										[
-											'@babel/preset-typescript',
-											{
-												allowDeclareFields: true,
-											},
-										],
-										[
 											'babel-preset-react-app',
 											{
 												runtime: 'automatic',
+											},
+										],
+										[
+											'@babel/preset-typescript',
+											{
+												allowDeclareFields: true,
 											},
 										],
 									],
