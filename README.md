@@ -8,7 +8,7 @@ This repository should not be ran alone. There are several dependencies that req
 
 If you are a developer, this repository is ideal for testing commits and building for production.
 
-If you are just looking to self-host/deploy Holy Unblocker, check out [website-aio](https://github.com/e9x/website-aio).
+If you are just looking to self-host/deploy Holy Unblocker, check out [website-aio](https://github.com/holy-unblocker/website-aio).
 
 # New repository
 
