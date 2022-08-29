@@ -81,17 +81,9 @@
 		"*.{mjs, js,json}": "prettier --write"
 	},
 	"scripts": {
-		"build-stomp": "node scripts/build-stomp.js",
-		"build-ultraviolet": "node scripts/build-ultraviolet.js",
 		"start": "http-server ./build/ --port 3000",
 		"dev": "NODE_ENV=development webpack serve",
-		"build": "NODE_ENV=production webpack",
-		"lint": "eslint ./src/"
-	},
-	"eslintConfig": {
-		"extends": [
-			"react-app"
-		]
+		"build": "NODE_ENV=production webpack"
 	},
 	"browserslist": {
 		"production": [
