@@ -111,7 +111,7 @@ const SearchBar = ({ layout }: { layout: LayoutDump['layout'] }) => {
 				}}
 				onBlur={(event) => {
 					if (!form.current!.contains(event.relatedTarget)) {
-						//setInputFocused(false);
+						setInputFocused(false);
 					}
 				}}
 				ref={form}
