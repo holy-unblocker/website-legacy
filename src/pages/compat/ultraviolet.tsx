@@ -31,7 +31,7 @@ const Ultraviolet: HolyPage = ({ compatLayout }) => {
 			let errorCause: string | undefined;
 
 			try {
-				if (SERVICEWORKERS) {
+				if (!SERVICEWORKERS) {
 					errorCause = 'Ultraviolet must be used under HTTPS.';
 					throw new Error(errorCause);
 				}
