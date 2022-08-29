@@ -1,7 +1,7 @@
 import type { HolyPage } from '../../App';
 import type { ScriptRef } from '../../CompatLayout';
 import { Script } from '../../CompatLayout';
-import { BARE_API } from '../../consts';
+import { BARE_API, SERVICEWORKERS } from '../../consts';
 import { Obfuscated } from '../../obfuscate';
 import { useEffect, useRef } from 'react';
 
@@ -36,10 +36,7 @@ const Stomp: HolyPage = ({ compatLayout }) => {
 			let errorCause: string | undefined;
 
 			try {
-				if (
-					process.env.NODE_ENV !== 'development' &&
-					global.location.protocol !== 'https:'
-				) {
+				if (SERVICEWORKERS) {
 					errorCause = 'Stomp must be used under HTTPS.';
 					throw new Error(errorCause);
 				}

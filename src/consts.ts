@@ -8,6 +8,13 @@ function format(env: string) {
 		.replace('%{location.protocol}', protocol);
 }
 
+const swAllowedHostnames = ['localhost', '127.0.0.1'];
+
+export const SERVICEWORKERS =
+	process.env.NODE_ENV !== 'production' ||
+	global.location.protocol === 'https:' ||
+	/*#__PURE__*/ swAllowedHostnames.includes(hostname);
+
 export const BARE_API = /*#__PURE__*/ format(process.env.REACT_APP_BARE_API!);
 export const RH_API = /*#__PURE__*/ format(process.env.REACT_APP_RH_API!);
 export const DB_API = /*#__PURE__*/ format(process.env.REACT_APP_DB_API!);

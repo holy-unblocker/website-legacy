@@ -1,7 +1,7 @@
 import type { HolyPage } from '../../App';
 import type { ScriptsRef } from '../../CompatLayout';
 import { Script, Scripts } from '../../CompatLayout';
-import { BARE_API } from '../../consts';
+import { BARE_API, SERVICEWORKERS } from '../../consts';
 import { Obfuscated } from '../../obfuscate';
 import { useEffect, useRef } from 'react';
 
@@ -31,11 +31,8 @@ const Ultraviolet: HolyPage = ({ compatLayout }) => {
 			let errorCause: string | undefined;
 
 			try {
-				if (
-					process.env.NODE_ENV !== 'development' &&
-					global.location.protocol !== 'https:'
-				) {
-					errorCause = 'Stomp must be used under HTTPS.';
+				if (SERVICEWORKERS) {
+					errorCause = 'Ultraviolet must be used under HTTPS.';
 					throw new Error(errorCause);
 				}
 
