@@ -77,10 +77,6 @@
 		"webpack-dev-server": "^4.10.0",
 		"webpack-manifest-plugin": "^5.0.0"
 	},
-	"optionalDependencies": {
-		"stomp": "github:sysce/stomp",
-		"ultraviolet": "github:titaniumnetwork-dev/Ultraviolet"
-	},
 	"lint-staged": {
 		"*.{mjs, js,json}": "prettier --write"
 	},
