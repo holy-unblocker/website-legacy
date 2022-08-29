@@ -76,9 +76,6 @@
 		"webpack-dev-server": "^4.10.0",
 		"webpack-manifest-plugin": "^5.0.0"
 	},
-	"lint-staged": {
-		"*.{mjs, js,json}": "prettier --write"
-	},
 	"scripts": {
 		"start": "http-server ./build/ --port 3000",
 		"dev": "NODE_ENV=development webpack-cli serve",
