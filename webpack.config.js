@@ -29,6 +29,24 @@ if (!process.env.NODE_ENV)
 
 expand(config());
 
+const envRequired = [
+	'REACT_APP_ROUTER',
+	'REACT_APP_HAT_BADGE',
+	'REACT_APP_DEFAULT_PROXY',
+	'REACT_APP_TN_DISCORD_URL',
+	'REACT_APP_HU_DISCORD_URL',
+	'REACT_APP_BARE_API',
+	'REACT_APP_RH_API',
+	'REACT_APP_DB_API',
+	'REACT_APP_THEATRE_CDN',
+];
+
+for (const env of envRequired)
+	if (!(env in process.env))
+		throw new Error(`Missing required environment variable: ${env}`);
+
+const shouldLint = process.env.DISABLE_ESLINT_PLUGIN !== 'true';
+
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
 
@@ -667,7 +685,7 @@ const webpackConfig = {
 			new BundleAnalyzerPlugin({
 				analyzerMode: 'static',
 			}),
-		!isEnvProduction &&
+		shouldLint &&
 			new ESLintPlugin({
 				// Plugin options
 				extensions: ['js', 'mjs', 'jsx', 'ts', 'tsx'],
