@@ -81,8 +81,8 @@
 	},
 	"scripts": {
 		"start": "http-server ./build/ --port 3000",
-		"dev": "NODE_ENV=development webpack serve",
-		"build": "NODE_ENV=production webpack"
+		"dev": "NODE_ENV=development webpack-cli serve",
+		"build": "NODE_ENV=production webpack-cli"
 	},
 	"browserslist": {
 		"production": [
