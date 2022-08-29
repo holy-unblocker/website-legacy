@@ -115,7 +115,7 @@ export default function App() {
 						path={resolveRoute('/', 'faq', false)}
 						element={
 							<Suspense fallback={<></>}>
-								<FAQ test="" {...layouts} />
+								<FAQ {...layouts} />
 							</Suspense>
 						}
 					/>
