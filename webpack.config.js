@@ -9,6 +9,7 @@ import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 import { expand } from 'dotenv-expand';
 import { config } from 'dotenv-flow';
 import ESLintPlugin from 'eslint-webpack-plugin';
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import { stompPath, rufflePath, uvPath } from 'holy-dump';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
@@ -45,7 +46,7 @@ for (const env of envRequired)
 	if (!(env in process.env))
 		throw new Error(`Missing required environment variable: ${env}`);
 
-const shouldLint = process.env.DISABLE_ESLINT_PLUGIN !== 'true';
+const shouldLint = process.env.DISABLE_LINT !== 'true';
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
@@ -685,6 +686,7 @@ const webpackConfig = {
 			new BundleAnalyzerPlugin({
 				analyzerMode: 'static',
 			}),
+		shouldLint && new ForkTsCheckerWebpackPlugin(),
 		shouldLint &&
 			new ESLintPlugin({
 				// Plugin options
