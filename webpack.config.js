@@ -15,7 +15,6 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import { basename, relative, resolve } from 'path';
 import InlineChunkHtmlPlugin from 'react-dev-utils/InlineChunkHtmlPlugin.js';
-import InterpolateHtmlPlugin from 'react-dev-utils/InterpolateHtmlPlugin.js';
 import ModuleNotFoundPlugin from 'react-dev-utils/ModuleNotFoundPlugin.js';
 import getCSSModuleLocalIdent from 'react-dev-utils/getCSSModuleLocalIdent.js';
 import TerserPlugin from 'terser-webpack-plugin';
@@ -615,12 +614,6 @@ const webpackConfig = {
 		isEnvProduction &&
 			shouldInlineRuntimeChunk &&
 			new InlineChunkHtmlPlugin(HtmlWebpackPlugin, [/runtime-.+[.]js/]),
-		// Makes some environment variables available in index.html.
-		// The public URL is available as %PUBLIC_URL% in index.html, e.g.:
-		// <link rel="icon" href="%PUBLIC_URL%/favicon.ico">
-		// It will be an empty string unless you specify "homepage"
-		// in `package.json`, in which case it will be the pathname of that URL.
-		new InterpolateHtmlPlugin(HtmlWebpackPlugin, envRaw),
 		// This gives some necessary context to module not found errors, such as
 		// the requesting resource.
 		new ModuleNotFoundPlugin(resolve('.')),
