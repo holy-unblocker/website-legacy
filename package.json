@@ -32,10 +32,13 @@
 		"@mui/icons-material": "^5.10.2",
 		"@pmmmwh/react-refresh-webpack-plugin": "^0.5.7",
 		"@svgr/webpack": "^6.3.1",
+		"@types/case-sensitive-paths-webpack-plugin": "^2.1.6",
 		"@types/crypto-js": "^4.1.1",
+		"@types/dotenv-flow": "^3.2.0",
 		"@types/js-cookie": "^3.0.2",
 		"@types/random-seed": "^0.3.3",
 		"@types/react-dom": "^18.0.6",
+		"@types/webpack-bundle-analyzer": "^4.4.2",
 		"@typescript-eslint/eslint-plugin": "^5.35.1",
 		"@typescript-eslint/parser": "^5.35.1",
 		"babel-loader": "^8.2.5",
@@ -70,6 +73,7 @@
 		"source-map-loader": "^4.0.0",
 		"style-loader": "^3.3.1",
 		"terser-webpack-plugin": "^5.3.5",
+		"ts-node": "^10.9.1",
 		"typescript": "4.7",
 		"webpack": "^5.74.0",
 		"webpack-bundle-analyzer": "^4.6.1",
@@ -79,8 +83,8 @@
 	},
 	"scripts": {
 		"start": "http-server ./build/ --port 3000",
-		"dev": "NODE_ENV=development webpack-cli serve",
-		"build": "NODE_ENV=production webpack-cli"
+		"dev": "NODE_ENV=development ts-node-esm node_modules/webpack-cli/bin/cli.js --config webpack.config.ts",
+		"build": "NODE_ENV=production ts-node-esm node_modules/webpack-cli/bin/cli.js --config webpack.config.ts"
 	},
 	"browserslist": {
 		"production": [
