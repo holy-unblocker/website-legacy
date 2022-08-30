@@ -1,4 +1,4 @@
-import HolyUnblockerRouterPlugin from './router.js';
+import RouterPlugin from './RouterPlugin.js';
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import BasicWebpackObfuscator from 'basic-webpack-obfuscator';
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
@@ -18,6 +18,7 @@ import InlineChunkHtmlPlugin from 'react-dev-utils/InlineChunkHtmlPlugin.js';
 import ModuleNotFoundPlugin from 'react-dev-utils/ModuleNotFoundPlugin.js';
 import getCSSModuleLocalIdent from 'react-dev-utils/getCSSModuleLocalIdent.js';
 import TerserPlugin from 'terser-webpack-plugin';
+import type { Compiler, Compilation, AssetInfo } from 'webpack';
 import webpack from 'webpack';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import { WebpackManifestPlugin } from 'webpack-manifest-plugin';
@@ -29,7 +30,7 @@ if (!process.env.NODE_ENV)
 
 expand(config());
 
-const envRequired = [
+const envRequired: string[] = [
 	'REACT_APP_ROUTER',
 	'REACT_APP_HAT_BADGE',
 	'REACT_APP_DEFAULT_PROXY',
@@ -73,39 +74,38 @@ const isEnvProduction = process.env.NODE_ENV === 'production';
 const isEnvProductionProfile =
 	isEnvProduction && process.argv.includes('--profile');
 
+const envRaw: typeof process.env = {
+	// Useful for determining whether we’re running in production mode.
+	// Most importantly, it switches React into the correct mode.
+	NODE_ENV: process.env.NODE_ENV || 'development',
+	// Useful for resolving the correct path to static assets in `public`.
+	// For example, <img src={process.env.PUBLIC_URL + '/img/logo.png'} />.
+	// This should only be used as an escape hatch. Normally you would put
+	// images into the `src` and `import` them in code to get their paths.
+	PUBLIC_URL: '/',
+	// We support configuring the sockjs pathname during development.
+	// These settings let a developer run multiple simultaneous projects.
+	// They are used as the connection `hostname`, `pathname` and `port`
+	// in webpackHotDevClient. They are used as the `sockHost`, `sockPath`
+	// and `sockPort` options in webpack-dev-server.
+	WDS_SOCKET_HOST: process.env.WDS_SOCKET_HOST,
+	WDS_SOCKET_PATH: process.env.WDS_SOCKET_PATH,
+	WDS_SOCKET_PORT: process.env.WDS_SOCKET_PORT,
+	// Whether or not react-refresh is enabled.
+	// It is defined here so it is available in the webpackHotDevClient.
+	FAST_REFRESH: (process.env.FAST_REFRESH !== 'false').toString(),
+};
+
+const envRawStringified: Record<string, string> = {};
+
+for (const key in envRaw) envRawStringified[key] = JSON.stringify(envRaw[key]);
+
 // Grab NODE_ENV and REACT_APP_* environment variables and prepare them to be
 // injected into the application via DefinePlugin in webpack configuration.
 const REACT_APP = /^REACT_APP_/i;
 
-const envRaw = Object.keys(process.env)
-	.filter((key) => REACT_APP.test(key))
-	.reduce(
-		(env, key) => {
-			env[key] = process.env[key];
-			return env;
-		},
-		{
-			// Useful for determining whether we’re running in production mode.
-			// Most importantly, it switches React into the correct mode.
-			NODE_ENV: process.env.NODE_ENV || 'development',
-			// Useful for resolving the correct path to static assets in `public`.
-			// For example, <img src={process.env.PUBLIC_URL + '/img/logo.png'} />.
-			// This should only be used as an escape hatch. Normally you would put
-			// images into the `src` and `import` them in code to get their paths.
-			PUBLIC_URL: '/',
-			// We support configuring the sockjs pathname during development.
-			// These settings let a developer run multiple simultaneous projects.
-			// They are used as the connection `hostname`, `pathname` and `port`
-			// in webpackHotDevClient. They are used as the `sockHost`, `sockPath`
-			// and `sockPort` options in webpack-dev-server.
-			WDS_SOCKET_HOST: process.env.WDS_SOCKET_HOST,
-			WDS_SOCKET_PATH: process.env.WDS_SOCKET_PATH,
-			WDS_SOCKET_PORT: process.env.WDS_SOCKET_PORT,
-			// Whether or not react-refresh is enabled.
-			// It is defined here so it is available in the webpackHotDevClient.
-			FAST_REFRESH: process.env.FAST_REFRESH !== 'false',
-		}
-	);
+for (const key in process.env)
+	if (REACT_APP.test(key)) envRaw[key] = process.env[key];
 
 const envHash = createHash('md5');
 envHash.update(JSON.stringify(envRaw));
@@ -115,7 +115,7 @@ const envRawHash = envHash.digest('hex');
 const shouldUseReactRefresh = envRaw.FAST_REFRESH;
 
 // common function to get style loaders
-const getStyleLoaders = (cssOptions, preProcessor) => {
+const getStyleLoaders = (cssOptions: any, preProcessor?: any) => {
 	const loaders = [
 		!isEnvProduction && 'style-loader',
 		isEnvProduction && {
@@ -223,13 +223,14 @@ const webpackConfig = {
 		publicPath: '/',
 		// Point sourcemap entries to original disk location (format as URL on Windows)
 		devtoolModuleFilenameTemplate: isEnvProduction
-			? (info) =>
+			? (info: AssetInfo) =>
 					relative(resolve('src'), info.absoluteResourcePath).replace(
 						/\\/g,
 						'/'
 					)
 			: !isEnvProduction &&
-			  ((info) => resolve(info.absoluteResourcePath).replace(/\\/g, '/')),
+			  ((info: AssetInfo) =>
+					resolve(info.absoluteResourcePath).replace(/\\/g, '/')),
 	},
 	cache: {
 		type: 'filesystem',
@@ -257,11 +258,10 @@ const webpackConfig = {
 						// into invalid ecma 5 code. This is why the 'compress' and 'output'
 						// sections only apply transformations that are ecma 5 safe
 						// https://github.com/facebook/create-react-app/pull/4234
-						ecma: 8,
+						ecma: 2018,
 					},
 					compress: {
 						ecma: 5,
-						warnings: false,
 						// Disabled because of an issue with Uglify breaking seemingly valid code:
 						// https://github.com/facebook/create-react-app/issues/2376
 						// Pending further investigation:
@@ -610,10 +610,7 @@ const webpackConfig = {
 		// Otherwise React will be compiled in the very slow development mode.
 		// new webpack.DefinePlugin(env.stringified),
 		new webpack.DefinePlugin({
-			'process.env': Object.keys(envRaw).reduce((env, key) => {
-				env[key] = JSON.stringify(envRaw[key]);
-				return env;
-			}, {}),
+			'process.env': envRawStringified,
 		}),
 		// Experimental hot reloading for React .
 		// https://github.com/facebook/react/tree/main/packages/react-refresh
@@ -681,37 +678,38 @@ const webpackConfig = {
 				cacheLocation: resolve('node_modules/.cache/.eslintcache'),
 			}),
 		{
-			/**
-			 *
-			 * @param {import('webpack').Compiler} compiler
-			 */
-			apply: (compiler) => {
-				compiler.hooks.compilation.tap('DefineUV', (compilation) => {
-					compilation.hooks.processAssets.tap(
-						{
-							name: 'WebpackObfuscator',
-							stage: webpack.Compilation.PROCESS_ASSETS_STAGE_ADDITIONS,
-						},
-						(assets) => {
-							const config = assets['uv/uv.config.js'];
+			apply: (compiler: Compiler) => {
+				compiler.hooks.compilation.tap(
+					'DefineUV',
+					(compilation: Compilation) => {
+						compilation.hooks.processAssets.tap(
+							{
+								name: 'WebpackObfuscator',
+								stage: webpack.Compilation.PROCESS_ASSETS_STAGE_ADDITIONS,
+							},
+							(assets: AssetInfo) => {
+								const config = assets['uv/uv.config.js'];
 
-							if (!config) return;
+								if (!config) return;
 
-							const content = config.buffer().toString();
+								const content = config.buffer().toString();
 
-							assets['uv/uv.config.js'] = new webpack.sources.RawSource(
-								content.replace(/process\.env\.(\w+)/g, (_match, target) =>
-									target in envRaw
-										? JSON.stringify(envRaw[target])
-										: 'undefined'
-								)
-							);
-						}
-					);
-				});
+								assets['uv/uv.config.js'] = new webpack.sources.RawSource(
+									content.replace(
+										/process\.env\.(\w+)/g,
+										(match: string, target: string) =>
+											target in envRaw
+												? JSON.stringify(envRaw[target])
+												: 'undefined'
+									)
+								);
+							}
+						);
+					}
+				);
 			},
 		},
-		new HolyUnblockerRouterPlugin(),
+		new RouterPlugin(),
 		isEnvProduction &&
 			new BasicWebpackObfuscator({
 				sourceMap: true,

@@ -8,7 +8,9 @@
 		"strict": true,
 		"noEmit": true,
 		"sourceMap": true,
-		"allowJs": true
+		"paths": {
+			"*": ["src/@types/*"]
+		}
 	},
-	"include": ["src/react-env.d.ts", "src/**/*"]
+	"include": ["src/node_modules", "src/react-env.d.ts", "src/**/*"]
 }

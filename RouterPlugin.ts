@@ -1,12 +1,10 @@
 import routes from './src/routes.js';
 import path from 'path';
+import type { Compiler } from 'webpack';
 import webpack from 'webpack';
 
 function pathsID() {
-	/**
-	 * @type {string[]}
-	 */
-	const paths = [];
+	const paths: string[] = [];
 
 	for (const dirI in routes) {
 		const { dir, pages } = routes[dirI];
@@ -25,10 +23,7 @@ function pathsID() {
 }
 
 function filesID() {
-	/**
-	 * @type {string[]}
-	 */
-	const paths = [];
+	const paths: string[] = [];
 
 	for (const { dir, pages } of routes) {
 		const dirName = dir;
@@ -44,12 +39,8 @@ function filesID() {
 	return paths;
 }
 
-export default class HolyUnblockerRouterPlugin {
-	/**
-	 *
-	 * @param {import('webpack').Compiler} compiler
-	 */
-	apply(compiler) {
+export default class RouterPlugin {
+	apply(compiler: Compiler) {
 		compiler.hooks.compilation.tap(
 			'HolyUnblockerRouterPlugin',
 			(compilation) => {
