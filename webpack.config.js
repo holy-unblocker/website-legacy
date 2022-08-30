@@ -572,6 +572,10 @@ const webpackConfig = {
 					to: 'uv',
 				},
 				{
+					from: './uv',
+					to: 'uv',
+				},
+				{
 					from: resolve('node_modules/@ruffle-rs/ruffle'),
 					// don't filter licenses!
 					filter: (file) =>
@@ -581,10 +585,6 @@ const webpackConfig = {
 				{
 					from: './public',
 					filter: (file) => file !== resolve('public/index.html'),
-				},
-				{
-					from: './uv',
-					to: 'uv',
 				},
 			],
 		}),
