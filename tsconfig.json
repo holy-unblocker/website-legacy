@@ -10,5 +10,5 @@
 		"sourceMap": true,
 		"allowJs": true
 	},
-	"include": ["env.d.ts", "src/**/*"]
+	"include": ["src/react-env.d.ts", "src/**/*"]
 }
