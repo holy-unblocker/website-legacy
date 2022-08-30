@@ -10,10 +10,10 @@ import { expand } from 'dotenv-expand';
 import { config } from 'dotenv-flow';
 import ESLintPlugin from 'eslint-webpack-plugin';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
-import { stompPath, rufflePath, uvPath } from 'holy-dump';
+import { stompPath, uvPath } from 'holy-dump';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import path from 'path';
+import { basename, relative, resolve } from 'path';
 import InlineChunkHtmlPlugin from 'react-dev-utils/InlineChunkHtmlPlugin.js';
 import InterpolateHtmlPlugin from 'react-dev-utils/InterpolateHtmlPlugin.js';
 import ModuleNotFoundPlugin from 'react-dev-utils/ModuleNotFoundPlugin.js';
@@ -181,7 +181,7 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
 				loader: 'resolve-url-loader',
 				options: {
 					sourceMap: isEnvProduction ? shouldUseSourceMap : !isEnvProduction,
-					root: path.resolve('src'),
+					root: resolve('src'),
 				},
 			},
 			{
@@ -219,7 +219,7 @@ const webpackConfig = {
 	entry: './src/index.tsx',
 	output: {
 		// The build folder.
-		path: path.resolve('./build/'),
+		path: resolve('./build/'),
 		// Add /* filename */ comments to generated require()s in the output.
 		pathinfo: !isEnvProduction,
 		// There will be one main bundle, and one file per asynchronous chunk.
@@ -239,21 +239,22 @@ const webpackConfig = {
 		// Point sourcemap entries to original disk location (format as URL on Windows)
 		devtoolModuleFilenameTemplate: isEnvProduction
 			? (info) =>
-					path
-						.relative(path.resolve('src'), info.absoluteResourcePath)
-						.replace(/\\/g, '/')
+					relative(resolve('src'), info.absoluteResourcePath).replace(
+						/\\/g,
+						'/'
+					)
 			: !isEnvProduction &&
-			  ((info) => path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')),
+			  ((info) => resolve(info.absoluteResourcePath).replace(/\\/g, '/')),
 	},
 	cache: {
 		type: 'filesystem',
 		version: envRawHash,
-		cacheDirectory: path.resolve('node_modules/.cache'),
+		cacheDirectory: resolve('node_modules/.cache'),
 		store: 'pack',
 		buildDependencies: {
 			defaultWebpack: ['webpack/lib/'],
-			config: [path.resolve('webpack.config.js')],
-			tsconfig: [path.resolve('tsconfig.json')],
+			config: [resolve('webpack.config.js')],
+			tsconfig: [resolve('tsconfig.json')],
 		},
 	},
 	infrastructureLogging: {
@@ -394,12 +395,12 @@ const webpackConfig = {
 					// The preset includes JSX, Flow, TypeScript, and some ESnext features.
 					{
 						test: /\.[mc]?[jt]sx?$/,
-						include: path.resolve('src'),
+						include: resolve('src'),
 						use: [
 							{
 								loader: 'babel-loader',
 								options: {
-									customize: path.resolve(
+									customize: resolve(
 										'node_modules/babel-preset-react-app/webpack-overrides.js'
 									),
 									presets: [
@@ -571,12 +572,15 @@ const webpackConfig = {
 					to: 'uv',
 				},
 				{
-					from: rufflePath,
+					from: resolve('node_modules/@ruffle-rs/ruffle'),
+					// don't filter licenses!
+					filter: (file) =>
+						!['package.json', 'README.md'].includes(basename(file)),
 					to: 'ruffle',
 				},
 				{
 					from: './public',
-					filter: (file) => file !== path.resolve('public/index.html'),
+					filter: (file) => file !== resolve('public/index.html'),
 				},
 				{
 					from: './uv',
@@ -587,7 +591,7 @@ const webpackConfig = {
 		// Generates an `index.html` file with the <script> injected.
 		new HtmlWebpackPlugin({
 			inject: true,
-			template: path.resolve('public/index.html'),
+			template: resolve('public/index.html'),
 			...(isEnvProduction
 				? {
 						minify: {
@@ -619,7 +623,7 @@ const webpackConfig = {
 		new InterpolateHtmlPlugin(HtmlWebpackPlugin, envRaw),
 		// This gives some necessary context to module not found errors, such as
 		// the requesting resource.
-		new ModuleNotFoundPlugin(path.resolve('.')),
+		new ModuleNotFoundPlugin(resolve('.')),
 		// Makes some environment variables available to the JS code, for example:
 		// if (process.env.NODE_ENV === 'production') { ... }. See `./env.js`.
 		// It is absolutely essential that NODE_ENV is set to production
@@ -695,7 +699,7 @@ const webpackConfig = {
 				eslintPath: 'eslint',
 				failOnError: !(!isEnvProduction && emitErrorsAsWarnings),
 				cache: true,
-				cacheLocation: path.resolve('node_modules/.cache/.eslintcache'),
+				cacheLocation: resolve('node_modules/.cache/.eslintcache'),
 			}),
 		{
 			/**
