@@ -60,20 +60,6 @@ const imageInlineSizeLimit = parseInt(
 	process.env.IMAGE_INLINE_SIZE_LIMIT || '10000'
 );
 
-const moduleFileExtensions = [
-	'web.mjs',
-	'mjs',
-	'web.js',
-	'js',
-	'web.ts',
-	'ts',
-	'web.tsx',
-	'tsx',
-	'json',
-	'web.jsx',
-	'jsx',
-];
-
 // style files regexes
 const cssRegex = /\.css$/;
 const cssModuleRegex = /\.module\.css$/;
@@ -313,7 +299,7 @@ const webpackConfig = {
 		// https://github.com/facebook/create-react-app/issues/290
 		// `web` extension prefixes have been added for better support
 		// for React Native Web.
-		extensions: moduleFileExtensions.map((ext) => `.${ext}`),
+		extensions: ['.mjs', '.js', '.ts', '.tsx', '.json', '.jsx'],
 		alias: {
 			// Support React Native Web
 			// https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
