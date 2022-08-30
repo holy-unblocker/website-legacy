@@ -20,7 +20,6 @@
 		"holy-dump": "https://git.holy.how/attachments/0dc89bfa-650b-4500-9c49-39004fb192f5",
 		"http-server": "^14.1.1",
 		"js-cookie": "^3.0.1",
-		"nord": "^0.2.1",
 		"random-seed": "^0.3.0",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0"

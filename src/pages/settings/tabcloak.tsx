@@ -4,7 +4,7 @@ import { ThemeButton, ThemeInputBar, themeStyles } from '../../ThemeElements';
 import { BARE_API } from '../../consts';
 import { Obfuscated } from '../../obfuscate';
 import styles from '../../styles/Settings.module.scss';
-import { Check } from '@mui/icons-material';
+import Check from '@mui/icons-material/Check';
 import BareClient from '@tomphttp/bare-client';
 import clsx from 'clsx';
 import { useRef } from 'react';

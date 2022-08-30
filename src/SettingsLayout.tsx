@@ -2,13 +2,11 @@ import type { HolyPage } from './App';
 import { MenuTab, navStyles } from './MainLayout';
 import resolveRoute from './resolveRoute';
 import styles from './styles/Settings.module.scss';
-import {
-	Brush,
-	BrushOutlined,
-	DriveFileRenameOutline,
-	DriveFileRenameOutlineOutlined,
-	Public,
-} from '@mui/icons-material';
+import Brush from '@mui/icons-material/Brush';
+import BrushOutlined from '@mui/icons-material/BrushOutlined';
+import DriveFileRenameOutline from '@mui/icons-material/DriveFileRenameOutline';
+import DriveFileRenameOutlineOutlined from '@mui/icons-material/DriveFileRenameOutlineOutlined';
+import Public from '@mui/icons-material/Public';
 import clsx from 'clsx';
 import { Outlet } from 'react-router-dom';
 

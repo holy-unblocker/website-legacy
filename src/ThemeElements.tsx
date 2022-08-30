@@ -1,7 +1,7 @@
 import { ObfuscatedA } from './obfuscate';
 import type { ObfuscatedAProps } from './obfuscate';
 import styles from './styles/ThemeElements.module.scss';
-import { ExpandMore } from '@mui/icons-material';
+import ExpandMore from '@mui/icons-material/ExpandMore';
 import clsx from 'clsx';
 import type { AnchorHTMLAttributes, ReactElement, ReactNode } from 'react';
 import { forwardRef, useState } from 'react';

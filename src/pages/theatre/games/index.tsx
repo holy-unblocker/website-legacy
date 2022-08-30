@@ -15,7 +15,7 @@ import isAbortError from '../../../isAbortError';
 import { Obfuscated } from '../../../obfuscate';
 import resolveRoute from '../../../resolveRoute';
 import styles from '../../../styles/TheatreCategory.module.scss';
-import { ArrowForward } from '@mui/icons-material';
+import ArrowForward from '@mui/icons-material/ArrowForward';
 import clsx from 'clsx';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';

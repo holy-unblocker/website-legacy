@@ -7,7 +7,7 @@ import isAbortError from './isAbortError';
 import { Obfuscated } from './obfuscate';
 import resolveRoute from './resolveRoute';
 import styles from './styles/TheatreSearch.module.scss';
-import { Search } from '@mui/icons-material';
+import Search from '@mui/icons-material/Search';
 import clsx from 'clsx';
 import { useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';

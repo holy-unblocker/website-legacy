@@ -6,19 +6,17 @@ import categories from './gameCategories';
 import { ObfuscateLayout, Obfuscated, ObfuscatedA } from './obfuscate';
 import resolveRoute from './resolveRoute';
 import styles from './styles/Navigation.module.scss';
-import {
-	Apps,
-	Home,
-	HomeOutlined,
-	List,
-	Menu,
-	QuestionMark,
-	Settings,
-	SortRounded,
-	StarOutlineRounded,
-	StarRounded,
-	WebAsset,
-} from '@mui/icons-material';
+import Apps from '@mui/icons-material/Apps';
+import Home from '@mui/icons-material/Home';
+import HomeOutlined from '@mui/icons-material/HomeOutlined';
+import List from '@mui/icons-material/List';
+import Menu from '@mui/icons-material/Menu';
+import QuestionMark from '@mui/icons-material/QuestionMark';
+import Settings from '@mui/icons-material/Settings';
+import SortRounded from '@mui/icons-material/SortRounded';
+import StarOutlineRounded from '@mui/icons-material/StarOutlineOutlined';
+import StarRounded from '@mui/icons-material/StarRounded';
+import WebAsset from '@mui/icons-material/WebAsset';
 import clsx from 'clsx';
 import type { MouseEventHandler, ReactNode, SVGAttributes } from 'react';
 import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';

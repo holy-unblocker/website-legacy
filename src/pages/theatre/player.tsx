@@ -8,19 +8,17 @@ import isAbortError from '../../isAbortError';
 import { Obfuscated } from '../../obfuscate';
 import resolveRoute from '../../resolveRoute';
 import styles from '../../styles/TheatrePlayer.module.scss';
-import {
-	ArrowDropDown,
-	ArrowDropUp,
-	ArrowLeft,
-	ArrowRight,
-	ChevronLeft,
-	Close,
-	Fullscreen,
-	Panorama,
-	Star,
-	StarBorder,
-	VideogameAsset,
-} from '@mui/icons-material';
+import ArrowDropDown from '@mui/icons-material/ArrowDropDown';
+import ArrowDropUp from '@mui/icons-material/ArrowDropUp';
+import ArrowLeft from '@mui/icons-material/ArrowLeft';
+import ArrowRight from '@mui/icons-material/ArrowRight';
+import ChevronLeft from '@mui/icons-material/ChevronLeft';
+import Close from '@mui/icons-material/Close';
+import Fullscreen from '@mui/icons-material/Fullscreen';
+import Panorama from '@mui/icons-material/Panorama';
+import Star from '@mui/icons-material/Star';
+import StarBorder from '@mui/icons-material/StarBorder';
+import VideogameAsset from '@mui/icons-material/VideogameAsset';
 import clsx from 'clsx';
 import { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';

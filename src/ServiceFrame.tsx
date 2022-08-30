@@ -5,12 +5,10 @@ import { BARE_API } from './consts';
 import { decryptURL, encryptURL } from './cryptURL';
 import { Obfuscated } from './obfuscate';
 import styles from './styles/Service.module.scss';
-import {
-	ChevronLeft,
-	Fullscreen,
-	OpenInNew,
-	Public,
-} from '@mui/icons-material';
+import ChevronLeft from '@mui/icons-material/ChevronLeft';
+import Fullscreen from '@mui/icons-material/Fullscreen';
+import OpenInNew from '@mui/icons-material/OpenInNew';
+import Public from '@mui/icons-material/Public';
 import BareClient from '@tomphttp/bare-client';
 import { useRef } from 'react';
 import {

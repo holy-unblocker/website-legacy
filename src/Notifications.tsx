@@ -1,10 +1,8 @@
 import { Obfuscated } from './obfuscate';
-import {
-	CheckCircle,
-	Error as ErrorIcon,
-	Info,
-	Warning,
-} from '@mui/icons-material';
+import CheckCircle from '@mui/icons-material/CheckCircle';
+import ErrorIcon from '@mui/icons-material/Error';
+import Info from '@mui/icons-material/Info';
+import Warning from '@mui/icons-material/Warning';
 import type SvgIcon from '@mui/material/SvgIcon';
 import clsx from 'clsx';
 import type { ReactElement, ReactNode, RefObject } from 'react';
