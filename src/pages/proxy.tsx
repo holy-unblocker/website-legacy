@@ -5,7 +5,7 @@ import type { ServiceFrameRef } from '../ServiceFrame';
 import { ThemeInputBar, ThemeLink, themeStyles } from '../ThemeElements';
 import { BARE_API } from '../consts';
 import engines from '../engines';
-import isAbortError from '../isAbortError';
+import isAbortError, { isFailedToFetch } from '../isAbortError';
 import { Obfuscated } from '../obfuscate';
 import resolveRoute from '../resolveRoute';
 import styles from '../styles/Proxy.module.scss';
@@ -64,14 +64,12 @@ const SearchBar = ({ layout }: { layout: LayoutDump['layout'] }) => {
 					/<span class="sa_tm_text">(.*?)<\/span>/g
 				))
 					entries.push(phrase);
-			} catch (error) {
-				if (error instanceof Error) {
+			} catch (err) {
+				if (!isAbortError(err) && isFailedToFetch(err)) {
 					// likely abort error
-					if (error.message === 'Failed to fetch') {
-						console.error('Error fetching Bare server.');
-					} else if (!isAbortError(error)) {
-						throw error;
-					}
+					console.error('Error fetching Bare server.');
+				} else {
+					throw err;
 				}
 			}
 

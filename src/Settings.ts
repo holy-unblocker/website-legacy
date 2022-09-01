@@ -16,7 +16,7 @@ export default class Settings<T> {
 
 		try {
 			parsed = JSON.parse(localStorage[this.key]);
-		} catch (error) {
+		} catch (err) {
 			parsed = {};
 		}
 

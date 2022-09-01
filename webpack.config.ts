@@ -1,4 +1,5 @@
 import RouterPlugin from './RouterPlugin.js';
+import type { CSSLoaderOptions } from './css-loader.js';
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import BasicWebpackObfuscator from 'basic-webpack-obfuscator';
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
@@ -18,10 +19,21 @@ import InlineChunkHtmlPlugin from 'react-dev-utils/InlineChunkHtmlPlugin.js';
 import ModuleNotFoundPlugin from 'react-dev-utils/ModuleNotFoundPlugin.js';
 import getCSSModuleLocalIdent from 'react-dev-utils/getCSSModuleLocalIdent.js';
 import TerserPlugin from 'terser-webpack-plugin';
-import type { Compiler, Compilation, AssetInfo } from 'webpack';
+import type {
+	Compiler,
+	Compilation,
+	AssetInfo,
+	Configuration as WebpackConfiguration,
+	RuleSetRule,
+} from 'webpack';
 import webpack from 'webpack';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
+import type { Configuration as WebpackDevServerConfiguration } from 'webpack-dev-server';
 import { WebpackManifestPlugin } from 'webpack-manifest-plugin';
+
+interface Configuration extends WebpackConfiguration {
+	devServer?: WebpackDevServerConfiguration;
+}
 
 if (!process.env.NODE_ENV)
 	throw new Error(
@@ -115,8 +127,11 @@ const envRawHash = envHash.digest('hex');
 const shouldUseReactRefresh = envRaw.FAST_REFRESH;
 
 // common function to get style loaders
-const getStyleLoaders = (cssOptions: any, preProcessor?: any) => {
-	const loaders = [
+const getStyleLoaders = (
+	cssOptions: CSSLoaderOptions,
+	preProcessor?: string
+) => {
+	const loaders: (RuleSetRule | string | false)[] = [
 		!isEnvProduction && 'style-loader',
 		isEnvProduction && {
 			loader: MiniCssExtractPlugin.loader,
@@ -177,13 +192,10 @@ const getStyleLoaders = (cssOptions: any, preProcessor?: any) => {
 			}
 		);
 	}
-	return loaders;
+	return loaders as (RuleSetRule | string)[];
 };
 
-/**
- * @type {import('webpack').Configuration}
- */
-const webpackConfig = {
+const webpackConfig: Configuration = {
 	target: ['browserslist'],
 	devServer: {
 		port: 3000,
@@ -542,7 +554,7 @@ const webpackConfig = {
 					// Make sure to add the new loader(s) before the "file" loader.
 				],
 			},
-		].filter(Boolean),
+		].filter(Boolean) as RuleSetRule[],
 	},
 	plugins: [
 		new CleanWebpackPlugin(),

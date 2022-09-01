@@ -2,6 +2,12 @@ export interface DatabaseError extends Error {
 	statusCode: number;
 }
 
+export const isDatabaseError = (error: unknown): error is DatabaseError =>
+	typeof error === 'object' &&
+	error !== null &&
+	error instanceof Error &&
+	'statusCode' in error;
+
 export default class DatabaseAPI {
 	private server: string;
 	private signal?: AbortSignal;
@@ -9,18 +15,16 @@ export default class DatabaseAPI {
 		this.server = server;
 		this.signal = signal;
 	}
-	protected sortParams(params: Record<string, any>): Record<string, string> {
+	protected sortParams(
+		params: Record<string, unknown>
+	): Record<string, string> {
 		const result: Record<string, string> = {};
 
 		for (const param in params) {
-			switch (typeof params[param]) {
-				case 'undefined':
-				case 'object':
-					break;
-				default:
-					result[param] = params[param].toString();
-					break;
-			}
+			const value = params[param];
+
+			if (typeof value === 'string' || typeof value === 'number')
+				result[param] = value.toString();
 		}
 
 		return result;

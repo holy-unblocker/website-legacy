@@ -70,8 +70,8 @@ const Ultraviolet: HolyPage = ({ compatLayout }) => {
 						new URL(config.prefix, global.location.toString())
 					)
 				);
-			} catch (error) {
-				compatLayout.current.report(error, errorCause, 'Ultraviolet');
+			} catch (err) {
+				compatLayout.current.report(err, errorCause, 'Ultraviolet');
 			}
 		})();
 	}, [compatLayout]);

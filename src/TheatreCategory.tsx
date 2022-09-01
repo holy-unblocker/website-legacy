@@ -96,10 +96,10 @@ const Category: HolyPage<{
 				errorCause.current = null;
 				setData(data);
 				setLastTotal(data.total);
-			} catch (error) {
-				if (error instanceof Error && isAbortError(error)) {
-					console.error(error);
-					setError(error.toString());
+			} catch (err) {
+				if (isAbortError(err)) {
+					console.error(err);
+					setError(err.toString());
 				}
 			}
 		})();

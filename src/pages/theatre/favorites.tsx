@@ -2,11 +2,10 @@ import type { HolyPage } from '../../App';
 import type { LoadingTheatreEntry, TheatreEntry } from '../../TheatreCommon';
 import { ItemList, TheatreAPI } from '../../TheatreCommon';
 import { DB_API } from '../../consts';
+import { isFailedToFetch } from '../../isAbortError';
 import { Obfuscated } from '../../obfuscate';
 import styles from '../../styles/TheatreCategory.module.scss';
 import { useEffect, useState } from 'react';
-
-const FETCH_FAILED = /TypeError: Failed to fetch/;
 
 const Favorites: HolyPage = ({ layout }) => {
 	const [data, setData] = useState<(TheatreEntry | LoadingTheatreEntry)[]>(() =>
@@ -27,10 +26,10 @@ const Favorites: HolyPage = ({ layout }) => {
 			for (const id of layout.current!.settings.favorites) {
 				try {
 					data.push(await api.show(id));
-				} catch (error) {
+				} catch (err) {
 					// cancelled? page unload?
-					if (error instanceof Error && !FETCH_FAILED.test(error.toString())) {
-						console.warn('Unable to fetch entry:', id, error);
+					if (!isFailedToFetch(err)) {
+						console.warn('Unable to fetch entry:', id, err);
 						layout.current!.settings.favorites.splice(
 							layout.current!.settings.favorites.indexOf(id),
 							1

@@ -79,8 +79,8 @@ const Stomp: HolyPage = ({ compatLayout }) => {
 				errorCause = undefined;
 
 				global.location.replace(boot.html(compatLayout.current.destination));
-			} catch (error) {
-				compatLayout.current.report(error, errorCause, 'Stomp');
+			} catch (err) {
+				compatLayout.current.report(err, errorCause, 'Stomp');
 			}
 		})();
 	}, [compatLayout, bootstrapper]);

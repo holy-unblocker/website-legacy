@@ -29,8 +29,8 @@ export class RammerheadAPI {
 					`unexpected server response to not match "200". Server says "${await request.text()}"`
 				);
 			}
-		} catch (error) {
-			console.error(error);
+		} catch (err) {
+			console.error(err);
 			throw new Error('Cannot communicate with the server');
 		}
 	}

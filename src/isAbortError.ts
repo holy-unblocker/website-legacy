@@ -4,6 +4,13 @@ const messages = [
 	'The user aborted a request.',
 ];
 
-export default function isAbortError(error: Error) {
-	return messages.includes(error.message);
-}
+export const isError = (err: unknown): err is Error =>
+	typeof err === 'object' && err !== null && err instanceof Error;
+
+export const isFailedToFetch = (err: unknown): err is Error =>
+	isError(err) && err.message === '';
+
+const isAbortError = (err: unknown): err is Error =>
+	isError(err) && messages.includes(err.message);
+
+export default isAbortError;

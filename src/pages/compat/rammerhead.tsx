@@ -57,8 +57,8 @@ const Rammerhead: HolyPage = ({ compatLayout }) => {
 						RH_API
 					)
 				);
-			} catch (error) {
-				compatLayout.current!.report(error, errorCause, 'Rammerhead');
+			} catch (err) {
+				compatLayout.current!.report(err, errorCause, 'Rammerhead');
 			}
 		})();
 	}, [compatLayout]);

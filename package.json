@@ -39,6 +39,7 @@
 		"@types/random-seed": "^0.3.3",
 		"@types/react-dom": "^18.0.6",
 		"@types/webpack-bundle-analyzer": "^4.4.2",
+		"@types/webpack-dev-server": "^4.7.2",
 		"@typescript-eslint/eslint-plugin": "^5.35.1",
 		"@typescript-eslint/parser": "^5.35.1",
 		"babel-loader": "^8.2.5",

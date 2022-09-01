@@ -1,4 +1,5 @@
 import type { LayoutDump } from './App';
+import { isDatabaseError } from './DatabaseAPI';
 import { Notification } from './Notifications';
 import resolveProxy from './ProxyResolver';
 import { BARE_API } from './consts';
@@ -57,14 +58,12 @@ const ServiceFrame = forwardRef<
 
 					iframe.current.contentWindow.location.href = proxiedSrc;
 					setLastSrc(proxiedSrc);
-				} catch (error) {
-					console.error(error);
+				} catch (err) {
+					console.error(err);
 					layout.current!.notifications.current!.add(
 						<Notification
 							title="Unable to find compatible proxy"
-							description={
-								error instanceof Error ? error.message : String(error)
-							}
+							description={isDatabaseError(err) ? err.message : String(err)}
 							type="error"
 						/>
 					);
@@ -113,7 +112,7 @@ const ServiceFrame = forwardRef<
 			// * didn't hook our call to new Function
 			try {
 				setLastSrc(contentWindow.location.href);
-			} catch (error) {
+			} catch (err) {
 				// possibly an x-frame error
 				return;
 			}

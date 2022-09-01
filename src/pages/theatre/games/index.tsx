@@ -58,10 +58,10 @@ const Popular: HolyPage = () => {
 				});
 
 				setData(data);
-			} catch (error) {
-				if (error instanceof Error && !isAbortError(error)) {
-					console.error(error);
-					setError(error.toString());
+			} catch (err) {
+				if (!isAbortError(err)) {
+					console.error(err);
+					setError(String(err));
 				}
 			}
 		})();

@@ -86,7 +86,7 @@ export const Scripts = forwardRef<ScriptsRef, { children: ReactNode }>(
 
 					try {
 						await load;
-					} catch (error) {
+					} catch (err) {
 						promiseExternal.reject();
 					}
 				}

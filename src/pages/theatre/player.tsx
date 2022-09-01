@@ -117,10 +117,9 @@ const Player: HolyPage = ({ layout }) => {
 					setSeen(true);
 					errorCause.current = null;
 				}
-			} catch (error) {
-				if (error instanceof Error && !isAbortError(error)) {
-					console.error(error);
-					setError(error.toString());
+			} catch (err) {
+				if (!isAbortError(err)) {
+					setError(String(err));
 				}
 			}
 		})();

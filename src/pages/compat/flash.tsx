@@ -49,8 +49,8 @@ const Flash: HolyPage = ({ compatLayout }) => {
 				player.load({
 					url: compatLayout.current!.destination.toString(),
 				});
-			} catch (error) {
-				compatLayout.current!.report(error, errorCause, 'Rammerhead');
+			} catch (err) {
+				compatLayout.current!.report(err, errorCause, 'Rammerhead');
 			}
 		})();
 

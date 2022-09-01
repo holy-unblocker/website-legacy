@@ -49,9 +49,9 @@ const SearchBar = ({
 			});
 
 			setCategoryData(categoryData);
-		} catch (error) {
-			if (error instanceof Error && !isAbortError(error)) {
-				console.error(error);
+		} catch (err) {
+			if (!isAbortError(err)) {
+				console.error(err);
 			}
 		}
 	}
