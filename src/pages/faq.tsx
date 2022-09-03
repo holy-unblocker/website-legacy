@@ -6,7 +6,7 @@ import resolveRoute from '../resolveRoute';
 
 const FAQ: HolyPage = () => {
 	return (
-		<main className="faq">
+		<main>
 			<section>
 				<h1>
 					<Obfuscated>How can I self-host Holy Unblocker?</Obfuscated>

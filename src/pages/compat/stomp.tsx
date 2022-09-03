@@ -86,7 +86,7 @@ const Stomp: HolyPage = ({ compatLayout }) => {
 	}, [compatLayout, bootstrapper]);
 
 	return (
-		<main className="compat">
+		<main>
 			<Script src="/stomp/bootstrapper.js" ref={bootstrapper} />
 			Loading <Obfuscated>Stomp</Obfuscated>...
 		</main>

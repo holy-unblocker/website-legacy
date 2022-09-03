@@ -5,7 +5,7 @@ import { Obfuscated } from '../obfuscate';
 
 const Contact: HolyPage = () => {
 	return (
-		<main className="legal contact">
+		<main>
 			<h1>Contact:</h1>
 			<ul>
 				<li>

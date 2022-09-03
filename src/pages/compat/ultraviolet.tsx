@@ -77,7 +77,7 @@ const Ultraviolet: HolyPage = ({ compatLayout }) => {
 	}, [compatLayout]);
 
 	return (
-		<main className="compat">
+		<main>
 			<Scripts ref={uvBundle}>
 				<Script src="/uv/uv.bundle.js" />
 				<Script src="/uv/uv.config.js" />

@@ -4,7 +4,7 @@ import { Obfuscated } from '../obfuscate';
 
 const Credits: HolyPage = () => {
 	return (
-		<main className="legal credits">
+		<main>
 			<h2>Credits</h2>
 			<h4>Development</h4>
 			<ul>

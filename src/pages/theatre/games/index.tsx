@@ -131,15 +131,15 @@ const Popular: HolyPage = () => {
 					<section className={styles.expand} key={section.category.id}>
 						<div className={styles.name}>
 							<h1>{section.category.name}</h1>
-							<Link
+							<ThemeLink
 								to={`${resolveRoute('/theatre/', 'category')}?id=${
 									section.category.id
 								}`}
-								className="theme-link see-all"
+								className={styles.seeAll}
 							>
 								See All
 								<ArrowForward />
-							</Link>
+							</ThemeLink>
 						</div>
 						<ItemList
 							className={clsx(styles.items, styles.flex)}
