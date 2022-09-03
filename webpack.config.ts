@@ -249,12 +249,9 @@ const webpackConfig: Configuration = {
 		store: 'pack',
 		buildDependencies: {
 			defaultWebpack: ['webpack/lib/'],
-			config: [resolve('webpack.config.js')],
+			config: [resolve('webpack.config.ts')],
 			tsconfig: [resolve('tsconfig.json')],
 		},
-	},
-	infrastructureLogging: {
-		level: 'none',
 	},
 	resolve: {
 		// These are the reasonable defaults supported by the Node ecosystem.
@@ -282,6 +279,7 @@ const webpackConfig: Configuration = {
 			shouldUseSourceMap && {
 				enforce: 'pre',
 				test: /\.(js|mjs|jsx|ts|tsx|css)$/,
+				exclude: /@swc(?:\/|\\{1,2})helpers/,
 				loader: 'source-map-loader',
 			},
 			{
@@ -369,6 +367,7 @@ const webpackConfig: Configuration = {
 					// Unlike the application JS, we only compile the standard ES features.
 					{
 						test: /\.(js|mjs)$/,
+						exclude: /@swc(?:\/|\\{1,2})helpers/,
 						loader: 'swc-loader',
 						options: {
 							minify: !isDevelopment,
