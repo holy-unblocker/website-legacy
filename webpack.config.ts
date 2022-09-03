@@ -1,7 +1,6 @@
 import RouterPlugin from './RouterPlugin.js';
 import type { CSSLoaderOptions } from './css-loader.js';
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
-import BasicWebpackObfuscator from 'basic-webpack-obfuscator';
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import CopyPlugin from 'copy-webpack-plugin';
@@ -18,18 +17,26 @@ import { basename, relative, resolve } from 'path';
 import InlineChunkHtmlPlugin from 'react-dev-utils/InlineChunkHtmlPlugin.js';
 import ModuleNotFoundPlugin from 'react-dev-utils/ModuleNotFoundPlugin.js';
 import getCSSModuleLocalIdent from 'react-dev-utils/getCSSModuleLocalIdent.js';
-import TerserPlugin from 'terser-webpack-plugin';
 import type {
 	Compiler,
 	Compilation,
 	AssetInfo,
 	Configuration as WebpackConfiguration,
 	RuleSetRule,
+	WebpackPluginInstance,
 } from 'webpack';
 import webpack from 'webpack';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import type { Configuration as WebpackDevServerConfiguration } from 'webpack-dev-server';
 import { WebpackManifestPlugin } from 'webpack-manifest-plugin';
+
+// import BasicWebpackObfuscator from 'basic-webpack-obfuscator';
+
+// import TerserPlugin from 'terser-webpack-plugin';
+
+type PluginEntry =
+	| ((this: Compiler, compiler: Compiler) => void)
+	| WebpackPluginInstance;
 
 interface Configuration extends WebpackConfiguration {
 	devServer?: WebpackDevServerConfiguration;
@@ -41,22 +48,6 @@ if (!process.env.NODE_ENV)
 	);
 
 expand(config());
-
-const envRequired: string[] = [
-	'REACT_APP_ROUTER',
-	'REACT_APP_HAT_BADGE',
-	'REACT_APP_DEFAULT_PROXY',
-	'REACT_APP_TN_DISCORD_URL',
-	'REACT_APP_HU_DISCORD_URL',
-	'REACT_APP_BARE_API',
-	'REACT_APP_RH_API',
-	'REACT_APP_DB_API',
-	'REACT_APP_THEATRE_CDN',
-];
-
-for (const env of envRequired)
-	if (!(env in process.env))
-		throw new Error(`Missing required environment variable: ${env}`);
 
 const shouldLint = process.env.DISABLE_LINT !== 'true';
 
@@ -79,12 +70,12 @@ const cssModuleRegex = /\.module\.css$/;
 const sassRegex = /\.(scss|sass)$/;
 const sassModuleRegex = /\.module\.(scss|sass)$/;
 
-const isEnvProduction = process.env.NODE_ENV === 'production';
+const isDevelopment = process.env.NODE_ENV !== 'production';
 
 // Variable used for enabling profiling in Production
 // passed into alias object. Uses a flag if passed into the build command
 const isEnvProductionProfile =
-	isEnvProduction && process.argv.includes('--profile');
+	!isDevelopment && process.argv.includes('--profile');
 
 const envRaw: typeof process.env = {
 	// Useful for determining whether we’re running in production mode.
@@ -108,19 +99,31 @@ const envRaw: typeof process.env = {
 	FAST_REFRESH: (process.env.FAST_REFRESH !== 'false').toString(),
 };
 
-const envRawStringified: Record<string, string> = {};
+const envRequired: string[] = [
+	'REACT_APP_ROUTER',
+	'REACT_APP_HAT_BADGE',
+	'REACT_APP_DEFAULT_PROXY',
+	'REACT_APP_TN_DISCORD_URL',
+	'REACT_APP_HU_DISCORD_URL',
+	'REACT_APP_BARE_API',
+	'REACT_APP_RH_API',
+	'REACT_APP_DB_API',
+	'REACT_APP_THEATRE_CDN',
+];
 
-for (const key in envRaw) envRawStringified[key] = JSON.stringify(envRaw[key]);
+for (const env of envRequired) {
+	if (!(env in process.env))
+		throw new Error(`Missing required environment variable: ${env}`);
 
-// Grab NODE_ENV and REACT_APP_* environment variables and prepare them to be
-// injected into the application via DefinePlugin in webpack configuration.
-const REACT_APP = /^REACT_APP_/i;
-
-for (const key in process.env)
-	if (REACT_APP.test(key)) envRaw[key] = process.env[key];
+	envRaw[env] = process.env[env];
+}
 
 const envHash = createHash('md5');
 envHash.update(JSON.stringify(envRaw));
+
+const envRawStringified: Record<string, string> = {};
+
+for (const key in envRaw) envRawStringified[key] = JSON.stringify(envRaw[key]);
 
 const envRawHash = envHash.digest('hex');
 
@@ -132,8 +135,8 @@ const getStyleLoaders = (
 	preProcessor?: string
 ) => {
 	const loaders: (RuleSetRule | string | false)[] = [
-		!isEnvProduction && 'style-loader',
-		isEnvProduction && {
+		isDevelopment && 'style-loader',
+		!isDevelopment && {
 			loader: MiniCssExtractPlugin.loader,
 			// css is located in `static/css`, use '../../' to locate index.html folder
 			// in production `paths.publicUrlOrPath` can be a relative path
@@ -170,7 +173,7 @@ const getStyleLoaders = (
 						'postcss-normalize',
 					],
 				},
-				sourceMap: isEnvProduction ? shouldUseSourceMap : true,
+				sourceMap: shouldUseSourceMap,
 			},
 		},
 	].filter(Boolean);
@@ -180,7 +183,7 @@ const getStyleLoaders = (
 			{
 				loader: 'resolve-url-loader',
 				options: {
-					sourceMap: isEnvProduction ? shouldUseSourceMap : !isEnvProduction,
+					sourceMap: shouldUseSourceMap,
 					root: resolve('src'),
 				},
 			},
@@ -203,46 +206,41 @@ const webpackConfig: Configuration = {
 	},
 	// Webpack noise constrained to errors and warnings
 	// stats: 'errors-warnings',
-	mode: isEnvProduction ? 'production' : 'development',
+	mode: isDevelopment ? 'development' : 'production',
 	// Stop compilation early in production
 	// bail: isEnvProduction,
-	devtool: isEnvProduction
-		? shouldUseSourceMap
-			? 'source-map'
-			: false
-		: 'eval',
+	devtool: isDevelopment ? 'eval' : shouldUseSourceMap ? 'source-map' : false,
 	// These are the "entry points" to our application.
 	// This means they will be the "root" imports that are included in JS bundle.
 	entry: './src/index.tsx',
 	output: {
 		// The build folder.
-		path: resolve('./build/'),
+		path: resolve('./dist/'),
 		// Add /* filename */ comments to generated require()s in the output.
-		pathinfo: !isEnvProduction,
+		pathinfo: isDevelopment,
 		// There will be one main bundle, and one file per asynchronous chunk.
 		// In development, it does not produce real files.
-		filename: isEnvProduction
-			? 'static/js/[name].[contenthash:8].js'
-			: !isEnvProduction && 'static/js/bundle.js',
+		filename: isDevelopment
+			? 'static/js/bundle.js'
+			: 'static/js/[name].[contenthash:8].js',
 		// There are also additional JS chunk files if you use code splitting.
-		chunkFilename: isEnvProduction
-			? 'static/js/[name].[contenthash:8].chunk.js'
-			: !isEnvProduction && 'static/js/[name].chunk.js',
+		chunkFilename: isDevelopment
+			? 'static/js/[name].chunk.js'
+			: 'static/js/[name].[contenthash:8].chunk.js',
 		assetModuleFilename: 'static/media/[name].[hash][ext]',
 		// webpack uses `publicPath` to determine where the app is being served from.
 		// It requires a trailing slash, or the file assets will get an incorrect path.
 		// We inferred the "public path" (such as / or /my-project) from homepage.
 		publicPath: '/',
 		// Point sourcemap entries to original disk location (format as URL on Windows)
-		devtoolModuleFilenameTemplate: isEnvProduction
+		devtoolModuleFilenameTemplate: isDevelopment
 			? (info: AssetInfo) =>
+					resolve(info.absoluteResourcePath).replace(/\\/g, '/')
+			: (info: AssetInfo) =>
 					relative(resolve('src'), info.absoluteResourcePath).replace(
 						/\\/g,
 						'/'
-					)
-			: !isEnvProduction &&
-			  ((info: AssetInfo) =>
-					resolve(info.absoluteResourcePath).replace(/\\/g, '/')),
+					),
 	},
 	cache: {
 		type: 'filesystem',
@@ -257,52 +255,6 @@ const webpackConfig: Configuration = {
 	},
 	infrastructureLogging: {
 		level: 'none',
-	},
-	optimization: {
-		minimize: isEnvProduction,
-		minimizer: [
-			// This is only used in production mode
-			new TerserPlugin({
-				terserOptions: {
-					parse: {
-						// We want terser to parse ecma 8 code. However, we don't want it
-						// to apply any minification steps that turns valid ecma 5 code
-						// into invalid ecma 5 code. This is why the 'compress' and 'output'
-						// sections only apply transformations that are ecma 5 safe
-						// https://github.com/facebook/create-react-app/pull/4234
-						ecma: 2018,
-					},
-					compress: {
-						ecma: 5,
-						// Disabled because of an issue with Uglify breaking seemingly valid code:
-						// https://github.com/facebook/create-react-app/issues/2376
-						// Pending further investigation:
-						// https://github.com/mishoo/UglifyJS2/issues/2011
-						comparisons: false,
-						// Disabled because of an issue with Terser breaking valid code:
-						// https://github.com/facebook/create-react-app/issues/5250
-						// Pending further investigation:
-						// https://github.com/terser-js/terser/issues/120
-						inline: 2,
-					},
-					mangle: {
-						safari10: true,
-					},
-					// Added for profiling in devtools
-					keep_classnames: isEnvProductionProfile,
-					keep_fnames: isEnvProductionProfile,
-					output: {
-						ecma: 5,
-						comments: false,
-						// Turned on because emoji and regex is not minified properly using default
-						// https://github.com/facebook/create-react-app/issues/2488
-						ascii_only: true,
-					},
-				},
-			}),
-			// This is only used in production mode
-			new CssMinimizerPlugin(),
-		],
 	},
 	resolve: {
 		// These are the reasonable defaults supported by the Node ecosystem.
@@ -329,7 +281,6 @@ const webpackConfig: Configuration = {
 			// Handle node_modules packages that contain sourcemaps
 			shouldUseSourceMap && {
 				enforce: 'pre',
-				exclude: /@babel(?:\/|\\{1,2})runtime/,
 				test: /\.(js|mjs|jsx|ts|tsx|css)$/,
 				loader: 'source-map-loader',
 			},
@@ -388,71 +339,39 @@ const webpackConfig: Configuration = {
 							and: [/\.(ts|tsx|js|jsx|md|mdx)$/],
 						},
 					},
-					// Process application JS with Babel.
+					// Process application JS with SWC.
 					// The preset includes JSX, Flow, TypeScript, and some ESnext features.
 					{
 						test: /\.[mc]?[jt]sx?$/,
 						include: resolve('src'),
-						use: [
-							{
-								loader: 'babel-loader',
-								options: {
-									customize: resolve(
-										'node_modules/babel-preset-react-app/webpack-overrides.js'
-									),
-									presets: [
-										[
-											'babel-preset-react-app',
-											{
-												runtime: 'automatic',
-											},
-										],
-										[
-											'@babel/preset-typescript',
-											{
-												allowDeclareFields: true,
-											},
-										],
-									],
-
-									plugins: [
-										!isEnvProduction &&
-											shouldUseReactRefresh &&
-											'react-refresh/babel',
-									].filter(Boolean),
-									// This is a feature of `babel-loader` for webpack (not Babel itself).
-									// It enables caching results in ./node_modules/.cache/babel-loader/
-									// directory for faster rebuilds.
-									cacheDirectory: true,
-									// See #6846 for context on why cacheCompression is disabled
-									cacheCompression: false,
-									compact: isEnvProduction,
+						loader: 'swc-loader',
+						options: {
+							// sourceMaps: shouldUseSourceMap,
+							// minify: !isDevelopment,
+							jsc: {
+								parser: {
+									syntax: 'typescript',
+									tsx: true,
+									decorators: false,
+									dynamicImport: true,
 								},
+								transform: {
+									react: {
+										runtime: 'automatic',
+									},
+								},
+								target: 'es2015',
 							},
-						],
+						},
 					},
-					// Process any JS outside of the app with Babel.
+					// Process any JS outside of the app with SWC.
 					// Unlike the application JS, we only compile the standard ES features.
 					{
 						test: /\.(js|mjs)$/,
-						exclude: /@babel(?:\/|\\{1,2})runtime/,
-						loader: 'babel-loader',
+						loader: 'swc-loader',
 						options: {
-							babelrc: false,
-							configFile: false,
-							compact: false,
-							presets: [
-								['babel-preset-react-app/dependencies', { helpers: true }],
-							],
-							cacheDirectory: true,
-							// See #6846 for context on why cacheCompression is disabled
-							cacheCompression: false,
-
-							// Babel sourcemaps are needed for debugging into node_modules
-							// code.  Without the options below, debuggers like VSCode
-							// show incorrect code and set breakpoints on the wrong lines.
+							minify: !isDevelopment,
 							sourceMaps: shouldUseSourceMap,
-							inputSourceMap: shouldUseSourceMap,
 						},
 					},
 					// "postcss" loader applies autoprefixer to our CSS.
@@ -467,9 +386,7 @@ const webpackConfig: Configuration = {
 						exclude: cssModuleRegex,
 						use: getStyleLoaders({
 							importLoaders: 1,
-							sourceMap: isEnvProduction
-								? shouldUseSourceMap
-								: !isEnvProduction,
+							sourceMap: shouldUseSourceMap,
 							modules: {
 								mode: 'icss',
 							},
@@ -486,9 +403,7 @@ const webpackConfig: Configuration = {
 						test: cssModuleRegex,
 						use: getStyleLoaders({
 							importLoaders: 1,
-							sourceMap: isEnvProduction
-								? shouldUseSourceMap
-								: !isEnvProduction,
+							sourceMap: shouldUseSourceMap,
 							modules: {
 								mode: 'local',
 								getLocalIdent: getCSSModuleLocalIdent,
@@ -504,9 +419,7 @@ const webpackConfig: Configuration = {
 						use: getStyleLoaders(
 							{
 								importLoaders: 3,
-								sourceMap: isEnvProduction
-									? shouldUseSourceMap
-									: !isEnvProduction,
+								sourceMap: shouldUseSourceMap,
 								modules: {
 									mode: 'icss',
 								},
@@ -526,9 +439,7 @@ const webpackConfig: Configuration = {
 						use: getStyleLoaders(
 							{
 								importLoaders: 3,
-								sourceMap: isEnvProduction
-									? shouldUseSourceMap
-									: !isEnvProduction,
+								sourceMap: shouldUseSourceMap,
 								modules: {
 									mode: 'local',
 									getLocalIdent: getCSSModuleLocalIdent,
@@ -556,178 +467,220 @@ const webpackConfig: Configuration = {
 			},
 		].filter(Boolean) as RuleSetRule[],
 	},
-	plugins: [
-		new CleanWebpackPlugin(),
-		new CopyPlugin({
-			patterns: [
-				{
-					from: stompPath,
-					to: 'stomp',
+	plugins: (
+		[
+			!isDevelopment && new CssMinimizerPlugin(),
+			/*isEnvProduction && new TerserPlugin({
+			terserOptions: {
+				parse: {
+					// We want terser to parse ecma 8 code. However, we don't want it
+					// to apply any minification steps that turns valid ecma 5 code
+					// into invalid ecma 5 code. This is why the 'compress' and 'output'
+					// sections only apply transformations that are ecma 5 safe
+					// https://github.com/facebook/create-react-app/pull/4234
+					ecma: 2018,
 				},
-				{
-					from: uvPath,
-					to: 'uv',
+				compress: {
+					ecma: 5,
+					// Disabled because of an issue with Uglify breaking seemingly valid code:
+					// https://github.com/facebook/create-react-app/issues/2376
+					// Pending further investigation:
+					// https://github.com/mishoo/UglifyJS2/issues/2011
+					comparisons: false,
+					// Disabled because of an issue with Terser breaking valid code:
+					// https://github.com/facebook/create-react-app/issues/5250
+					// Pending further investigation:
+					// https://github.com/terser-js/terser/issues/120
+					inline: 2,
 				},
-				{
-					from: './uv',
-					to: 'uv',
+				mangle: {
+					safari10: true,
 				},
-				{
-					from: resolve('node_modules/@ruffle-rs/ruffle'),
-					// don't filter licenses!
-					filter: (file) =>
-						!['package.json', 'README.md'].includes(basename(file)),
-					to: 'ruffle',
+				// Added for profiling in devtools
+				keep_classnames: isEnvProductionProfile,
+				keep_fnames: isEnvProductionProfile,
+				output: {
+					ecma: 5,
+					comments: false,
+					// Turned on because emoji and regex is not minified properly using default
+					// https://github.com/facebook/create-react-app/issues/2488
+					ascii_only: true,
 				},
-				{
-					from: './public',
-					filter: (file) => file !== resolve('public/index.html'),
-				},
-			],
-		}),
-		// Generates an `index.html` file with the <script> injected.
-		new HtmlWebpackPlugin({
-			inject: true,
-			template: resolve('public/index.html'),
-			...(isEnvProduction
-				? {
-						minify: {
-							removeComments: true,
-							collapseWhitespace: true,
-							removeRedundantAttributes: true,
-							useShortDoctype: true,
-							removeEmptyAttributes: true,
-							removeStyleLinkTypeAttributes: true,
-							keepClosingSlash: true,
-							minifyJS: true,
-							minifyCSS: true,
-							minifyURLs: true,
-						},
-				  }
-				: {}),
-		}),
-		// Inlines the webpack runtime script. This script is too small to warrant
-		// a network request.
-		// https://github.com/facebook/create-react-app/issues/5358
-		isEnvProduction &&
-			shouldInlineRuntimeChunk &&
-			new InlineChunkHtmlPlugin(HtmlWebpackPlugin, [/runtime-.+[.]js/]),
-		// This gives some necessary context to module not found errors, such as
-		// the requesting resource.
-		new ModuleNotFoundPlugin(resolve('.')),
-		// Makes some environment variables available to the JS code, for example:
-		// if (process.env.NODE_ENV === 'production') { ... }. See `./env.js`.
-		// It is absolutely essential that NODE_ENV is set to production
-		// during a production build.
-		// Otherwise React will be compiled in the very slow development mode.
-		// new webpack.DefinePlugin(env.stringified),
-		new webpack.DefinePlugin({
-			'process.env': envRawStringified,
-		}),
-		// Experimental hot reloading for React .
-		// https://github.com/facebook/react/tree/main/packages/react-refresh
-		!isEnvProduction &&
-			shouldUseReactRefresh &&
-			new ReactRefreshWebpackPlugin({
-				overlay: false,
-			}),
-		// Watcher doesn't work well if you mistype casing in a path so we use
-		// a plugin that prints an error when you attempt to do this.
-		// See https://github.com/facebook/create-react-app/issues/240
-		!isEnvProduction && new CaseSensitivePathsPlugin(),
-		isEnvProduction &&
-			new MiniCssExtractPlugin({
-				// Options similar to the same options in webpackOptions.output
-				// both options are optional
-				filename: 'static/css/[name].[contenthash:8].css',
-				chunkFilename: 'static/css/[name].[contenthash:8].chunk.css',
-			}),
-		// Generate an asset manifest file with the following content:
-		// - "files" key: Mapping of all asset filenames to their corresponding
-		//   output file so that tools can pick it up without having to parse
-		//   `index.html`
-		// - "entrypoints" key: Array of files which are included in `index.html`,
-		//   can be used to reconstruct the HTML if necessary
-		new WebpackManifestPlugin({
-			fileName: 'asset-manifest.json',
-			publicPath: '/',
-			generate: (seed, files, entrypoints) => {
-				const manifestFiles = files.reduce((manifest, file) => {
-					manifest[file.name] = file.path;
-					return manifest;
-				}, seed);
-				const entrypointFiles = entrypoints.main.filter(
-					(fileName) => !fileName.endsWith('.map')
-				);
-
-				return {
-					files: manifestFiles,
-					entrypoints: entrypointFiles,
-				};
 			},
-		}),
-		// Moment.js is an extremely popular library that bundles large locale files
-		// by default due to how webpack interprets its code. This is a practical
-		// solution that requires the user to opt into importing specific locales.
-		// https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
-		// You can remove this if you don't use Moment.js:
-		new webpack.IgnorePlugin({
-			resourceRegExp: /^\.\/locale$/,
-		}),
-		process.env.WEBPACK_BUNDLE_ANALYZER === 'true' &&
-			new BundleAnalyzerPlugin({
-				analyzerMode: 'static',
+		}),*/
+
+			new CleanWebpackPlugin(),
+			new CopyPlugin({
+				patterns: [
+					{
+						from: stompPath,
+						to: 'stomp',
+					},
+					{
+						from: uvPath,
+						to: 'uv',
+					},
+					{
+						from: './uv',
+						to: 'uv',
+					},
+					{
+						from: resolve('node_modules/@ruffle-rs/ruffle'),
+						// don't filter licenses!
+						filter: (file) =>
+							!['package.json', 'README.md'].includes(basename(file)),
+						to: 'ruffle',
+					},
+					{
+						from: './public',
+						filter: (file) => file !== resolve('public/index.html'),
+					},
+				],
 			}),
-		shouldLint && new ForkTsCheckerWebpackPlugin(),
-		shouldLint &&
-			new ESLintPlugin({
-				// Plugin options
-				extensions: ['js', 'mjs', 'jsx', 'ts', 'tsx'],
-				formatter: 'react-dev-utils/eslintFormatter',
-				eslintPath: 'eslint',
-				failOnError: !(!isEnvProduction && emitErrorsAsWarnings),
-				cache: true,
-				cacheLocation: resolve('node_modules/.cache/.eslintcache'),
-			}),
-		{
-			apply: (compiler: Compiler) => {
-				compiler.hooks.compilation.tap(
-					'DefineUV',
-					(compilation: Compilation) => {
-						compilation.hooks.processAssets.tap(
-							{
-								name: 'WebpackObfuscator',
-								stage: webpack.Compilation.PROCESS_ASSETS_STAGE_ADDITIONS,
+			// Generates an `index.html` file with the <script> injected.
+			new HtmlWebpackPlugin({
+				inject: true,
+				template: resolve('public/index.html'),
+				...(isDevelopment
+					? {}
+					: {
+							minify: {
+								removeComments: true,
+								collapseWhitespace: true,
+								removeRedundantAttributes: true,
+								useShortDoctype: true,
+								removeEmptyAttributes: true,
+								removeStyleLinkTypeAttributes: true,
+								keepClosingSlash: true,
+								minifyJS: true,
+								minifyCSS: true,
+								minifyURLs: true,
 							},
-							(assets: AssetInfo) => {
-								const config = assets['uv/uv.config.js'];
-
-								if (!config) return;
-
-								const content = config.buffer().toString();
-
-								assets['uv/uv.config.js'] = new webpack.sources.RawSource(
-									content.replace(
-										/process\.env\.(\w+)/g,
-										(match: string, target: string) =>
-											target in envRaw
-												? JSON.stringify(envRaw[target])
-												: 'undefined'
-									)
-								);
-							}
-						);
-					}
-				);
-			},
-		},
-		new RouterPlugin(),
-		isEnvProduction &&
-			new BasicWebpackObfuscator({
-				sourceMap: true,
-				compact: true,
+					  }),
 			}),
-	].filter(Boolean),
+			// Inlines the webpack runtime script. This script is too small to warrant
+			// a network request.
+			// https://github.com/facebook/create-react-app/issues/5358
+			!isDevelopment &&
+				shouldInlineRuntimeChunk &&
+				new InlineChunkHtmlPlugin(HtmlWebpackPlugin, [/runtime-.+[.]js/]),
+			// This gives some necessary context to module not found errors, such as
+			// the requesting resource.
+			new ModuleNotFoundPlugin(resolve('.')),
+			// Makes some environment variables available to the JS code, for example:
+			// if (process.env.NODE_ENV === 'production') { ... }. See `./env.js`.
+			// It is absolutely essential that NODE_ENV is set to production
+			// during a production build.
+			// Otherwise React will be compiled in the very slow development mode.
+			// new webpack.DefinePlugin(env.stringified),
+			new webpack.DefinePlugin({
+				'process.env': envRawStringified,
+			}),
+			// Experimental hot reloading for React .
+			// https://github.com/facebook/react/tree/main/packages/react-refresh
+			isDevelopment &&
+				shouldUseReactRefresh &&
+				new ReactRefreshWebpackPlugin({
+					overlay: false,
+				}),
+			// Watcher doesn't work well if you mistype casing in a path so we use
+			// a plugin that prints an error when you attempt to do this.
+			// See https://github.com/facebook/create-react-app/issues/240
+			isDevelopment && new CaseSensitivePathsPlugin(),
+			!isDevelopment &&
+				new MiniCssExtractPlugin({
+					// Options similar to the same options in webpackOptions.output
+					// both options are optional
+					filename: 'static/css/[name].[contenthash:8].css',
+					chunkFilename: 'static/css/[name].[contenthash:8].chunk.css',
+				}),
+			// Generate an asset manifest file with the following content:
+			// - "files" key: Mapping of all asset filenames to their corresponding
+			//   output file so that tools can pick it up without having to parse
+			//   `index.html`
+			// - "entrypoints" key: Array of files which are included in `index.html`,
+			//   can be used to reconstruct the HTML if necessary
+			new WebpackManifestPlugin({
+				fileName: 'asset-manifest.json',
+				publicPath: '/',
+				generate: (seed, files, entrypoints) => {
+					const manifestFiles = files.reduce((manifest, file) => {
+						manifest[file.name] = file.path;
+						return manifest;
+					}, seed);
+					const entrypointFiles = entrypoints.main.filter(
+						(fileName) => !fileName.endsWith('.map')
+					);
+
+					return {
+						files: manifestFiles,
+						entrypoints: entrypointFiles,
+					};
+				},
+			}),
+			// Moment.js is an extremely popular library that bundles large locale files
+			// by default due to how webpack interprets its code. This is a practical
+			// solution that requires the user to opt into importing specific locales.
+			// https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
+			// You can remove this if you don't use Moment.js:
+			new webpack.IgnorePlugin({
+				resourceRegExp: /^\.\/locale$/,
+			}),
+			process.env.WEBPACK_BUNDLE_ANALYZER === 'true' &&
+				new BundleAnalyzerPlugin({
+					analyzerMode: 'static',
+				}),
+			shouldLint && new ForkTsCheckerWebpackPlugin(),
+			shouldLint &&
+				new ESLintPlugin({
+					// Plugin options
+					extensions: ['js', 'mjs', 'jsx', 'ts', 'tsx'],
+					formatter: 'react-dev-utils/eslintFormatter',
+					eslintPath: 'eslint',
+					failOnError: !(isDevelopment && emitErrorsAsWarnings),
+					cache: true,
+					cacheLocation: resolve('node_modules/.cache/.eslintcache'),
+				}),
+			{
+				apply: (compiler: Compiler) => {
+					compiler.hooks.compilation.tap(
+						'DefineUV',
+						(compilation: Compilation) => {
+							compilation.hooks.processAssets.tap(
+								{
+									name: 'WebpackObfuscator',
+									stage: webpack.Compilation.PROCESS_ASSETS_STAGE_ADDITIONS,
+								},
+								(assets: AssetInfo) => {
+									const config = assets['uv/uv.config.js'];
+
+									if (!config) return;
+
+									const content = config.buffer().toString();
+
+									assets['uv/uv.config.js'] = new webpack.sources.RawSource(
+										content.replace(
+											/process\.env\.(\w+)/g,
+											(match: string, target: string) =>
+												target in envRaw
+													? JSON.stringify(envRaw[target])
+													: 'undefined'
+										)
+									);
+								}
+							);
+						}
+					);
+				},
+			},
+			new RouterPlugin(),
+			/*!isDevelopment &&
+				new BasicWebpackObfuscator({
+					sourceMap: true,
+					compact: true,
+				}),*/
+		] as (PluginEntry | false)[]
+	).filter(Boolean) as PluginEntry[],
 	// Turn off performance processing because we utilize
 	// our own hints via the FileSizeReporter
 	performance: false,
