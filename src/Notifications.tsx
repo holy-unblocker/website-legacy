@@ -1,4 +1,5 @@
 import { Obfuscated } from './obfuscate';
+import styles from './styles/Notifications.module.scss';
 import CheckCircle from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
 import Info from '@mui/icons-material/Info';
@@ -58,27 +59,34 @@ function RealNotification({
 			break;
 		default:
 		case 'info':
+			type = 'info';
 			Icon = Info;
 			break;
 	}
 
 	return (
-		<div className={clsx('notification', hide && 'hide', title && 'title')}>
-			<Icon className={`icon ${type}`} />
-			<div className="content">
+		<div
+			className={clsx(
+				styles.notification,
+				hide && styles.hide,
+				title && styles.title
+			)}
+		>
+			<Icon className={clsx(styles.icon, styles[type])} />
+			<div className={styles.content}>
 				{title && (
-					<div className="title">
+					<div className={styles.title}>
 						<Obfuscated>{title}</Obfuscated>
 					</div>
 				)}
 				{description && (
-					<div className="description">
+					<div className={styles.description}>
 						<Obfuscated>{description}</Obfuscated>
 					</div>
 				)}
 			</div>
 			<div
-				className="timer"
+				className={styles.timer}
 				style={{ animationDuration: `${duration / 1000}s` }}
 			/>
 		</div>
@@ -140,7 +148,7 @@ const NotificationsManager = forwardRef<NotificationsManagerRef>(
 			[notifications, ref]
 		);
 
-		return <div className="notifications">{notifications}</div>;
+		return <div className={styles.notifications}>{notifications}</div>;
 	}
 );
 

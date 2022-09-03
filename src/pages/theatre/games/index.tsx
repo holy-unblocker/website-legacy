@@ -18,7 +18,6 @@ import styles from '../../../styles/TheatreCategory.module.scss';
 import ArrowForward from '@mui/icons-material/ArrowForward';
 import clsx from 'clsx';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 
 const entryLimit = 8;
 const loadingCategories: LoadingCategoryData = {

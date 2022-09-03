@@ -1,4 +1,8 @@
-@import './Common.scss';
+@import './common.scss';
+
+@include newShimmerWide();
+@include newShimmerCard();
+@include newShimmerSmall();
 
 .main {
 	border-radius: 10px;
@@ -217,7 +221,7 @@
 	&.loading {
 		> .frame {
 			background-color: var(--background-accent-disabled);
-			animation: shimmer-wide 1.7s linear 0s infinite normal forwards;
+			animation: shimmerWide 1.7s linear 0s infinite normal forwards;
 			background-image: linear-gradient(
 				90deg,
 				hsla(0, 0%, 100%, 0),
@@ -231,7 +235,7 @@
 		> .title {
 			> .name {
 				background-color: var(--background-accent-disabled);
-				animation: shimmer-card 1.7s linear 0s infinite normal forwards;
+				animation: shimmerCard 1.7s linear 0s infinite normal forwards;
 				background-image: linear-gradient(
 					90deg,
 					hsla(0, 0%, 100%, 0),
@@ -246,7 +250,7 @@
 
 			> .button {
 				background-color: var(--background-accent-disabled);
-				animation: shimmer-small 1.7s linear 0s infinite normal forwards;
+				animation: shimmerSmall 1.7s linear 0s infinite normal forwards;
 				background-image: linear-gradient(
 					90deg,
 					hsla(0, 0%, 100%, 0),

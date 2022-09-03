@@ -1,7 +1,7 @@
-@import './Lato.scss';
-@import './MontserratAlternates.scss';
+@import './fonts/Lato.scss';
+@import './fonts/MontserratAlternates.scss';
 @import './Theme.scss';
-@import './Common.scss';
+@import './common.scss';
 
 html {
 	background-color: var(--background);
@@ -20,8 +20,6 @@ h2,
 h3 {
 	font-family: 'Montserrat Alternates';
 }
-
-$scrollbar-width: 16px;
 
 :focus-visible {
 	outline: none;
@@ -70,128 +68,6 @@ $scrollbar-width: 16px;
 	// hide "absolute" overflow
 	overflow: hidden;
 	position: relative;
-}
-
-.notifications {
-	position: fixed;
-	top: 0;
-	right: 0;
-	box-sizing: border-box;
-	width: 300px;
-	max-height: 100vh;
-	overflow: hidden;
-	display: block;
-	z-index: 5;
-	padding: 15px;
-	pointer-events: none;
-
-	@keyframes slide-in {
-		0% {
-			transform: translateX(100vw);
-		}
-
-		50% {
-			transform: translateX(50vw);
-		}
-
-		100% {
-			transform: translateX(0vw);
-		}
-	}
-
-	@keyframes slide-out {
-		0% {
-			visibility: visible;
-			transform: translateX(0vw);
-			height: 30px;
-			margin-bottom: 5px;
-		}
-
-		50% {
-			transform: translateX(50vw);
-		}
-
-		100% {
-			visibility: hidden;
-			transform: translateX(100vw);
-			height: 0px;
-			padding: 0;
-			margin-bottom: 0px;
-		}
-	}
-
-	.notification {
-		pointer-events: all;
-		padding: 8px;
-		border-radius: 5px;
-		margin-bottom: 5px;
-		transition-timing-function: ease;
-		transition: transform, height;
-		animation: slide-in 0.3s;
-		height: 25px;
-		background: var(--background-accent);
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-		font-size: 14px;
-		position: relative;
-		overflow: hidden;
-		box-shadow: 0 0 10px var(--shadow);
-
-		&.title {
-			height: 50px;
-		}
-
-		.content {
-			display: flex;
-			flex-direction: column;
-			justify-content: center;
-
-			.title {
-				font-weight: bold;
-			}
-		}
-
-		.icon {
-			box-sizing: border-box;
-			margin-right: 5px;
-
-			&.error {
-				color: var(--error);
-			}
-
-			&.info {
-				color: var(--info);
-			}
-
-			&.success {
-				color: var(--success);
-			}
-		}
-
-		@keyframes timer {
-			from {
-				width: 100%;
-			}
-			to {
-				width: 0%;
-			}
-		}
-
-		.timer {
-			position: absolute;
-			height: 2px;
-			left: 0;
-			bottom: 0;
-			animation: timer linear;
-			background: var(--contrast-background);
-		}
-
-		&.hide {
-			visibility: hidden;
-			animation: slide-out 0.3s;
-		}
-	}
 }
 
 main {

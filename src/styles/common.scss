@@ -1,3 +1,8 @@
+/**
+ * Common utils
+ * This file should only contain SCSS mixins and variables
+ */
+
 $scrollbar-width: 16px;
 $fixed-width: calc(100vw - $scrollbar-width);
 
@@ -19,8 +24,22 @@ $fixed-width: calc(100vw - $scrollbar-width);
 	}
 }
 
-@include shimmer(240px, shimmer-small);
-@include shimmer(470px, shimmer-card);
-@include shimmer(940px, shimmer-large);
-@include shimmer(1880px, shimmer-larger);
-@include shimmer(200vw, shimmer-wide);
+@mixin newShimmerSmall() {
+	@include shimmer(240px, shimmerSmall);
+}
+
+@mixin newShimmerCard() {
+	@include shimmer(470px, shimmerCard);
+}
+
+@mixin newShimmerLarge() {
+	@include shimmer(940px, shimmerLarge);
+}
+
+@mixin newShimmerLarger() {
+	@include shimmer(1880px, shimmerLarger);
+}
+
+@mixin newShimmerWide() {
+	@include shimmer(200vw, shimmerWide);
+}

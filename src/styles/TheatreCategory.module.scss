@@ -1,4 +1,6 @@
-@import './Common.scss';
+@import './common.scss';
+
+@include newShimmerCard();
 
 .main {
 	display: flex;
@@ -102,7 +104,7 @@
 					position: relative;
 					border-radius: 8px;
 					background-color: var(--background-accent);
-					animation: shimmer-card 1.7s linear 0s infinite normal forwards;
+					animation: shimmerCard 1.7s linear 0s infinite normal forwards;
 					background-image: linear-gradient(
 						90deg,
 						hsla(0, 0%, 100%, 0),
@@ -169,7 +171,7 @@
 					cursor: revert;
 
 					> .name {
-						animation: shimmer-card 1.7s linear 0s infinite normal forwards;
+						animation: shimmerCard 1.7s linear 0s infinite normal forwards;
 						background-image: linear-gradient(
 							90deg,
 							hsla(0, 0%, 100%, 0),
