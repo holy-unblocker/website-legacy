@@ -2,6 +2,7 @@ import RouterPlugin from './RouterPlugin.js';
 import type { CSSLoaderOptions } from './css-loader.js';
 import type swcrcSchema from './swcrc.js';
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
+import type { JsMinifyOptions } from '@swc/core';
 import BasicWebpackObfuscator from 'basic-webpack-obfuscator';
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
@@ -19,27 +20,33 @@ import { basename, relative, resolve } from 'path';
 import InlineChunkHtmlPlugin from 'react-dev-utils/InlineChunkHtmlPlugin.js';
 import ModuleNotFoundPlugin from 'react-dev-utils/ModuleNotFoundPlugin.js';
 import getCSSModuleLocalIdent from 'react-dev-utils/getCSSModuleLocalIdent.js';
+import TerserPlugin from 'terser-webpack-plugin';
 import type {
 	Compiler,
 	Compilation,
 	AssetInfo,
-	Configuration as WebpackConfiguration,
+	Configuration,
 	RuleSetRule,
-	WebpackPluginInstance,
 } from 'webpack';
 import webpack from 'webpack';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import type { Configuration as WebpackDevServerConfiguration } from 'webpack-dev-server';
 import { WebpackManifestPlugin } from 'webpack-manifest-plugin';
 
-// import TerserPlugin from 'terser-webpack-plugin';
+type ArrElement<ArrType> = ArrType extends readonly (infer ElementType)[]
+	? ElementType
+	: never;
 
-type PluginEntry =
-	| ((this: Compiler, compiler: Compiler) => void)
-	| WebpackPluginInstance;
+type PluginEntry = ArrElement<Required<Configuration>['plugins']>;
 
-interface Configuration extends WebpackConfiguration {
-	devServer?: WebpackDevServerConfiguration;
+type MinimizerEntry = ArrElement<
+	Required<Configuration>['optimization']['minimizer']
+>;
+
+declare module 'webpack' {
+	interface Configuration {
+		devServer?: WebpackDevServerConfiguration;
+	}
 }
 
 if (!process.env.NODE_ENV)
@@ -271,6 +278,28 @@ const webpackConfig: Configuration = {
 			}),
 		},
 	},
+	optimization: {
+		minimize: !isDevelopment,
+		minimizer: (
+			[
+				new CssMinimizerPlugin(),
+				new BasicWebpackObfuscator({
+					sourceMap: true,
+				}),
+				new TerserPlugin<JsMinifyOptions>({
+					minify: TerserPlugin.swcMinify,
+					terserOptions: {
+						compress: false,
+					},
+				}),
+				// Inlines the webpack runtime script. This script is too small to warrant
+				// a network request.
+				// https://github.com/facebook/create-react-app/issues/5358
+				shouldInlineRuntimeChunk &&
+					new InlineChunkHtmlPlugin(HtmlWebpackPlugin, [/runtime-.+[.]js/]),
+			] as (MinimizerEntry | false)[]
+		).filter(Boolean) as MinimizerEntry[],
+	},
 	module: {
 		strictExportPresence: true,
 		rules: [
@@ -472,7 +501,6 @@ const webpackConfig: Configuration = {
 	},
 	plugins: (
 		[
-			!isDevelopment && new CssMinimizerPlugin(),
 			new CleanWebpackPlugin(),
 			new CopyPlugin({
 				patterns: [
@@ -522,12 +550,6 @@ const webpackConfig: Configuration = {
 							},
 					  }),
 			}),
-			// Inlines the webpack runtime script. This script is too small to warrant
-			// a network request.
-			// https://github.com/facebook/create-react-app/issues/5358
-			!isDevelopment &&
-				shouldInlineRuntimeChunk &&
-				new InlineChunkHtmlPlugin(HtmlWebpackPlugin, [/runtime-.+[.]js/]),
 			// This gives some necessary context to module not found errors, such as
 			// the requesting resource.
 			new ModuleNotFoundPlugin(resolve('.')),
@@ -638,11 +660,6 @@ const webpackConfig: Configuration = {
 				},
 			},
 			new RouterPlugin(),
-			!isDevelopment &&
-				new BasicWebpackObfuscator({
-					sourceMap: true,
-					compact: true,
-				}),
 		] as (PluginEntry | false)[]
 	).filter(Boolean) as PluginEntry[],
 	// Turn off performance processing because we utilize
