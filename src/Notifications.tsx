@@ -100,8 +100,8 @@ export function Notification(props: NotificationStubProps): JSX.Element {
 }
 
 export interface NotificationsManagerRef {
-	add(notification: ReactElement<Notification>): void;
-	delete(id: string): void;
+	add: (notification: ReactElement<Notification>) => void;
+	delete: (id: string) => void;
 }
 
 const NotificationsManager = forwardRef<NotificationsManagerRef>(
@@ -113,7 +113,7 @@ const NotificationsManager = forwardRef<NotificationsManagerRef>(
 		useImperativeHandle(
 			ref,
 			() => ({
-				add(notification: ReactElement<Notification>) {
+				add: (notification: ReactElement<Notification>) => {
 					const id = Math.random().toString(36);
 					const _notifications = [...notifications];
 
@@ -128,7 +128,7 @@ const NotificationsManager = forwardRef<NotificationsManagerRef>(
 
 					setNotifications(_notifications);
 				},
-				delete(id: string) {
+				delete: (id: string) => {
 					const _notifications = [...notifications];
 
 					for (let i = 0; i < _notifications.length; i++) {

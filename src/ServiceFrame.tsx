@@ -23,7 +23,7 @@ import {
 import { useSearchParams } from 'react-router-dom';
 
 export interface ServiceFrameRef {
-	proxy(src: string): void;
+	proxy: (src: string) => void;
 }
 
 const ServiceFrame = forwardRef<
@@ -81,7 +81,7 @@ const ServiceFrame = forwardRef<
 	}, [iframe, layout, src]);
 
 	useImperativeHandle(ref, () => ({
-		proxy(src: string) {
+		proxy: (src: string) => {
 			search.has('query') && decryptURL(search.get('query')! as string);
 			setSearch({
 				...Object.fromEntries(search),
