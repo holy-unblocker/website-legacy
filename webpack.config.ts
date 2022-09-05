@@ -39,10 +39,6 @@ type ArrElement<ArrType> = ArrType extends readonly (infer ElementType)[]
 
 type PluginEntry = ArrElement<Required<Configuration>['plugins']>;
 
-type MinimizerEntry = ArrElement<
-	Required<Configuration>['optimization']['minimizer']
->;
-
 declare module 'webpack' {
 	interface Configuration {
 		devServer?: WebpackDevServerConfiguration;
@@ -279,26 +275,13 @@ const webpackConfig: Configuration = {
 		},
 	},
 	optimization: {
-		minimize: !isDevelopment,
-		minimizer: (
-			[
-				new CssMinimizerPlugin(),
-				new BasicWebpackObfuscator({
-					sourceMap: true,
-				}),
-				new TerserPlugin<JsMinifyOptions>({
-					minify: TerserPlugin.swcMinify,
-					terserOptions: {
-						compress: false,
-					},
-				}),
-				// Inlines the webpack runtime script. This script is too small to warrant
-				// a network request.
-				// https://github.com/facebook/create-react-app/issues/5358
-				shouldInlineRuntimeChunk &&
-					new InlineChunkHtmlPlugin(HtmlWebpackPlugin, [/runtime-.+[.]js/]),
-			] as (MinimizerEntry | false)[]
-		).filter(Boolean) as MinimizerEntry[],
+		minimize: true,
+		minimizer: [
+			new TerserPlugin<JsMinifyOptions>({
+				minify: TerserPlugin.swcMinify,
+			}),
+			new CssMinimizerPlugin(),
+		],
 	},
 	module: {
 		strictExportPresence: true,
@@ -529,6 +512,12 @@ const webpackConfig: Configuration = {
 					},
 				],
 			}),
+			// Inlines the webpack runtime script. This script is too small to warrant
+			// a network request.
+			// https://github.com/facebook/create-react-app/issues/5358
+			!isDevelopment &&
+				shouldInlineRuntimeChunk &&
+				new InlineChunkHtmlPlugin(HtmlWebpackPlugin, [/runtime-.+[.]js/]),
 			// Generates an `index.html` file with the <script> injected.
 			new HtmlWebpackPlugin({
 				inject: true,
@@ -659,6 +648,10 @@ const webpackConfig: Configuration = {
 					);
 				},
 			},
+			!isDevelopment &&
+				new BasicWebpackObfuscator({
+					sourceMap: shouldUseSourceMap,
+				}),
 			new RouterPlugin(),
 		] as (PluginEntry | false)[]
 	).filter(Boolean) as PluginEntry[],
