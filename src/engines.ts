@@ -20,6 +20,14 @@ const engines: Engine[] = [
 		name: 'Wikipedia',
 		format: 'https://en.wikipedia.org/wiki/Special:Search?search=%s',
 	},
+	{
+		name: 'Reddit',
+		format: 'https://www.reddit.com/search/?q=%s',
+	},
+	{
+		name: 'Hacker News',
+		format: 'https://hn.algolia.com/?query=%s',
+	},
 ];
 
 export default engines;
