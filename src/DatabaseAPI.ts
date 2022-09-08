@@ -1,5 +1,6 @@
 export interface DatabaseError extends Error {
 	statusCode: number;
+	type?: string;
 }
 
 export const isDatabaseError = (error: unknown): error is DatabaseError =>
