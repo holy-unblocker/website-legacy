@@ -610,7 +610,7 @@ const webpackConfig: Configuration = {
 				new ESLintPlugin({
 					// Plugin options
 					extensions: ['js', 'mjs', 'jsx', 'ts', 'tsx'],
-					formatter: resolve('node_modules/react-dev-utils/eslintFormatter'),
+					formatter: resolve('node_modules/react-dev-utils/eslintFormatter.js'),
 					eslintPath: 'eslint',
 					failOnError: !(isDevelopment && emitErrorsAsWarnings),
 					cache: true,
