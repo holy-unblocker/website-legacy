@@ -16,7 +16,7 @@ import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import { stompPath, uvPath } from 'holy-dump';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import { basename, relative, resolve } from 'path';
+import { basename, resolve } from 'path';
 import InlineChunkHtmlPlugin from 'react-dev-utils/InlineChunkHtmlPlugin.js';
 import ModuleNotFoundPlugin from 'react-dev-utils/ModuleNotFoundPlugin.js';
 import getCSSModuleLocalIdent from 'react-dev-utils/getCSSModuleLocalIdent.js';
@@ -234,15 +234,6 @@ const webpackConfig: Configuration = {
 		// It requires a trailing slash, or the file assets will get an incorrect path.
 		// We inferred the "public path" (such as / or /my-project) from homepage.
 		publicPath: '/',
-		// Point sourcemap entries to original disk location (format as URL on Windows)
-		devtoolModuleFilenameTemplate: isDevelopment
-			? (info: AssetInfo) =>
-					resolve(info.absoluteResourcePath).replace(/\\/g, '/')
-			: (info: AssetInfo) =>
-					relative(resolve('src'), info.absoluteResourcePath).replace(
-						/\\/g,
-						'/'
-					),
 	},
 	cache: {
 		type: 'filesystem',
