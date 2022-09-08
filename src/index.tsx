@@ -1,4 +1,5 @@
 import App from './App';
+import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 
@@ -8,11 +9,10 @@ if (!rootElement) throw new Error('Missing root');
 
 const root = createRoot(rootElement);
 
-// <StrictMode>
-// https://stackoverflow.com/questions/61254372/my-react-component-is-rendering-twice-because-of-strict-mode
-
 root.render(
-	<BrowserRouter>
-		<App />
-	</BrowserRouter>
+	<StrictMode>
+		<BrowserRouter>
+			<App />
+		</BrowserRouter>
+	</StrictMode>
 );
