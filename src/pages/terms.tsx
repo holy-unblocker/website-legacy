@@ -1,7 +1,7 @@
 import type { HolyPage } from '../App';
 import { ThemeLink } from '../ThemeElements';
 import { Obfuscated } from '../obfuscate';
-import resolveRoute from '../resolveRoute';
+import { getHot } from '../routes';
 
 const Terms: HolyPage = () => {
 	return (
@@ -50,7 +50,7 @@ const Terms: HolyPage = () => {
 			<h2>Contact Information</h2>
 			<p>
 				If you have any questions about our Privacy Policy, please{' '}
-				<ThemeLink to={resolveRoute('/', 'contact')}>Contact Us</ThemeLink>.
+				<ThemeLink to={getHot('contact').path}>Contact Us</ThemeLink>.
 			</p>
 		</main>
 	);

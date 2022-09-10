@@ -2,7 +2,7 @@ import CompatAPI from './CompatAPI';
 import { isDatabaseError } from './DatabaseAPI';
 import { DB_API, DEFAULT_PROXY } from './consts';
 import { encryptURL } from './cryptURL';
-import resolveRoute from './resolveRoute';
+import { getHot } from './routes';
 
 export default async function resolveProxy(src: string, setting: string) {
 	if (setting === 'automatic') {
@@ -25,14 +25,14 @@ export default async function resolveProxy(src: string, setting: string) {
 
 	switch (setting) {
 		case 'stomp':
-			route = resolveRoute('/compat/', 'stomp');
+			route = getHot('compat stomp').path;
 			break;
 		case 'ultraviolet':
-			route = resolveRoute('/compat/', 'ultraviolet');
+			route = getHot('compat ultraviolet').path;
 			break;
 		default:
 		case 'rammerhead':
-			route = resolveRoute('/compat/', 'rammerhead');
+			route = getHot('compat rammerhead').path;
 			break;
 	}
 

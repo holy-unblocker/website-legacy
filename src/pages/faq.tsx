@@ -2,7 +2,7 @@ import type { HolyPage } from '../App';
 import { ObfuscatedThemeA, ThemeLink } from '../ThemeElements';
 import { TN_DISCORD_URL } from '../consts';
 import { Obfuscated } from '../obfuscate';
-import resolveRoute from '../resolveRoute';
+import { getHot } from '../routes';
 
 const FAQ: HolyPage = () => {
 	return (
@@ -52,15 +52,12 @@ const FAQ: HolyPage = () => {
 				<p>
 					We do not collect any data, your information is only as secure as the
 					sites you are accessing. For privacy concerns, you can review our{' '}
-					<ThemeLink to={resolveRoute('/', 'privacy')}>
-						Privacy Policy
-					</ThemeLink>
-					.
+					<ThemeLink to={getHot('privacy').path}>Privacy Policy</ThemeLink>.
 				</p>
 			</section>
 			<p style={{ marginTop: 30, opacity: 0.75 }}>
 				Not what you're looking for?{' '}
-				<ThemeLink to={resolveRoute('/', 'contact')}>Contact Us</ThemeLink>.
+				<ThemeLink to={getHot('contact').path}>Contact Us</ThemeLink>.
 			</p>
 		</main>
 	);

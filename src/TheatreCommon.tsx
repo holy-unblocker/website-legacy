@@ -1,7 +1,7 @@
 import DatabaseAPI from './DatabaseAPI';
 import { THEATRE_CDN } from './consts';
 import { Obfuscated } from './obfuscate';
-import resolveRoute from './resolveRoute';
+import { getHot } from './routes';
 import styles from './styles/TheatreCategory.module.scss';
 import clsx from 'clsx';
 import { useState } from 'react';
@@ -118,7 +118,7 @@ export function Item({ id, name }: { id: string; name: string }) {
 	return (
 		<Link
 			className={styles.item}
-			to={`${resolveRoute('/theatre/', 'player')}?id=${id}`}
+			to={`${getHot('theatre player').path}?id=${id}`}
 		>
 			<div className={styles.thumbnail} data-loaded={Number(loaded)}>
 				<img

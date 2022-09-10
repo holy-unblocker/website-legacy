@@ -13,7 +13,7 @@ import categories from '../../../gameCategories';
 import type { Category } from '../../../gameCategories';
 import isAbortError from '../../../isAbortError';
 import { Obfuscated } from '../../../obfuscate';
-import resolveRoute from '../../../resolveRoute';
+import { getHot } from '../../../routes';
 import styles from '../../../styles/TheatreCategory.module.scss';
 import ArrowForward from '@mui/icons-material/ArrowForward';
 import clsx from 'clsx';
@@ -91,11 +91,11 @@ const Popular: HolyPage = () => {
 					.
 					<br />
 					If this problem still occurs, check{' '}
-					<ThemeLink to={resolveRoute('/', 'faq')} target="_parent">
+					<ThemeLink to={getHot('faq').path} target="_parent">
 						Support
 					</ThemeLink>{' '}
 					or{' '}
-					<ThemeLink to={resolveRoute('/', 'contact')} target="_parent">
+					<ThemeLink to={getHot('contact').path} target="_parent">
 						Contact Us
 					</ThemeLink>
 					.
@@ -131,7 +131,7 @@ const Popular: HolyPage = () => {
 						<div className={styles.name}>
 							<h1>{section.category.name}</h1>
 							<ThemeLink
-								to={`${resolveRoute('/theatre/', 'category')}?id=${
+								to={`${getHot('theatre games category').path}?id=${
 									section.category.id
 								}`}
 								className={styles.seeAll}

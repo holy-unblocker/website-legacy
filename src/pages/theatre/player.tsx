@@ -6,7 +6,7 @@ import { DB_API, THEATRE_CDN } from '../../consts';
 import { encryptURL } from '../../cryptURL';
 import isAbortError from '../../isAbortError';
 import { Obfuscated } from '../../obfuscate';
-import resolveRoute from '../../resolveRoute';
+import { getHot } from '../../routes';
 import styles from '../../styles/TheatrePlayer.module.scss';
 import ArrowDropDown from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUp from '@mui/icons-material/ArrowDropUp';
@@ -34,7 +34,7 @@ async function resolveSrc(
 		case 'embed':
 			return src;
 		case 'flash':
-			return `${resolveRoute('/compat/', 'flash')}#${encryptURL(src)}`;
+			return `${getHot('compat flash').path}#${encryptURL(src)}`;
 		case 'emulator':
 		case 'emulator.gba':
 		case 'emulator.nes':

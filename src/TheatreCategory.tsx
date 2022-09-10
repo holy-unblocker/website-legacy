@@ -7,7 +7,7 @@ import { ThemeLink, ThemeSelect } from './ThemeElements';
 import { DB_API } from './consts';
 import isAbortError from './isAbortError';
 import { Obfuscated } from './obfuscate';
-import resolveRoute from './resolveRoute';
+import { getHot } from './routes';
 import styles from './styles/TheatreCategory.module.scss';
 import ChevronLeft from '@mui/icons-material/ChevronLeft';
 import ChevronRight from '@mui/icons-material/ChevronRight';
@@ -129,11 +129,11 @@ const Category: HolyPage<{
 					.
 					<br />
 					If this problem still occurs, check{' '}
-					<ThemeLink to={resolveRoute('/', 'faq')} target="_parent">
+					<ThemeLink to={getHot('faq').path} target="_parent">
 						Support
 					</ThemeLink>{' '}
 					or{' '}
-					<ThemeLink to={resolveRoute('/', 'contact')} target="_parent">
+					<ThemeLink to={getHot('contact').path} target="_parent">
 						Contact Us
 					</ThemeLink>
 					.

@@ -1,7 +1,7 @@
 import { ThemeA, ThemeLink } from './ThemeElements';
 import { decryptURL } from './cryptURL';
 import { ObfuscateLayout, Obfuscated } from './obfuscate';
-import resolveRoute from './resolveRoute';
+import { getHot } from './routes';
 import type { ReactNode } from 'react';
 import {
 	forwardRef,
@@ -10,7 +10,7 @@ import {
 	useMemo,
 	useState,
 } from 'react';
-import { Outlet, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 function loadScript(
 	src: string
@@ -149,75 +149,77 @@ export interface CompatLayoutRef {
 	report: (error: unknown, cause: string | undefined, origin: string) => void;
 }
 
-export default forwardRef<{}>(function CompatLayout(props, ref) {
-	const location = useLocation();
+export default forwardRef<CompatLayoutRef, { children: ReactNode }>(
+	function CompatLayout({ children }, ref) {
+		const location = useLocation();
 
-	const [error, setError] = useState<{
-		error: string;
-		cause: string;
-		origin: string;
-	} | null>(null);
+		const [error, setError] = useState<{
+			error: string;
+			cause: string;
+			origin: string;
+		} | null>(null);
 
-	useImperativeHandle(
-		ref,
-		() => ({
-			get destination() {
-				if (location.hash === '') throw new Error('No hash was provided');
+		useImperativeHandle(
+			ref,
+			() => ({
+				get destination() {
+					if (location.hash === '') throw new Error('No hash was provided');
 
-				return decryptURL(location.hash.slice(1));
-			},
-			report: (error: unknown, cause: string | undefined, origin: string) => {
-				console.error(error);
+					return decryptURL(location.hash.slice(1));
+				},
+				report: (error: unknown, cause: string | undefined, origin: string) => {
+					console.error(error);
 
-				setError({
-					error: String(error),
-					cause: cause || 'unknown',
-					origin,
-				});
-			},
-		}),
-		[location]
-	);
+					setError({
+						error: String(error),
+						cause: cause || 'unknown',
+						origin,
+					});
+				},
+			}),
+			[location]
+		);
 
-	return (
-		<>
-			<ObfuscateLayout />
-			{error ? (
-				<main className="error">
-					{' '}
-					<span>
-						An error occured when loading{' '}
-						<Obfuscated>{error.origin}</Obfuscated>:
-						<br />
-						<pre>{error.cause || error.error}</pre>
-					</span>
-					<p>
-						Try again by clicking{' '}
-						<ThemeA
-							href="i:"
-							onClick={(event) => {
-								event.preventDefault();
-								global.location.reload();
-							}}
-						>
-							here
-						</ThemeA>
-						.
-						<br />
-						If this problem still occurs, check our{' '}
-						<ThemeLink to={resolveRoute('/', 'faq')} target="_parent">
-							FAQ
-						</ThemeLink>{' '}
-						or{' '}
-						<ThemeLink to={resolveRoute('/', 'contact')} target="_parent">
-							Contact Us
-						</ThemeLink>
-						.
-					</p>
-				</main>
-			) : (
-				<Outlet />
-			)}
-		</>
-	);
-});
+		return (
+			<>
+				<ObfuscateLayout />
+				{error ? (
+					<main className="error">
+						{' '}
+						<span>
+							An error occured when loading{' '}
+							<Obfuscated>{error.origin}</Obfuscated>:
+							<br />
+							<pre>{error.cause || error.error}</pre>
+						</span>
+						<p>
+							Try again by clicking{' '}
+							<ThemeA
+								href="i:"
+								onClick={(event) => {
+									event.preventDefault();
+									global.location.reload();
+								}}
+							>
+								here
+							</ThemeA>
+							.
+							<br />
+							If this problem still occurs, check our{' '}
+							<ThemeLink to={getHot('faq').path} target="_parent">
+								FAQ
+							</ThemeLink>{' '}
+							or{' '}
+							<ThemeLink to={getHot('contact').path} target="_parent">
+								Contact Us
+							</ThemeLink>
+							.
+						</p>
+					</main>
+				) : (
+					{ children }
+				)}
+			</>
+		);
+	}
+);

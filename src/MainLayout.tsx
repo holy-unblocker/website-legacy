@@ -4,7 +4,7 @@ import { ReactComponent as HatDev } from './assets/hat-dev.svg';
 import { ReactComponent as HatPlain } from './assets/hat.svg';
 import categories from './gameCategories';
 import { ObfuscateLayout, Obfuscated, ObfuscatedA } from './obfuscate';
-import resolveRoute from './resolveRoute';
+import { getHot } from './routes';
 import styles from './styles/Navigation.module.scss';
 import Apps from '@mui/icons-material/Apps';
 import Home from '@mui/icons-material/Home';
@@ -20,7 +20,7 @@ import WebAsset from '@mui/icons-material/WebAsset';
 import clsx from 'clsx';
 import type { MouseEventHandler, ReactNode, SVGAttributes } from 'react';
 import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
-import { Link, Outlet, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 function Hat(props: SVGAttributes<{}>) {
 	switch (process.env.REACT_APP_HAT_BADGE) {
@@ -93,7 +93,12 @@ export interface MainLayoutRef {
 	setExpanded: (state: boolean | ((prevState: boolean) => boolean)) => void;
 }
 
-const MainLayout = forwardRef<MainLayoutRef>(function MainLayout(props, ref) {
+const MainLayout = forwardRef<
+	MainLayoutRef,
+	{
+		children: ReactNode;
+	}
+>(function MainLayout({ children }, ref) {
 	const [expanded, setExpanded] = useState(false);
 
 	useImperativeHandle(
@@ -140,10 +145,7 @@ const MainLayout = forwardRef<MainLayoutRef>(function MainLayout(props, ref) {
 					<Hat />
 				</Link>
 				<div className={styles.shiftRight}></div>
-				<Link
-					className={styles.button}
-					to={resolveRoute('/settings/', 'search')}
-				>
+				<Link className={styles.button} to={getHot('settings search').path}>
 					<Settings />
 				</Link>
 			</nav>
@@ -164,20 +166,20 @@ const MainLayout = forwardRef<MainLayoutRef>(function MainLayout(props, ref) {
 					</div>
 					<div className={styles.menuList}>
 						<MenuTab
-							route={resolveRoute('/', '')}
+							route={getHot('home').path}
 							name="Home"
 							iconFilled={<Home />}
 							iconOutlined={<HomeOutlined />}
 							onClick={closeMenu}
 						/>
 						<MenuTab
-							route={resolveRoute('/', 'proxy')}
+							route={getHot('proxy').path}
 							name="Proxy"
 							iconFilled={<WebAsset />}
 							onClick={closeMenu}
 						/>
 						<MenuTab
-							route={resolveRoute('/', 'faq')}
+							route={getHot('faq').path}
 							name="FAQ"
 							iconFilled={<QuestionMark />}
 							onClick={closeMenu}
@@ -186,14 +188,14 @@ const MainLayout = forwardRef<MainLayoutRef>(function MainLayout(props, ref) {
 						<div className={styles.bar} />
 
 						<MenuTab
-							route={resolveRoute('/theatre/', 'apps')}
+							route={getHot('theatre apps').path}
 							name="Apps"
 							iconFilled={<Apps />}
 							onClick={closeMenu}
 						/>
 
 						<MenuTab
-							route={resolveRoute('/theatre/', 'favorites')}
+							route={getHot('theatre favorites').path}
 							name="Favorites"
 							iconFilled={<StarRounded />}
 							iconOutlined={<StarOutlineRounded />}
@@ -207,13 +209,13 @@ const MainLayout = forwardRef<MainLayoutRef>(function MainLayout(props, ref) {
 						</div>
 
 						<MenuTab
-							route={resolveRoute('/theatre/games/', '')}
+							route={getHot('theatre games popular').path}
 							name="Popular"
 							iconFilled={<SortRounded />}
 							onClick={closeMenu}
 						/>
 						<MenuTab
-							route={resolveRoute('/theatre/games/', 'all')}
+							route={getHot('theatre games all').path}
 							name="All"
 							iconFilled={<List />}
 							onClick={closeMenu}
@@ -223,7 +225,7 @@ const MainLayout = forwardRef<MainLayoutRef>(function MainLayout(props, ref) {
 							{categories.map((category) => (
 								<Link
 									key={category.id}
-									to={`${resolveRoute('/theatre/', 'category')}?id=${
+									to={`${getHot('theatre games category').path}?id=${
 										category.id
 									}`}
 									className={clsx(styles.entry, styles.text)}
@@ -235,7 +237,7 @@ const MainLayout = forwardRef<MainLayoutRef>(function MainLayout(props, ref) {
 						</div>
 					</div>
 				</div>
-				<Outlet />
+				{children}
 				<Footer />
 			</div>
 		</>

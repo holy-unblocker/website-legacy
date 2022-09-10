@@ -1,7 +1,7 @@
 import { ThemeLink } from './ThemeElements';
 import { ReactComponent as Waves } from './assets/waves.svg';
 import { Obfuscated } from './obfuscate';
-import resolveRoute from './resolveRoute';
+import { getHot } from './routes';
 import styles from './styles/Footer.module.scss';
 
 const Footer = () => {
@@ -11,10 +11,10 @@ const Footer = () => {
 			<div className={styles.background}>
 				<div className={styles.content}>
 					<div className={styles.shiftRight} />
-					<ThemeLink to={resolveRoute('/', 'credits')}>Credits</ThemeLink>
-					<ThemeLink to={resolveRoute('/', 'contact')}>Contact</ThemeLink>
-					<ThemeLink to={resolveRoute('/', 'privacy')}>Privacy</ThemeLink>
-					<ThemeLink to={resolveRoute('/', 'terms')}>Terms of use</ThemeLink>
+					<ThemeLink to={getHot('credits').path}>Credits</ThemeLink>
+					<ThemeLink to={getHot('contact').path}>Contact</ThemeLink>
+					<ThemeLink to={getHot('privacy').path}>Privacy</ThemeLink>
+					<ThemeLink to={getHot('terms').path}>Terms of use</ThemeLink>
 					<span>
 						&copy; <Obfuscated>Holy Unblocker</Obfuscated>{' '}
 						{new Date().getUTCFullYear()}

@@ -5,7 +5,7 @@ import { DB_API } from './consts';
 import categories from './gameCategories';
 import isAbortError from './isAbortError';
 import { Obfuscated } from './obfuscate';
-import resolveRoute from './resolveRoute';
+import { getHot } from './routes';
 import styles from './styles/TheatreSearch.module.scss';
 import Search from '@mui/icons-material/Search';
 import clsx from 'clsx';
@@ -129,9 +129,7 @@ const SearchBar = ({
 									if (entry) {
 										input.current!.blur();
 										setInputFocused(false);
-										navigate(
-											`${resolveRoute('/theatre/', 'player')}?id=${entry.id}`
-										);
+										navigate(`${getHot('theatre player').path}?id=${entry.id}`);
 									}
 								}
 								break;
@@ -164,7 +162,7 @@ const SearchBar = ({
 							key={entry.id}
 							onClick={() => setInputFocused(false)}
 							onMouseOver={() => setLastSelect(i)}
-							to={`${resolveRoute('/theatre/', 'player')}?id=${entry.id}`}
+							to={`${getHot('theatre player').path}?id=${entry.id}`}
 							className={clsx(styles.option, i === lastSelect && styles.hover)}
 						>
 							<div className={styles.name}>

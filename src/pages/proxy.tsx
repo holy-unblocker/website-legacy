@@ -7,7 +7,7 @@ import { BARE_API } from '../consts';
 import engines from '../engines';
 import isAbortError, { isFailedToFetch } from '../isAbortError';
 import { Obfuscated } from '../obfuscate';
-import resolveRoute from '../resolveRoute';
+import { getHot } from '../routes';
 import styles from '../styles/Proxy.module.scss';
 import textContent from '../textContent';
 import NorthWest from '@mui/icons-material/NorthWest';
@@ -243,7 +243,7 @@ const Proxies: HolyPage = ({ layout }) => {
 					If you're having issues with the proxy, try troubleshooting your
 					problem by looking at the
 				</Obfuscated>{' '}
-				<ThemeLink to={resolveRoute('/', 'faq')}>
+				<ThemeLink to={getHot('faq').path}>
 					<Obfuscated>FAQ</Obfuscated>
 				</ThemeLink>
 				.

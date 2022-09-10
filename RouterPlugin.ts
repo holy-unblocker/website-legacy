@@ -1,43 +1,6 @@
-import routes from './src/routes.js';
-import path from 'path';
+import { hotRoutes } from './src/routes.js';
 import type { Compiler } from 'webpack';
 import webpack from 'webpack';
-
-function pathsID() {
-	const paths: string[] = [];
-
-	for (const dirI in routes) {
-		const { dir, pages } = routes[dirI];
-		const dirName = dir === '/' ? '' : dirI;
-
-		for (const pageI in pages) {
-			// const page = pages[pageI];
-			const pageName = pages[pageI] === '' ? 'index.html' : `${pageI}.html`;
-			const pageAbs = path.join(dirName, pageName);
-
-			paths.push(pageAbs);
-		}
-	}
-
-	return paths;
-}
-
-function filesID() {
-	const paths: string[] = [];
-
-	for (const { dir, pages } of routes) {
-		const dirName = dir;
-
-		for (const page of pages) {
-			const pageName = page === '' ? 'index.html' : `${page}.html`;
-			const pageAbs = path.join(dirName, pageName);
-
-			paths.push(pageAbs);
-		}
-	}
-
-	return paths;
-}
 
 export default class RouterPlugin {
 	apply(compiler: Compiler) {
@@ -54,13 +17,11 @@ export default class RouterPlugin {
 
 						if (!index) return;
 
-						for (const file of [
-							'404.html',
-							...(process.env.REACT_APP_ROUTER === 'id'
-								? pathsID()
-								: filesID()),
-						])
-							assets[file] = index;
+						const files = ['404.html'];
+
+						for (const hot of hotRoutes) files.push(hot.file);
+
+						for (const file of files) assets[file] = index;
 					}
 				);
 			}
