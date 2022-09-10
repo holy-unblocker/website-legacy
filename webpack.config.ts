@@ -15,6 +15,7 @@ import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import { stompPath, uvPath } from 'holy-dump';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import { createRequire } from 'module';
 import { basename, resolve } from 'path';
 import InlineChunkHtmlPlugin from 'react-dev-utils/InlineChunkHtmlPlugin.js';
 import ModuleNotFoundPlugin from 'react-dev-utils/ModuleNotFoundPlugin.js';
@@ -31,6 +32,8 @@ import webpack from 'webpack';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import type { Configuration as WebpackDevServerConfiguration } from 'webpack-dev-server';
 import { WebpackManifestPlugin } from 'webpack-manifest-plugin';
+
+const require = createRequire(import.meta.url);
 
 type ArrElement<ArrType> = ArrType extends readonly (infer ElementType)[]
 	? ElementType
@@ -208,7 +211,7 @@ const webpackConfig: Configuration = {
 		},
 	},
 	optimization: {
-		minimize: true,
+		minimize: !isDevelopment,
 		minimizer: [
 			new TerserPlugin<JsMinifyOptions>({
 				minify: TerserPlugin.swcMinify,
@@ -531,7 +534,7 @@ const webpackConfig: Configuration = {
 				new ESLintPlugin({
 					// Plugin options
 					extensions: ['js', 'mjs', 'jsx', 'ts', 'tsx'],
-					formatter: resolve('node_modules/react-dev-utils/eslintFormatter.js'),
+					formatter: require.resolve('react-dev-utils/eslintFormatter'),
 					eslintPath: 'eslint',
 					failOnError: !(isDevelopment && emitErrorsAsWarnings),
 					cache: true,
