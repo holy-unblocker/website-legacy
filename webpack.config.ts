@@ -1,5 +1,7 @@
+import './env.js';
 import RouterPlugin from './RouterPlugin.js';
 import type { CSSLoaderOptions } from './css-loader.js';
+import { envRaw, envRawHash, envRawStringified } from './env.js';
 import type swcrcSchema from './swcrc.js';
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import type { JsMinifyOptions } from '@swc/core';
@@ -7,10 +9,7 @@ import BasicWebpackObfuscator from 'basic-webpack-obfuscator';
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import CopyPlugin from 'copy-webpack-plugin';
-import { createHash } from 'crypto';
 import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
-import { expand } from 'dotenv-expand';
-import { config } from 'dotenv-flow';
 import ESLintPlugin from 'eslint-webpack-plugin';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import { stompPath, uvPath } from 'holy-dump';
@@ -45,13 +44,6 @@ declare module 'webpack' {
 	}
 }
 
-if (!process.env.NODE_ENV)
-	throw new Error(
-		'The NODE_ENV environment variable is required but was not specified.'
-	);
-
-expand(config());
-
 const shouldLint = process.env.DISABLE_LINT !== 'true';
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
@@ -79,56 +71,6 @@ const isDevelopment = process.env.NODE_ENV !== 'production';
 // passed into alias object. Uses a flag if passed into the build command
 const isEnvProductionProfile =
 	!isDevelopment && process.argv.includes('--profile');
-
-const envRaw: typeof process.env = {
-	// Useful for determining whether we’re running in production mode.
-	// Most importantly, it switches React into the correct mode.
-	NODE_ENV: process.env.NODE_ENV || 'development',
-	// Useful for resolving the correct path to static assets in `public`.
-	// For example, <img src={process.env.PUBLIC_URL + '/img/logo.png'} />.
-	// This should only be used as an escape hatch. Normally you would put
-	// images into the `src` and `import` them in code to get their paths.
-	PUBLIC_URL: '/',
-	// We support configuring the sockjs pathname during development.
-	// These settings let a developer run multiple simultaneous projects.
-	// They are used as the connection `hostname`, `pathname` and `port`
-	// in webpackHotDevClient. They are used as the `sockHost`, `sockPath`
-	// and `sockPort` options in webpack-dev-server.
-	WDS_SOCKET_HOST: process.env.WDS_SOCKET_HOST,
-	WDS_SOCKET_PATH: process.env.WDS_SOCKET_PATH,
-	WDS_SOCKET_PORT: process.env.WDS_SOCKET_PORT,
-	// Whether or not react-refresh is enabled.
-	// It is defined here so it is available in the webpackHotDevClient.
-	FAST_REFRESH: (process.env.FAST_REFRESH !== 'false').toString(),
-};
-
-const envRequired: string[] = [
-	'REACT_APP_ROUTER',
-	'REACT_APP_HAT_BADGE',
-	'REACT_APP_DEFAULT_PROXY',
-	'REACT_APP_TN_DISCORD_URL',
-	'REACT_APP_HU_DISCORD_URL',
-	'REACT_APP_BARE_API',
-	'REACT_APP_RH_API',
-	'REACT_APP_DB_API',
-	'REACT_APP_THEATRE_CDN',
-];
-
-for (const env of envRequired) {
-	if (!(env in process.env))
-		throw new Error(`Missing required environment variable: ${env}`);
-
-	envRaw[env] = process.env[env];
-}
-
-const envHash = createHash('md5');
-envHash.update(JSON.stringify(envRaw));
-
-const envRawStringified: Record<string, string> = {};
-
-for (const key in envRaw) envRawStringified[key] = JSON.stringify(envRaw[key]);
-
-const envRawHash = envHash.digest('hex');
 
 const shouldUseReactRefresh = envRaw.FAST_REFRESH;
 
@@ -289,23 +231,11 @@ const webpackConfig: Configuration = {
 				// match the requirements. When no loader matches it will fall
 				// back to the "file" loader at the end of the loader list.
 				oneOf: [
-					// TODO: Merge this config once `image/avif` is in the mime-db
-					// https://github.com/jshttp/mime-db
-					{
-						test: [/\.avif$/],
-						type: 'asset',
-						mimetype: 'image/avif',
-						parser: {
-							dataUrlCondition: {
-								maxSize: imageInlineSizeLimit,
-							},
-						},
-					},
 					// "url" loader works like "file" loader except that it embeds assets
 					// smaller than specified limit in bytes as data URLs to avoid requests.
 					// A missing `test` is equivalent to a match.
 					{
-						test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
+						test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/, /\.avif$/],
 						type: 'asset',
 						parser: {
 							dataUrlCondition: {
