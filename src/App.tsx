@@ -11,7 +11,7 @@ import type { ComponentType, ReactElement, RefObject } from 'react';
 import { Suspense, lazy, useRef } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-// const NotFound = lazy(() => import(/* webpackPrefetch: true */ './pages/404'));
+const NotFound = lazy(() => import(/* webpackPrefetch: true */ './pages/404'));
 
 export interface LayoutDump {
 	layout: RefObject<LayoutRef | null>;
@@ -70,7 +70,21 @@ export default function App() {
 	return (
 		<>
 			<Layout ref={layout} />
-			<Routes>{allRoutes}</Routes>
+			<Routes>
+				{allRoutes}
+				<Route
+					path="*"
+					element={
+						<Suspense fallback={<></>}>
+							<NotFound
+								layout={layout}
+								mainLayout={mainLayout}
+								compatLayout={compatLayout}
+							/>
+						</Suspense>
+					}
+				/>
+			</Routes>
 		</>
 	);
 }
