@@ -1,6 +1,6 @@
 # Holy Unblocker website
 
-# Who/What this repository is for
+## Who/What this repository is for
 
 This repository contains the base Holy Unblocker website. This includes tools and dependencies used to compile the website (Webpack, React) and development tools (ESLint, Prettier).
 
@@ -10,7 +10,7 @@ If you are a developer, this repository is ideal for testing commits and buildin
 
 If you are just looking to self-host/deploy Holy Unblocker, check out [website-aio](https://github.com/holy-unblocker/website-aio).
 
-# New repository
+## New repository
 
 If you're trying to run a git blame and always reach the recent initial commit, you're probably looking for the the website-archive repo.
 
@@ -20,7 +20,7 @@ This repository (was 200 MB before we ran poor cleaning tools) is 500 MB. Poor u
 
 Binary files still required to build the frontend are stored in the [holy-dump](https://git.holy.how/holy/holy-dump) package.
 
-# Prerequisites
+## Prerequisites
 
 ## APIs
 
@@ -31,7 +31,7 @@ This project depends on the following APIs/scripts:
 - [Bare Server Node](https://github.com/tomphttp/bare-server-node) (ran on port 8001)
 - [Rammerhead](https://github.com/binary-person/rammerhead) (ran on port 8002)
 
-## Rammerhead config
+### Rammerhead config
 
 `src/config.js`:
 
@@ -51,33 +51,33 @@ This project depends on the following APIs/scripts:
 // ...
 ```
 
-## Recommended VSC Extensions
+### Recommended VSC Extensions
 
 - [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
 - [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
 
-## Recommended Chromium extensions
+### Recommended Chromium extensions
 
 Protections against clickjacking and CORS prevents the website running locally from interacting with other scripts such as Rammerhead. These extensions will circumvent these protections for development.
 
 - [CORS unblock](https://chrome.google.com/webstore/detail/cors-unblock/lfhmikememgdcahcdlaciloancbhjino)
 - [Ignore X-Frame headers](https://chrome.google.com/webstore/detail/ignore-x-frame-headers/gleekbfjekiniecknbkamfmkohkpodhe)
 
-# Scripts
+## Scripts
 
 In the project directory, you can run:
 
-## **npm run dev**
+### **npm run dev**
 
 > Starts the React development server.
 
 By default, the development server listens on [http://localhost:3000](http://localhost:3000).
 
-## **npm run build**
+### **npm run build**
 
 > Builds the React app.
 
-## **npm start**
+### **npm start**
 
 > Starts the static webserver.
 
