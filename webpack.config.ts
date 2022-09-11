@@ -150,6 +150,9 @@ const webpackConfig: Configuration = {
 	target: ['browserslist'],
 	devServer: {
 		port: 3000,
+		// https://webpack.js.org/configuration/dev-server/#devserverhistoryapifallback
+		// to test our 404 pages
+		historyApiFallback: true,
 	},
 	// Webpack noise constrained to errors and warnings
 	// stats: 'errors-warnings',

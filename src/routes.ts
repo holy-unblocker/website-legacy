@@ -36,6 +36,7 @@ export type SomeAlias =
 	| 'proxy'
 	| 'terms'
 	| 'credits'
+	| '404'
 	| 'compat ultraviolet'
 	| 'compat rammerhead'
 	| 'compat stomp'
@@ -74,6 +75,16 @@ const lazyLoc = (path: string) => {
 
 // wrap in React.lazy()
 export const hotRoutes: Hot[] = [
+	{
+		// 404 is odd, components shouldn't attempt to use the path defined here as its fed directly to react-dom-router
+		path: '*',
+		// 404.html is recognized by static site hosts
+		// needs to be manually configured in NGINX: `error_page 404 /404.html;`
+		file: '404.html',
+		alias: '404',
+		import: () => import(/* webpackPrefetch: true */ './pages/404'),
+		layout: 'main',
+	},
 	{
 		...lazyLoc('/'),
 		alias: 'home',
