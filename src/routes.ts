@@ -148,7 +148,7 @@ export const hotRoutes: Hot[] = [
 		layout: 'compat',
 	},
 	{
-		...lazyLoc(routeType === 'id' ? '/' + i++ : '/compat/rammerhead'),
+		...lazyLoc(routeType === 'id' ? '/' + i++ : '/compat/flash'),
 		alias: 'compat flash',
 		import: () => import(/* webpackPrefetch: true */ './pages/compat/flash'),
 		layout: 'compat',
