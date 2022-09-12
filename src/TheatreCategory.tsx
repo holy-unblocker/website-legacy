@@ -57,7 +57,6 @@ const Category: HolyPage<{
 		const abort = new AbortController();
 
 		(async function () {
-			const api = new TheatreAPI(DB_API, abort.signal);
 			let leastGreatest = false;
 			let sort;
 
@@ -82,9 +81,11 @@ const Category: HolyPage<{
 					break;
 			}
 
-			try {
-				errorCause.current = 'Unable to fetch the category data.';
+			const api = new TheatreAPI(DB_API, abort.signal);
 
+			errorCause.current = 'Unable to fetch the category data.';
+
+			try {
 				const data = await api.category({
 					category,
 					sort,
@@ -97,9 +98,9 @@ const Category: HolyPage<{
 				setData(data);
 				setLastTotal(data.total);
 			} catch (err) {
-				if (isAbortError(err)) {
+				if (!isAbortError(err)) {
 					console.error(err);
-					setError(err.toString());
+					setError(String(err));
 				}
 			}
 		})();
