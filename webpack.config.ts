@@ -192,6 +192,7 @@ const webpackConfig: Configuration = {
 			defaultWebpack: ['webpack/lib/'],
 			config: [resolve('webpack.config.ts')],
 			tsconfig: [resolve('tsconfig.json')],
+			routes: [resolve('src/routes.ts')],
 		},
 	},
 	resolve: {
