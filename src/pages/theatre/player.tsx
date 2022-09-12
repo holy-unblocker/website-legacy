@@ -255,6 +255,7 @@ const Player: HolyPage = ({ layout }) => {
 				<div className={styles.iframeContainer}>
 					<div
 						className={styles.iframeCover}
+						title="Click to focus"
 						onClick={(event) => {
 							event.stopPropagation();
 							setIFrameFocused(true);
