@@ -217,7 +217,7 @@ export default forwardRef<CompatLayoutRef, { children: ReactNode }>(
 						</p>
 					</main>
 				) : (
-					{ children }
+					children
 				)}
 			</>
 		);
