@@ -21,17 +21,12 @@ import InlineChunkHtmlPlugin from 'react-dev-utils/InlineChunkHtmlPlugin.js';
 import ModuleNotFoundPlugin from 'react-dev-utils/ModuleNotFoundPlugin.js';
 import getCSSModuleLocalIdent from 'react-dev-utils/getCSSModuleLocalIdent.js';
 import TerserPlugin from 'terser-webpack-plugin';
-import type {
-	Compiler,
-	Compilation,
-	AssetInfo,
-	Configuration,
-	RuleSetRule,
-} from 'webpack';
+import type { Compiler, Compilation, AssetInfo, Configuration, RuleSetRule } from 'webpack';
 import webpack from 'webpack';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import type { Configuration as WebpackDevServerConfiguration } from 'webpack-dev-server';
 import { WebpackManifestPlugin } from 'webpack-manifest-plugin';
+
 
 const require = createRequire(import.meta.url);
 
@@ -551,7 +546,7 @@ const webpackConfig: Configuration = {
 						(compilation: Compilation) => {
 							compilation.hooks.processAssets.tap(
 								{
-									name: 'WebpackObfuscator',
+									name: 'DefineUV',
 									stage: webpack.Compilation.PROCESS_ASSETS_STAGE_ADDITIONS,
 								},
 								(assets: AssetInfo) => {
