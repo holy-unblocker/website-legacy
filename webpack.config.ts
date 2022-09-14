@@ -5,7 +5,6 @@ import { envRaw, envRawHash, envRawStringified } from './env.js';
 import type swcrcSchema from './swcrc.js';
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import type { JsMinifyOptions } from '@swc/core';
-import BasicWebpackObfuscator from 'basic-webpack-obfuscator';
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import CopyPlugin from 'copy-webpack-plugin';
@@ -32,6 +31,8 @@ import webpack from 'webpack';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import type { Configuration as WebpackDevServerConfiguration } from 'webpack-dev-server';
 import { WebpackManifestPlugin } from 'webpack-manifest-plugin';
+
+// import BasicWebpackObfuscator from 'basic-webpack-obfuscator';
 
 const require = createRequire(import.meta.url);
 
@@ -576,10 +577,10 @@ const webpackConfig: Configuration = {
 					);
 				},
 			},
-			!isDevelopment &&
+			/*!isDevelopment &&
 				new BasicWebpackObfuscator({
 					sourceMap: shouldUseSourceMap,
-				}),
+				}),*/
 			new RouterPlugin(),
 		] as (PluginEntry | false)[]
 	).filter(Boolean) as PluginEntry[],
