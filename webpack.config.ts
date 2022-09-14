@@ -4,6 +4,7 @@ import type { CSSLoaderOptions } from './css-loader.js';
 import { envRaw, envRawHash, envRawStringified } from './env.js';
 import type swcrcSchema from './swcrc.js';
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
+import type { JsMinifyOptions } from '@swc/core';
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import CopyPlugin from 'copy-webpack-plugin';
@@ -18,6 +19,7 @@ import { basename, resolve } from 'path';
 import InlineChunkHtmlPlugin from 'react-dev-utils/InlineChunkHtmlPlugin.js';
 import ModuleNotFoundPlugin from 'react-dev-utils/ModuleNotFoundPlugin.js';
 import getCSSModuleLocalIdent from 'react-dev-utils/getCSSModuleLocalIdent.js';
+import TerserPlugin from 'terser-webpack-plugin';
 import type {
 	Compiler,
 	Compilation,
@@ -215,7 +217,12 @@ const webpackConfig: Configuration = {
 	},
 	optimization: {
 		minimize: !isDevelopment,
-		minimizer: [new CssMinimizerPlugin()],
+		minimizer: [
+			new TerserPlugin<JsMinifyOptions>({
+				minify: TerserPlugin.swcMinify,
+			}),
+			new CssMinimizerPlugin(),
+		],
 	},
 	module: {
 		strictExportPresence: true,
@@ -300,7 +307,7 @@ const webpackConfig: Configuration = {
 					// Unlike the application JS, we only compile the standard ES features.
 					{
 						test: /\.(js|mjs)$/,
-						exclude: [resolve('node_modules/@swc/helpers'), resolve('dist')],
+						exclude: /@swc(?:\/|\\{1,2})helpers/,
 						loader: 'swc-loader',
 						options: {
 							minify: !isDevelopment,
