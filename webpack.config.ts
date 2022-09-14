@@ -150,6 +150,8 @@ const getStyleLoaders = (
 	return loaders as (RuleSetRule | string)[];
 };
 
+const distPath = resolve('./dist/');
+
 const copyPluginPatterns: {
 	from: string;
 	to?: string;
@@ -186,7 +188,7 @@ const terserPluginExclude: string[] = [];
 for (const pattern of copyPluginPatterns) {
 	const fromRes = resolve(pattern.from);
 	const toRes = resolve(
-		'dist',
+		distPath,
 		typeof pattern.to === 'string'
 			? pattern.to
 			: relative(process.cwd(), fromRes)
@@ -194,7 +196,7 @@ for (const pattern of copyPluginPatterns) {
 
 	for (const x of await globA(join(fromRes, '{*.mjs,*.js}'))) {
 		const xRel = relative(fromRes, x);
-		terserPluginExclude.push(relative(resolve('dist'), join(toRes, xRel)));
+		terserPluginExclude.push(relative(distPath, join(toRes, xRel)));
 	}
 }
 
@@ -217,7 +219,7 @@ const webpackConfig: Configuration = {
 	entry: './src/index.tsx',
 	output: {
 		// The build folder.
-		path: resolve('./dist/'),
+		path: distPath,
 		// Add /* filename */ comments to generated require()s in the output.
 		pathinfo: isDevelopment,
 		// There will be one main bundle, and one file per asynchronous chunk.
