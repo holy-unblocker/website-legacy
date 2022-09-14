@@ -11,15 +11,17 @@ import CopyPlugin from 'copy-webpack-plugin';
 import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 import ESLintPlugin from 'eslint-webpack-plugin';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
+import glob from 'glob';
 import { stompPath, uvPath } from 'holy-dump';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import { createRequire } from 'module';
-import { basename, resolve } from 'path';
+import { relative, basename, resolve, join } from 'path';
 import InlineChunkHtmlPlugin from 'react-dev-utils/InlineChunkHtmlPlugin.js';
 import ModuleNotFoundPlugin from 'react-dev-utils/ModuleNotFoundPlugin.js';
 import getCSSModuleLocalIdent from 'react-dev-utils/getCSSModuleLocalIdent.js';
 import TerserPlugin from 'terser-webpack-plugin';
+import { promisify } from 'util';
 import type {
 	Compiler,
 	Compilation,
@@ -32,6 +34,7 @@ import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import type { Configuration as WebpackDevServerConfiguration } from 'webpack-dev-server';
 import { WebpackManifestPlugin } from 'webpack-manifest-plugin';
 
+const globA = promisify(glob);
 // import BasicWebpackObfuscator from 'basic-webpack-obfuscator';
 
 const require = createRequire(import.meta.url);
@@ -147,6 +150,54 @@ const getStyleLoaders = (
 	return loaders as (RuleSetRule | string)[];
 };
 
+const copyPluginPatterns: {
+	from: string;
+	to?: string;
+	filter?: CopyPlugin.Filter;
+}[] = [
+	{
+		from: stompPath,
+		to: 'stomp',
+	},
+	{
+		from: uvPath,
+		to: 'uv',
+	},
+	{
+		from: './uv',
+		to: 'uv',
+	},
+	{
+		from: resolve('node_modules/@ruffle-rs/ruffle'),
+		// don't filter licenses!
+		filter: (file) => !['package.json', 'README.md'].includes(basename(file)),
+		to: 'ruffle',
+	},
+	{
+		from: './public',
+		filter: (file) => file !== resolve('public/index.html'),
+	},
+];
+
+// https://github.com/webpack-contrib/terser-webpack-plugin/issues/31
+const terserPluginExclude: string[] = [];
+
+// simulate CopyPlugin logic to resolve all output files
+for (const pattern of copyPluginPatterns) {
+	const fromRes = resolve(pattern.from);
+	const toRes = resolve(
+		'dist',
+		typeof pattern.to === 'string'
+			? pattern.to
+			: relative(process.cwd(), fromRes)
+	);
+
+	for (const x of await globA(join(fromRes, '{*.mjs,*.js}'))) {
+		const xRel = relative(fromRes, x);
+		terserPluginExclude.push(relative(resolve('dist'), join(toRes, xRel)));
+	}
+}
+
 const webpackConfig: Configuration = {
 	target: ['browserslist'],
 	devServer: {
@@ -220,6 +271,7 @@ const webpackConfig: Configuration = {
 		minimizer: [
 			new TerserPlugin<JsMinifyOptions>({
 				minify: TerserPlugin.swcMinify,
+				exclude: terserPluginExclude,
 			}),
 			new CssMinimizerPlugin(),
 		],
@@ -415,31 +467,7 @@ const webpackConfig: Configuration = {
 		[
 			new CleanWebpackPlugin(),
 			new CopyPlugin({
-				patterns: [
-					{
-						from: stompPath,
-						to: 'stomp',
-					},
-					{
-						from: uvPath,
-						to: 'uv',
-					},
-					{
-						from: './uv',
-						to: 'uv',
-					},
-					{
-						from: resolve('node_modules/@ruffle-rs/ruffle'),
-						// don't filter licenses!
-						filter: (file) =>
-							!['package.json', 'README.md'].includes(basename(file)),
-						to: 'ruffle',
-					},
-					{
-						from: './public',
-						filter: (file) => file !== resolve('public/index.html'),
-					},
-				],
+				patterns: copyPluginPatterns,
 			}),
 			// Inlines the webpack runtime script. This script is too small to warrant
 			// a network request.
