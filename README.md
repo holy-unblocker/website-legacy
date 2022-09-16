@@ -18,8 +18,6 @@ https://git.holy.how/holy/website-archive
 
 This repository (was 200 MB before we ran poor cleaning tools) is 500 MB. Poor usage of git and storing binary files led to this large repository size. Tools to clean the git history of repositories suck and we have made no further attempt to do so.
 
-Binary files still required to build the frontend are stored in the [holy-dump](https://git.holy.how/holy/holy-dump) package.
-
 ## Prerequisites
 
 ## APIs

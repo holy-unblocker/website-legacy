@@ -5,8 +5,8 @@ import { BARE_API, SERVICEWORKERS } from '../../consts';
 import { Obfuscated } from '../../obfuscate';
 import { useEffect, useRef } from 'react';
 
-declare interface StompBootConfig {
-	bare: string;
+interface StompBootConfig {
+	bare_server: string;
 	directory: string;
 	loglevel: number;
 	codec: number;
@@ -51,7 +51,7 @@ const Stomp: HolyPage = ({ compatLayout }) => {
 				errorCause = undefined;
 
 				const config = {
-					bare: BARE_API,
+					bare_server: BARE_API,
 					directory: '/stomp/',
 				} as Partial<StompBootConfig>;
 
