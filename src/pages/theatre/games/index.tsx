@@ -76,6 +76,16 @@ const Popular: HolyPage = () => {
 					:
 					<br />
 					<pre>{error}</pre>
+					<br />
+					If this problem still occurs, check our{' '}
+					<ThemeLink to={getHot('faq').path} target="_parent">
+						FAQ
+					</ThemeLink>{' '}
+					or{' '}
+					<ThemeLink to={getHot('contact').path} target="_parent">
+						Contact Us
+					</ThemeLink>
+					.
 				</span>
 				<p>
 					Try again by clicking{' '}

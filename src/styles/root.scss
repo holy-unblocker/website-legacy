@@ -74,6 +74,12 @@ main {
 	padding: 0px 5%;
 	margin: 20px 0px;
 	flex: none;
+
+	&.error {
+		pre {
+			white-space: break-spaces;
+		}
+	}
 }
 
 input {

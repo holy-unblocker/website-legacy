@@ -2,6 +2,7 @@ import type { HolyPage } from '../../App';
 import resolveProxy from '../../ProxyResolver';
 import { TheatreAPI } from '../../TheatreCommon';
 import type { TheatreEntry } from '../../TheatreCommon';
+import { ThemeLink } from '../../ThemeElements';
 import { DB_API, THEATRE_CDN } from '../../consts';
 import { encryptURL } from '../../cryptURL';
 import isAbortError from '../../isAbortError';
@@ -175,6 +176,16 @@ const Player: HolyPage = ({ layout }) => {
 				<pre>
 					<Obfuscated>{errorCause.current || error}</Obfuscated>
 				</pre>
+				<br />
+				If this problem still occurs, check our{' '}
+				<ThemeLink to={getHot('faq').path} target="_parent">
+					FAQ
+				</ThemeLink>{' '}
+				or{' '}
+				<ThemeLink to={getHot('contact').path} target="_parent">
+					Contact Us
+				</ThemeLink>
+				.
 			</main>
 		);
 
