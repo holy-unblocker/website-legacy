@@ -10,7 +10,6 @@ const Footer = () => {
 			<Waves />
 			<div className={styles.background}>
 				<div className={styles.content}>
-					<div className={styles.shiftRight} />
 					<ThemeLink to={getHot('credits').path}>Credits</ThemeLink>
 					<ThemeLink to={getHot('contact').path}>Contact</ThemeLink>
 					<ThemeLink to={getHot('privacy').path}>Privacy</ThemeLink>

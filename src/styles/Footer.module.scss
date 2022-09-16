@@ -66,12 +66,12 @@ footer {
 			font-size: 12px;
 			line-height: 16px;
 
-			> .shiftRight {
-				margin-left: auto;
-			}
-
 			> * {
 				margin-left: 15px;
+
+				&:nth-child(1) {
+					margin-left: auto;
+				}
 			}
 
 			> a {
@@ -85,8 +85,8 @@ footer {
 			@include screen_mobile {
 				justify-content: space-around;
 
-				> .shiftRight {
-					display: none;
+				> *:nth-child(1) {
+					margin-left: 0px;
 				}
 			}
 		}
