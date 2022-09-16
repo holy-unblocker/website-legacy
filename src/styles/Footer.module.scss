@@ -66,7 +66,7 @@ footer {
 			font-size: 12px;
 			line-height: 16px;
 
-			> * {
+			> a {
 				margin-left: 15px;
 
 				&:nth-child(1) {
@@ -85,7 +85,7 @@ footer {
 			@include screen_mobile {
 				justify-content: space-around;
 
-				> *:nth-child(1) {
+				> a:nth-child(1) {
 					margin-left: 0px;
 				}
 			}

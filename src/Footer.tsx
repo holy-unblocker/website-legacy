@@ -11,13 +11,12 @@ const Footer = () => {
 			<div className={styles.background}>
 				<div className={styles.content}>
 					<ThemeLink to={getHot('credits').path}>Credits</ThemeLink>
-					<ThemeLink to={getHot('contact').path}>Contact</ThemeLink>
 					<ThemeLink to={getHot('privacy').path}>Privacy</ThemeLink>
 					<ThemeLink to={getHot('terms').path}>Terms of use</ThemeLink>
-					<span>
+					<ThemeLink to={getHot('contact').path}>
 						&copy; <Obfuscated>Holy Unblocker</Obfuscated>{' '}
 						{new Date().getUTCFullYear()}
-					</span>
+					</ThemeLink>
 				</div>
 			</div>
 		</footer>
