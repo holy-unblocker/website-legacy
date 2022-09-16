@@ -11,7 +11,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	height: var(--nav-height);
+	height: $nav-height;
 	padding: 0px 15px;
 	color: inherit;
 	white-space: nowrap;
@@ -52,14 +52,23 @@
 	}
 
 	&:hover {
-		background: var(--background-accent);
+		background-color: var(--background-accent);
+
+		@include screen_mobile {
+			background-color: transparent;
+		}
+	}
+
+	@include screen_mobile {
+		padding: calc(($nav-height - 20px) / 2) 10px;
+		margin: 0px;
 	}
 }
 
 .nav {
 	display: flex;
 	width: $fixed-width;
-	height: var(--nav-height);
+	height: $nav-height;
 	box-sizing: border-box;
 	align-content: center;
 	position: fixed;
@@ -89,9 +98,9 @@
 }
 
 .content {
-	padding-top: var(--nav-height-border);
+	padding-top: $nav-height-border;
 	flex-direction: column;
-	min-height: calc(100vh - var(--nav-height-border));
+	min-height: calc(100vh - $nav-height-border);
 	overflow: hidden;
 	display: flex;
 
@@ -141,7 +150,7 @@
 		> .top {
 			padding: 0px 18px;
 			padding-left: 18px;
-			height: var(--nav-height);
+			height: $nav-height;
 			box-sizing: border-box;
 			border-bottom: var(--border) 1px solid;
 			width: $fixed-width;
@@ -203,6 +212,11 @@
 			&[data-selected='1'] {
 				background: var(--background-accent);
 			}
+
+			@include screen_mobile {
+				color: var(--contrast-background);
+				background-color: transparent;
+			}
 		}
 	}
 
@@ -241,6 +255,10 @@
 
 			&:hover {
 				background-color: var(--background-accent);
+
+				@include screen_mobile {
+					background-color: transparent;
+				}
 			}
 		}
 	}

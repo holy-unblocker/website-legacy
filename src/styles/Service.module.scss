@@ -1,4 +1,5 @@
 @use 'sass:selector';
+@import './common.scss';
 
 html {
 	&[data-service='1'] {
@@ -37,7 +38,7 @@ html {
 		> .embed {
 			border: none;
 			width: 100%;
-			height: calc(100% - var(--nav-height-border));
+			height: calc(100% - $nav-height-border);
 			background: var(--background);
 
 			&[data-first-load='1'] {
@@ -48,7 +49,7 @@ html {
 		> .buttons {
 			display: flex;
 			width: auto;
-			height: var(--nav-height);
+			height: $nav-height;
 			border-bottom: var(--border) 1px solid;
 			padding: 0px 18px;
 			user-select: none;

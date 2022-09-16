@@ -6,6 +6,9 @@
 $scrollbar-width: 16px;
 $fixed-width: calc(100vw - $scrollbar-width);
 
+$nav-height: 70px;
+$nav-height-border: 71px;
+
 @mixin screen_mobile {
 	@media only screen and (max-width: 650px) {
 		@content;

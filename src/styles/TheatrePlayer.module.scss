@@ -6,13 +6,13 @@
 
 .main {
 	border-radius: 10px;
-	margin: calc(var(--nav-height-border) / 4) auto;
+	margin: calc($nav-height-border / 4) auto;
 	background-color: var(--background-accent);
 	display: flex;
 	flex-direction: column;
 	margin: 20px auto 0px auto;
 	width: 95%;
-	height: calc(100vh - var(--nav-height-border) - 40px);
+	height: calc(100vh - $nav-height-border - 40px);
 	box-sizing: border-box;
 	padding: 0px 15px;
 	border-radius: 10px;

@@ -52,10 +52,10 @@
 		background-color: var(--background);
 		left: 0;
 		top: 0;
-		margin-top: var(--nav-height-border);
+		margin-top: $nav-height-border;
 		border-right: 1px solid var(--border);
 		width: 300px;
-		height: calc(100vh - var(--nav-height-border));
+		height: calc(100vh - $nav-height-border);
 		box-sizing: border-box;
 		transform: translateX(0);
 		z-index: 1;
