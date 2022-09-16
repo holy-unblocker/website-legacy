@@ -151,7 +151,11 @@ const Player: HolyPage = ({ layout }) => {
 			if (iframeFocused) setIFrameFocused(false);
 		}
 
-		if (!iframeFocused) iframe.current!.blur();
+		if (iframeFocused) {
+			document.documentElement.scrollTo(0, 0);
+		} else {
+			iframe.current!.blur();
+		}
 
 		// window.addEventListener('blur', blurListener);
 		window.addEventListener('click', clickListener);
