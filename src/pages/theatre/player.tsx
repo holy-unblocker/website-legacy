@@ -176,16 +176,29 @@ const Player: HolyPage = ({ layout }) => {
 				<pre>
 					<Obfuscated>{errorCause.current || error}</Obfuscated>
 				</pre>
-				<br />
-				If this problem still occurs, check our{' '}
-				<ThemeLink to={getHot('faq').path} target="_parent">
-					FAQ
-				</ThemeLink>{' '}
-				or{' '}
-				<ThemeLink to={getHot('contact').path} target="_parent">
-					Contact Us
-				</ThemeLink>
-				.
+				<p>
+					Try again by clicking{' '}
+					<a
+						href="i:"
+						onClick={(event) => {
+							event.preventDefault();
+							global.location.reload();
+						}}
+					>
+						here
+					</a>
+					.
+					<br />
+					If this problem still occurs, check our{' '}
+					<ThemeLink to={getHot('faq').path} target="_parent">
+						FAQ
+					</ThemeLink>{' '}
+					or{' '}
+					<ThemeLink to={getHot('contact').path} target="_parent">
+						Contact Us
+					</ThemeLink>
+					.
+				</p>
 			</main>
 		);
 

@@ -185,13 +185,11 @@ export default forwardRef<CompatLayoutRef, { children: ReactNode }>(
 				<ObfuscateLayout />
 				{error ? (
 					<main className="error">
-						{' '}
-						<span>
+						<p>
 							An error occured when loading{' '}
 							<Obfuscated>{error.origin}</Obfuscated>:
-							<br />
-							<pre>{error.cause || error.error}</pre>
-						</span>
+						</p>
+						<pre>{error.cause || error.error}</pre>
 						<p>
 							Try again by clicking{' '}
 							<ThemeA

@@ -129,9 +129,9 @@ const Category: HolyPage<{
 					</a>
 					.
 					<br />
-					If this problem still occurs, check{' '}
+					If this problem still occurs, check our{' '}
 					<ThemeLink to={getHot('faq').path} target="_parent">
-						Support
+						FAQ
 					</ThemeLink>{' '}
 					or{' '}
 					<ThemeLink to={getHot('contact').path} target="_parent">

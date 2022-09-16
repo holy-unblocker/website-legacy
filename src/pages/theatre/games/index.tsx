@@ -71,22 +71,10 @@ const Popular: HolyPage = () => {
 	if (error) {
 		return (
 			<main className="error">
-				<span>
-					An error occured when loading popular <Obfuscated>games</Obfuscated>
-					:
-					<br />
-					<pre>{error}</pre>
-					<br />
-					If this problem still occurs, check our{' '}
-					<ThemeLink to={getHot('faq').path} target="_parent">
-						FAQ
-					</ThemeLink>{' '}
-					or{' '}
-					<ThemeLink to={getHot('contact').path} target="_parent">
-						Contact Us
-					</ThemeLink>
-					.
-				</span>
+				<p>
+					An error occured when loading popular <Obfuscated>games</Obfuscated>:
+				</p>
+				<pre>{error}</pre>
 				<p>
 					Try again by clicking{' '}
 					<a
@@ -100,9 +88,9 @@ const Popular: HolyPage = () => {
 					</a>
 					.
 					<br />
-					If this problem still occurs, check{' '}
+					If this problem still occurs, check our{' '}
 					<ThemeLink to={getHot('faq').path} target="_parent">
-						Support
+						FAQ
 					</ThemeLink>{' '}
 					or{' '}
 					<ThemeLink to={getHot('contact').path} target="_parent">
