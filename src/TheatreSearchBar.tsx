@@ -70,7 +70,7 @@ const SearchBar = ({
 				}
 			}}
 		>
-			<ThemeInputBar className={styles.themeInputBar}>
+			<ThemeInputBar className={styles.ThemeInputBar}>
 				<Search className={themeStyles.icon} />
 				<input
 					ref={input}

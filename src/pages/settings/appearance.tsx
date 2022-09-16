@@ -8,7 +8,7 @@ const Appearance: HolyPage = ({ layout }) => {
 			<div>
 				<span>Theme:</span>
 				<ThemeSelect
-					className={styles.themeSelect}
+					className={styles.ThemeSelect}
 					defaultValue={layout.current!.settings.theme}
 					onChange={(event) => {
 						layout.current!.setSettings({

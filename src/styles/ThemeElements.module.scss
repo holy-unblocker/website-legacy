@@ -9,28 +9,28 @@
 	}
 }
 
-.themeInputBar[data-disabled='1'],
-.themeInput[disabled],
-.themeButton[disabled] {
+.ThemeInputBar[data-disabled='1'],
+.ThemeInput[disabled],
+.ThemeButton[disabled] {
 	cursor: not-allowed !important;
 	background-color: var(--background-accent-disabled) !important;
 }
 
-.themeInputBar[data-disabled='1'] input {
+.ThemeInputBar[data-disabled='1'] input {
 	cursor: not-allowed !important;
 }
 
 html[data-tab='1'] {
-	.themeInput,
-	.themeButton,
-	.themeInputBar .button,
-	.themeInputBar input {
+	.ThemeInput,
+	.ThemeButton,
+	.ThemeInputBar .button,
+	.ThemeInputBar input {
 		&:focus-visible {
 			outline: var(--action) solid 2px;
 		}
 	}
 
-	.themeInputBar > input:focus {
+	.ThemeInputBar > input:focus {
 		outline-offset: 2px;
 	}
 
@@ -40,13 +40,13 @@ html[data-tab='1'] {
 	}
 }
 
-/*.themeInput,
-.themeButton:required,
-.themeInputBar input:required {
+/*.ThemeInput,
+.ThemeButton:required,
+.ThemeInputBar input:required {
 	outline: var(--error) solid 2px;
 }*/
 
-.themeInput {
+.ThemeInput {
 	width: 500px;
 	height: 44px;
 	background: var(--background-accent);
@@ -59,7 +59,7 @@ html[data-tab='1'] {
 	padding: 0px 15px;
 }
 
-.themeInputBar {
+.ThemeInputBar {
 	height: 44px;
 	background: var(--background-accent);
 	color: var(--text-accent);
@@ -147,7 +147,7 @@ html[data-tab='1'] {
 	}
 }
 
-.themeButton {
+.ThemeButton {
 	cursor: pointer;
 	display: flex;
 	align-items: center;
@@ -171,7 +171,7 @@ html[data-tab='1'] {
 	}
 }
 
-.themeSelect {
+.ThemeSelect {
 	color: var(--text);
 	position: relative;
 	user-select: none;

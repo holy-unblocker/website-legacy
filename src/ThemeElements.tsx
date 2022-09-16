@@ -19,7 +19,7 @@ export function ThemeButton({
 	return (
 		<button
 			type="button"
-			className={clsx(styles.themeButton, className)}
+			className={clsx(styles.ThemeButton, className)}
 			{...attributes}
 		>
 			{children}
@@ -36,7 +36,7 @@ export function ThemeInputBar({
 	className?: string;
 }) {
 	return (
-		<div className={clsx(styles.themeInputBar, className)} {...attributes}>
+		<div className={clsx(styles.ThemeInputBar, className)} {...attributes}>
 			{children}
 		</div>
 	);
@@ -88,7 +88,7 @@ export const ThemeInput = forwardRef<
 	return (
 		<input
 			ref={ref}
-			className={clsx(styles.themeInput, className)}
+			className={clsx(styles.ThemeInput, className)}
 			{...attributes}
 		>
 			{children}
@@ -196,7 +196,7 @@ export function ThemeSelect({
 		<div
 			{...attributes}
 			tabIndex={0}
-			className={clsx(styles.themeSelect, className)}
+			className={clsx(styles.ThemeSelect, className)}
 			data-open={Number(open)}
 			ref={setContainer}
 			onKeyDown={(event) => {

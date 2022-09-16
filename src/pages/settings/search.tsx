@@ -12,7 +12,7 @@ const Search: HolyPage = ({ layout }) => {
 					<Obfuscated>Proxy</Obfuscated>:
 				</span>
 				<ThemeSelect
-					className={styles.themeSelect}
+					className={styles.ThemeSelect}
 					onChange={(event) =>
 						layout.current!.setSettings({
 							...layout.current!.settings,
@@ -32,7 +32,7 @@ const Search: HolyPage = ({ layout }) => {
 					<Obfuscated>Search Engine</Obfuscated>:
 				</span>
 				<ThemeSelect
-					className={styles.themeSelect}
+					className={styles.ThemeSelect}
 					onChange={(event) =>
 						layout.current!.setSettings({
 							...layout.current!.settings,

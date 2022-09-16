@@ -115,7 +115,7 @@ const SearchBar = ({ layout }: { layout: LayoutDump['layout'] }) => {
 				}}
 				ref={form}
 			>
-				<ThemeInputBar className={styles.themeInputBar}>
+				<ThemeInputBar className={styles.ThemeInputBar}>
 					<Search className={themeStyles.icon} />
 					<input
 						type="text"
