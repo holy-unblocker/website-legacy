@@ -86,11 +86,11 @@ html {
 		@include theme-rules($night, $day);
 	}
 
-	&[data-theme='dark'] {
-		@include theme-rules($night, $day);
-	}
-
 	&[data-theme='day'] {
 		@include theme-rules($day, $night);
+	}
+
+	&[data-theme='night'] {
+		@include theme-rules($night, $day);
 	}
 }
