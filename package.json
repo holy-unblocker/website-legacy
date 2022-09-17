@@ -83,8 +83,8 @@
 	},
 	"scripts": {
 		"start": "http-server ./dist/ --port 3000",
-		"dev": "cross-env NODE_ENV=development ts-node-esm node_modules/webpack-cli/bin/cli.js serve --config webpack.config.ts",
-		"build": "cross-env NODE_ENV=production ts-node-esm node_modules/webpack-cli/bin/cli.js --config webpack.config.ts"
+		"dev": "cross-env NODE_ENV=development ts-node-esm node_modules/webpack-cli/bin/cli.js serve",
+		"build": "cross-env NODE_ENV=production ts-node-esm node_modules/webpack-cli/bin/cli.js"
 	},
 	"browserslist": {
 		"production": [
