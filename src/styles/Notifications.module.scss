@@ -54,7 +54,7 @@
 		transition-timing-function: ease;
 		transition: transform, height;
 		animation: slide-in 0.3s;
-		height: 25px;
+
 		background: var(--background-accent);
 		display: flex;
 		flex-direction: row;
@@ -63,10 +63,6 @@
 		position: relative;
 		overflow: hidden;
 		box-shadow: 0 0 10px var(--shadow);
-
-		&.title {
-			height: 50px;
-		}
 
 		.content {
 			display: flex;

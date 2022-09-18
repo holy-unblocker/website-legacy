@@ -15,9 +15,12 @@ import NorthWest from '@mui/icons-material/NorthWest';
 import Search from '@mui/icons-material/Search';
 import BareClient from '@tomphttp/bare-client';
 import clsx from 'clsx';
+import type { ReactNode } from 'react';
 import { createRef, useMemo, useRef, useState } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 
 const SearchBar = ({ layout }: { layout: LayoutDump['layout'] }) => {
+	const { t } = useTranslation();
 	const input = useRef<HTMLInputElement | null>(null);
 	const inputValue = useRef<string | null>(null);
 	const lastInput = useRef<'select' | 'input' | null>(null);
@@ -64,7 +67,7 @@ const SearchBar = ({ layout }: { layout: LayoutDump['layout'] }) => {
 				))
 					entries.push(phrase);
 			} catch (err) {
-				if (!isAbortError(err) && isFailedToFetch(err)) {
+				if (isAbortError(err) || isFailedToFetch(err)) {
 					// likely abort error
 					console.error('Error fetching Bare server.');
 				} else {
@@ -118,7 +121,9 @@ const SearchBar = ({ layout }: { layout: LayoutDump['layout'] }) => {
 					<Search className={themeStyles.icon} />
 					<input
 						type="text"
-						placeholder={`Search ${engine.name} or type a URL`}
+						placeholder={t('proxy.search', {
+							engine: engine.name,
+						})}
 						required={lastSelect === -1}
 						autoComplete="off"
 						className={themeStyles.thinPadLeft}
@@ -233,19 +238,18 @@ const SearchBar = ({ layout }: { layout: LayoutDump['layout'] }) => {
 	);
 };
 
+const FAQLink = ({ children }: { children?: ReactNode }) => (
+	<ThemeLink to={getHot('faq').path}>
+		<Obfuscated>{children}</Obfuscated>
+	</ThemeLink>
+);
+
 const Proxies: HolyPage = ({ layout }) => {
 	return (
 		<main className={styles.main}>
 			<SearchBar layout={layout} />
 			<p>
-				<Obfuscated>
-					If you're having issues with the proxy, try troubleshooting your
-					problem by looking at the
-				</Obfuscated>{' '}
-				<ThemeLink to={getHot('faq').path}>
-					<Obfuscated>FAQ</Obfuscated>
-				</ThemeLink>
-				.
+				<Trans i18nKey="proxy.faq" components={[<FAQLink />]} />
 			</p>
 		</main>
 	);

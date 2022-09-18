@@ -1,9 +1,9 @@
 import type { HolyPage } from '../../App';
+import CommonError from '../../CommonError';
 import { useGlobalSettings } from '../../Layout';
 import resolveProxy from '../../ProxyResolver';
 import { TheatreAPI } from '../../TheatreCommon';
 import type { TheatreEntry } from '../../TheatreCommon';
-import { ThemeLink } from '../../ThemeElements';
 import { DB_API, THEATRE_CDN } from '../../consts';
 import { encryptURL } from '../../cryptURL';
 import isAbortError from '../../isAbortError';
@@ -23,6 +23,7 @@ import StarBorder from '@mui/icons-material/StarBorder';
 import VideogameAsset from '@mui/icons-material/VideogameAsset';
 import clsx from 'clsx';
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
 
 async function resolveSrc(
@@ -55,6 +56,7 @@ async function resolveSrc(
 }
 
 const Player: HolyPage = () => {
+	const { t } = useTranslation();
 	const [searchParams] = useSearchParams();
 	const id = searchParams.get('id')!;
 	if (!id) throw new Error('Bad ID');
@@ -171,35 +173,10 @@ const Player: HolyPage = () => {
 
 	if (error)
 		return (
-			<main className="error">
-				<p>An error occurreds when loading the entry:</p>
-				<pre>
-					<Obfuscated>{errorCause.current || error}</Obfuscated>
-				</pre>
-				<p>
-					Try again by clicking{' '}
-					<a
-						href="i:"
-						onClick={(event) => {
-							event.preventDefault();
-							global.location.reload();
-						}}
-					>
-						here
-					</a>
-					.
-					<br />
-					If this problem still occurs, check our{' '}
-					<ThemeLink to={getHot('faq').path} target="_parent">
-						FAQ
-					</ThemeLink>{' '}
-					or{' '}
-					<ThemeLink to={getHot('contact').path} target="_parent">
-						Contact Us
-					</ThemeLink>
-					.
-				</p>
-			</main>
+			<CommonError
+				error={errorCause.current || error}
+				message={t('theatre.error.playerEntryLoad')}
+			/>
 		);
 
 	if (!data) {
@@ -283,7 +260,7 @@ const Player: HolyPage = () => {
 				<div className={styles.iframeContainer}>
 					<div
 						className={styles.iframeCover}
-						title="Click to focus"
+						title={t('theatre.click')}
 						onClick={(event) => {
 							event.stopPropagation();
 							setIFrameFocused(true);
@@ -321,6 +298,7 @@ const Player: HolyPage = () => {
 					onClick={() => {
 						iframe.current!.requestFullscreen();
 					}}
+					title={t('theatre.fullscreen')}
 				>
 					<Fullscreen />
 				</div>
@@ -333,6 +311,7 @@ const Player: HolyPage = () => {
 							setControlsExpanded(!controlsExpanded);
 							controlsPopup.current!.focus();
 						}}
+						title={t('theatre.controls')}
 					>
 						<VideogameAsset />
 					</div>
@@ -356,6 +335,7 @@ const Player: HolyPage = () => {
 
 						setFavorited(favorites.includes(id));
 					}}
+					title={t('theatre.favorite')}
 				>
 					{favorited ? <Star /> : <StarBorder />}
 				</div>
@@ -364,6 +344,7 @@ const Player: HolyPage = () => {
 					onClick={async () => {
 						setPanorama(!panorama);
 					}}
+					title={t('theatre.panorama')}
 				>
 					{panorama ? <ChevronLeft /> : <Panorama />}
 				</div>

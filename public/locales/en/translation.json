@@ -1,0 +1,152 @@
+{
+	"contact": {
+		"title": "Contact"
+	},
+	"landing": {
+		"title": "End Internet Censorship.",
+		"caption": "Privacy right at your fingertips.",
+		"getStarted": "Get Started"
+	},
+	"link": {
+		"credits": "Credits",
+		"privacy": "Privacy",
+		"tou": "Terms of Use",
+		"home": "Home",
+		"proxy": "Proxy",
+		"faq": "FAQ",
+		"theatreApps": "Apps",
+		"theatreFavorites": "Favorites",
+		"theatreGamesPopular": "Popular",
+		"theatreGamesAll": "All",
+		"settingsAppearance": "Appearance",
+		"settingsSearch": "Search",
+		"settingsTabCloak": "Tab Cloak"
+	},
+	"compat": {
+		"error": {
+			"generic": "An error occurred while loading {{what}}",
+			"swHTTPS": "HTTPS must be enabled to use this proxy.",
+			"swSupport": "Your browser doesn't support service workers.",
+			"loadingBootstrapper": "Failure loading the bootstrapper.",
+			"registeringSW": "Failure registering the service worker.",
+			"bareServer": "Bare server is unreachable.",
+			"rammerhead": "Rammerhead server is unreachable.",
+			"rammerheadSavedSession": "Unable to check if the saved session exists.",
+			"rammerheadNewSession": "Unable to create a new Rammerhead session.",
+			"rammerheadEditSession": "Unable to edit a Rammerhead session.",
+			"rammerheadDict": "Unable to retrieve shuffled dictionary.",
+			"hash": "Aucun hachage n'a été fourni",
+			"decryptURL": "Échec du déchiffrement de la destination"
+		},
+		"loading": "Loading {{what}}..."
+	},
+	"theatre": {
+		"noFavorites": "You haven't added any favorites.",
+		"apps": "Apps",
+		"allGames": "All Games",
+		"searchByGame": "Search by game name",
+		"searchByApp": "Search by app name",
+		"mostPopular": "Most Popular",
+		"leastPopular": "Least Popular",
+		"nameASC": "Name (A-Z)",
+		"nameDES": "Name (Z-A)",
+		"click": "Click to focus",
+		"panorama": "Panorama mode",
+		"favorite": "Add to favorites",
+		"controls": "Controls",
+		"fullscreen": "Fullscreen mode",
+		"error": {
+			"generic": "An error occurred while loading the category",
+			"playerEntryLoad": "An error occurred while loading the app/game",
+			"popularGamesLoad": "An error occurred while loading popular games"
+		}
+	},
+	"proxy": {
+		"search": "Search {{engine}} or type a URL",
+		"faq": "If you're having issues with the proxy, try troubleshooting your problem by looking at the <0>FAQ</0>.",
+		"error": {
+			"compatibleProxy": "Unable to find a compatible proxy"
+		}
+	},
+	"settings": {
+		"language": "Language",
+		"theme": "Theme",
+		"themeDay": "Day",
+		"themeNight": "Night",
+		"languageEnglish": "English",
+		"languageFrench": "French",
+		"automaticProxy": "Automatic",
+		"searchEngine": "Search Engine",
+		"proxy": "Proxy",
+		"tabCloak": {
+			"description": "Tab Cloaking allows you to disguise Holy Unblocker as any website such as your school's home page, new tab, etc.",
+			"urlField": "URL",
+			"resetButton": "Reset Cloak",
+			"notification": {
+				"reset": "Cloak reset.",
+				"fetching": "Requesting cloak data...",
+				"failure": "Unable to request cloak data.",
+				"set": "Cloak set."
+			},
+			"error": {
+				"response": "Cloak response was not OK. Got {{status}}.",
+				"validate": "Bad URL."
+			}
+		}
+	},
+	"commonError": {
+		"tryAgain": "Try again by clicking <0>here</0>.",
+		"stillOccurs": "If this problem still occurs, check our <0>FAQ</0> or <1>Contact Us</1>.",
+		"unknownError": "Unknown Error"
+	},
+	"navSection": {
+		"games": "Games",
+		"genre": "Genre"
+	},
+	"gameCategory": {
+		"action_": "Action",
+		"action": "Action & Adventure",
+		"platformer": "Platformer",
+		"shooter_": "Shooters",
+		"shooter": "Shooters & Strategy",
+		"rpg": "RPG",
+		"sandbox": "Sandbox",
+		"survival_": "Survival",
+		"survival": "Survival & Horror",
+		"sports_": "Sports",
+		"sports": "Simulation & Sports",
+		"puzzle": "Puzzle"
+	},
+	"faq": {
+		"list": {
+			"selfhost": {
+				"q": "How can I self-host Holy Unblocker?",
+				"a": "<0>You can self-host/deploy Holy Unblocker by using our all-in-one script</0> <1>here</1>."
+			},
+			"morelinks": {
+				"q": "How do I get more links?",
+				"a": "<0>You can join the</0> <1>TitaniumNetwork Discord Server</1> <0>to receive more links. In any channel, enter /proxy and select Holy Unblocker.</0>"
+			},
+			"source": {
+				"q": "Where is this website's source code?",
+				"a": "<0>The source code to this website can be found in our</0> <1>Git repository</1>."
+			},
+			"secure": {
+				"q": "Is my information on the proxy secure?",
+				"a": "We do not collect any data, your information is only as secure as the sites you are accessing. For privacy concerns, you can review our <1>Privacy Policy</1>."
+			}
+		},
+		"contact": "Not what you're looking for? <0>Contact Us</0>."
+	},
+	"credits": {
+		"titles": {
+			"credits": "Credits",
+			"development": "Development",
+			"proxyScripts": "Proxy Scripts"
+		},
+		"positions": {
+			"frontendDev": "Frontend Developer",
+			"backendDev": "Backend Developer"
+		}
+	}
+}

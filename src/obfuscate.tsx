@@ -160,7 +160,7 @@ interface JSXData {
 /**
  * @description A obfuscated text block. This will strip the input of all non-text elements.
  */
-export const Obfuscated = memo<{ ellipsis?: boolean; children: ReactNode }>(
+export const Obfuscated = memo<{ ellipsis?: boolean; children?: ReactNode }>(
 	function Obfuscated({ ellipsis, children }) {
 		let string = '';
 
@@ -172,7 +172,8 @@ export const Obfuscated = memo<{ ellipsis?: boolean; children: ReactNode }>(
 			},
 		];
 
-		let toclone;
+		let toclone: JSXData | undefined;
+
 		while ((toclone = stack.pop())) {
 			if (typeof toclone === 'string') {
 				string += toclone;

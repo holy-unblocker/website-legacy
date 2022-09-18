@@ -3,61 +3,88 @@ import { ObfuscatedThemeA, ThemeLink } from '../ThemeElements';
 import { TN_DISCORD_URL } from '../consts';
 import { Obfuscated } from '../obfuscate';
 import { getHot } from '../routes';
+import type { ReactNode } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
+
+const WebsiteAIOLink = ({ children }: { children?: ReactNode }) => (
+	<ObfuscatedThemeA href="https://github.com/holy-unblocker/website-aio#website-aio">
+		{children}
+	</ObfuscatedThemeA>
+);
+
+const TNInviteLink = ({ children }: { children?: ReactNode }) => (
+	<ObfuscatedThemeA href={TN_DISCORD_URL}>
+		<Obfuscated>{children}</Obfuscated>
+	</ObfuscatedThemeA>
+);
+
+const GitLink = ({ children }: { children?: ReactNode }) => (
+	<ObfuscatedThemeA href="https://git.holy.how/holy/website">
+		{children}
+	</ObfuscatedThemeA>
+);
+
+const ContactLink = ({ children }: { children?: ReactNode }) => (
+	<ThemeLink to={getHot('contact').path}>{children}</ThemeLink>
+);
+
+const PrivacyLink = ({ children }: { children?: ReactNode }) => (
+	<ThemeLink to={getHot('privacy').path}>{children}</ThemeLink>
+);
 
 const FAQ: HolyPage = () => {
+	const { t } = useTranslation();
+
+	// <0> = obfuscated always
+
 	return (
 		<main>
 			<section>
 				<h1>
-					<Obfuscated>How can I self-host Holy Unblocker?</Obfuscated>
+					<Obfuscated>{t(`faq.list.selfhost.q`)}</Obfuscated>
 				</h1>
 				<p>
-					<Obfuscated>
-						You can self-host/deploy Holy Unblocker by using our all-in-one
-						script
-					</Obfuscated>{' '}
-					<ObfuscatedThemeA href="https://github.com/holy-unblocker/website-aio#website-aio">
-						here
-					</ObfuscatedThemeA>
-					.
-				</p>
-			</section>
-			<section>
-				<h1>How do I get more links?</h1>
-				<p>
-					<Obfuscated>You can join the</Obfuscated>{' '}
-					<ObfuscatedThemeA href={TN_DISCORD_URL}>
-						<Obfuscated>TitaniumNetwork Discord Server</Obfuscated>
-					</ObfuscatedThemeA>{' '}
-					<Obfuscated>
-						to receive more links. In any channel, enter /proxy and select Holy
-						Unblocker.
-					</Obfuscated>
-				</p>
-			</section>
-			<section>
-				<h1>Where is this website's source code?</h1>
-				<p>
-					The source code to this website can be found in our{' '}
-					<ObfuscatedThemeA href="https://git.holy.how/holy/website">
-						Git repository
-					</ObfuscatedThemeA>
-					.
+					<Trans
+						i18nKey={`faq.list.selfhost.a`}
+						components={[<Obfuscated />, <WebsiteAIOLink />]}
+					/>
 				</p>
 			</section>
 			<section>
 				<h1>
-					Is my information on the <Obfuscated>proxy</Obfuscated> secure?
+					<Obfuscated>{t(`faq.list.morelinks.q`)}</Obfuscated>
 				</h1>
 				<p>
-					We do not collect any data, your information is only as secure as the
-					sites you are accessing. For privacy concerns, you can review our{' '}
-					<ThemeLink to={getHot('privacy').path}>Privacy Policy</ThemeLink>.
+					<Trans
+						i18nKey={`faq.list.morelinks.a`}
+						components={[<Obfuscated />, <TNInviteLink />]}
+					/>
+				</p>
+			</section>
+			<section>
+				<h1>
+					<Obfuscated>{t(`faq.list.source.q`)}</Obfuscated>
+				</h1>
+				<p>
+					<Trans
+						i18nKey={`faq.list.source.a`}
+						components={[<Obfuscated />, <GitLink />]}
+					/>
+				</p>
+			</section>
+			<section>
+				<h1>
+					<Obfuscated>{t(`faq.list.secure.q`)}</Obfuscated>
+				</h1>
+				<p>
+					<Trans
+						i18nKey={`faq.list.secure.a`}
+						components={[<Obfuscated />, <PrivacyLink />]}
+					/>
 				</p>
 			</section>
 			<p style={{ marginTop: 30, opacity: 0.75 }}>
-				Not what you're looking for?{' '}
-				<ThemeLink to={getHot('contact').path}>Contact Us</ThemeLink>.
+				<Trans i18nKey={`faq.contact`} components={[<ContactLink />]} />
 			</p>
 		</main>
 	);

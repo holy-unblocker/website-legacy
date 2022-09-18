@@ -2,11 +2,14 @@ import type { HolyPage } from '../App';
 import { ObfuscatedThemeA } from '../ThemeElements';
 import { HU_DISCORD_URL } from '../consts';
 import { Obfuscated } from '../obfuscate';
+import { useTranslation } from 'react-i18next';
 
 const Contact: HolyPage = () => {
+	const { t } = useTranslation();
+
 	return (
 		<main>
-			<h1>Contact:</h1>
+			<h1>{t('contact.title')}</h1>
 			<ul>
 				<li>
 					GitHub:{' '}

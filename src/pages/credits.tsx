@@ -1,29 +1,38 @@
 import type { HolyPage } from '../App';
 import { ObfuscatedThemeA } from '../ThemeElements';
 import { Obfuscated } from '../obfuscate';
+import { useTranslation } from 'react-i18next';
 
 const Credits: HolyPage = () => {
+	const { t } = useTranslation();
+
 	return (
 		<main>
-			<h2>Credits</h2>
-			<h4>Development</h4>
+			<h2>{t('credits.titles.credits')}</h2>
+			<h4>{t('credits.titles.development')}</h4>
 			<ul>
 				<li>
 					<Obfuscated>
-						sexyduceduce - Frontend Developer, Ultraviolet
+						sexyduceduce - {t('credits.positions.frontendDev')}, Ultraviolet
 					</Obfuscated>
 				</li>
 				<li>
-					<Obfuscated>Device - Frontend Developer, Stomp</Obfuscated>
+					<Obfuscated>
+						Device - {t('credits.positions.frontendDev')}, Stomp
+					</Obfuscated>
 				</li>
 				<li>
-					<Obfuscated>OlyB - Frontend Developer, WebRetro</Obfuscated>
+					<Obfuscated>
+						OlyB - {t('credits.positions.frontendDev')}, WebRetro
+					</Obfuscated>
 				</li>
 				<li>
-					<Obfuscated>luphoria - Backend Developer</Obfuscated>
+					<Obfuscated>
+						luphoria - {t('credits.positions.backendDev')}
+					</Obfuscated>
 				</li>
 				<li>
-					<Obfuscated>Ender - Backend Developer</Obfuscated>
+					<Obfuscated>Ender - {t('credits.positions.backendDev')}</Obfuscated>
 				</li>
 				<li>
 					<Obfuscated>011011000110111101101100 - Rammerhead</Obfuscated>
@@ -31,7 +40,7 @@ const Credits: HolyPage = () => {
 			</ul>
 
 			<h2>
-				<Obfuscated>Proxy Scripts</Obfuscated>
+				<Obfuscated>{t('credits.titles.proxyScripts')}</Obfuscated>
 			</h2>
 
 			<ul>

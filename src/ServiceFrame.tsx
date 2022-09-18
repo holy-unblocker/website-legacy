@@ -5,6 +5,7 @@ import { Notification } from './Notifications';
 import resolveProxy from './ProxyResolver';
 import { BARE_API } from './consts';
 import { decryptURL, encryptURL } from './cryptURL';
+import i18n from './i18n';
 import { Obfuscated } from './obfuscate';
 import styles from './styles/Service.module.scss';
 import ChevronLeft from '@mui/icons-material/ChevronLeft';
@@ -61,11 +62,17 @@ const ServiceFrame = forwardRef<
 					console.error(err);
 					layout.current!.notifications.current!.add(
 						<Notification
-							title="Unable to find compatible proxy"
+							title={i18n.t('proxy.error.compatibleProxy') as string}
 							description={isDatabaseError(err) ? err.message : String(err)}
 							type="error"
 						/>
 					);
+
+					search.delete('query');
+
+					setSearch({
+						...Object.fromEntries(search),
+					});
 				}
 			})();
 		} else {
@@ -77,7 +84,7 @@ const ServiceFrame = forwardRef<
 			iframe.current.contentWindow.location.href = 'about:blank';
 			setLastSrc('about:blank');
 		}
-	}, [iframe, layout, settings.proxy, src]);
+	}, [iframe, layout, search, setSearch, settings.proxy, src]);
 
 	useImperativeHandle(ref, () => ({
 		proxy: (src: string) => {

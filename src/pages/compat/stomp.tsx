@@ -3,8 +3,9 @@ import type { ScriptRef } from '../../CompatLayout';
 import { getDestination } from '../../CompatLayout';
 import { Script } from '../../CompatLayout';
 import { BARE_API, SERVICEWORKERS } from '../../consts';
-import { Obfuscated } from '../../obfuscate';
+import i18n from '../../i18n';
 import { useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 
 interface StompBootConfig {
@@ -29,6 +30,7 @@ declare class StompBoot {
 }
 
 const Stomp: HolyPage = ({ compatLayout }) => {
+	const { t } = useTranslation();
 	const location = useLocation();
 	const bootstrapper = useRef<ScriptRef | null>(null);
 
@@ -40,16 +42,16 @@ const Stomp: HolyPage = ({ compatLayout }) => {
 
 			try {
 				if (!SERVICEWORKERS) {
-					errorCause = 'Stomp must be used under HTTPS.';
+					errorCause = i18n.t('compat.error.swHTTPS');
 					throw new Error(errorCause);
 				}
 
 				if (!('serviceWorker' in navigator)) {
-					errorCause = "Your browser doesn't support service workers.";
+					errorCause = i18n.t('compat.error.swSupport');
 					throw new Error(errorCause);
 				}
 
-				errorCause = 'Failure loading the Stomp bootstrapper.';
+				errorCause = i18n.t('compat.error.genericBootstrapper');
 				await bootstrapper.current.promise;
 				errorCause = undefined;
 
@@ -68,11 +70,11 @@ const Stomp: HolyPage = ({ compatLayout }) => {
 
 				const boot = new StompBoot(config as StompBootConfig);
 
-				errorCause = 'Failure registering the Stomp Service Worker.';
+				errorCause = i18n.t('compat.error.registeringSW');
 				await boot.ready;
 				errorCause = undefined;
 
-				errorCause = 'Bare server is unreachable.';
+				errorCause = i18n.t('compat.error.bareServer');
 				{
 					const bare = await fetch(BARE_API);
 					if (!bare.ok) {
@@ -91,7 +93,7 @@ const Stomp: HolyPage = ({ compatLayout }) => {
 	return (
 		<main>
 			<Script src="/stomp/bootstrapper.js" ref={bootstrapper} />
-			Loading <Obfuscated>Stomp</Obfuscated>...
+			{t('compat.loading', { what: 'Stomp' })}
 		</main>
 	);
 };

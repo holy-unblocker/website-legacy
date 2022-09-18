@@ -2,12 +2,14 @@ import type { HolyPage } from '../../App';
 import { getDestination } from '../../CompatLayout';
 import { RammerheadAPI, StrShuffler } from '../../RammerheadAPI';
 import { RH_API } from '../../consts';
-import { Obfuscated } from '../../obfuscate';
+import i18n from '../../i18n';
 import Cookies from 'js-cookie';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 
 const Rammerhead: HolyPage = ({ compatLayout }) => {
+	const { t } = useTranslation();
 	const location = useLocation();
 
 	useEffect(() => {
@@ -26,16 +28,16 @@ const Rammerhead: HolyPage = ({ compatLayout }) => {
 						sameSite: 'lax',
 					});
 
-				errorCause = 'Rammerhead server is unreachable.';
+				errorCause = i18n.t('compat.error.rammerhead');
 				await fetch(RH_API);
 				errorCause = undefined;
 
-				errorCause = 'Unable to check if the saved session exists.';
+				errorCause = i18n.t('compat.error.rammerheadSavedSession');
 				if (
 					!localStorage.rammerhead_session ||
 					!(await api.sessionExists(localStorage.rammerhead_session))
 				) {
-					errorCause = 'Unable to create a new Rammerhead session.';
+					errorCause = i18n.t('compat.error.rammerheadNewSession');
 					const session = await api.newSession();
 					errorCause = undefined;
 					localStorage.rammerhead_session = session;
@@ -45,11 +47,11 @@ const Rammerhead: HolyPage = ({ compatLayout }) => {
 
 				errorCause = undefined;
 
-				errorCause = 'Unable to edit a Rammerhead session.';
+				errorCause = i18n.t('compat.error.rammerheadEditSession');
 				await api.editSession(session, false, true);
 				errorCause = undefined;
 
-				errorCause = 'Unable to retrieve shuffled dictionary.';
+				errorCause = i18n.t('compat.error.rammerheadDict');
 				const dict = await api.shuffleDict(session);
 				errorCause = undefined;
 
@@ -67,11 +69,7 @@ const Rammerhead: HolyPage = ({ compatLayout }) => {
 		})();
 	}, [compatLayout, location]);
 
-	return (
-		<main>
-			Loading <Obfuscated>Rammerhead</Obfuscated>...
-		</main>
-	);
+	return <main>{t('compat.loading', { what: 'Rammerhead' })}</main>;
 };
 
 export default Rammerhead;

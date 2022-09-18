@@ -1,45 +1,46 @@
 export interface Category {
+	/**
+	 * ID
+	 *i18n `name` is `gameCategory.${id}`
+	 *i18n `shortName` is `gameCategory.${id}_`
+	 */
 	id: string;
-	name: string;
-	short?: string;
+	/** i18n ID */
+	short: boolean;
 }
 
 const categories: Category[] = [
 	{
 		id: 'action',
-		short: 'Action',
-		name: 'Action & Adventure',
+		short: true,
 	},
 	{
 		id: 'platformer',
-		name: 'Platformer',
+		short: false,
 	},
 	{
 		id: 'shooter',
-		short: 'Shooters',
-		name: 'Shooters & Strategy',
+		short: true,
 	},
 	{
 		id: 'rpg',
-		name: 'RPG',
+		short: false,
 	},
 	{
 		id: 'sandbox',
-		name: 'Sandbox',
+		short: false,
 	},
 	{
 		id: 'survival',
-		short: 'Survival',
-		name: 'Survival & Horror',
+		short: true,
 	},
 	{
 		id: 'sports',
-		short: 'Sports',
-		name: 'Simulation & Sports',
+		short: true,
 	},
 	{
 		id: 'puzzle',
-		name: 'Puzzle',
+		short: false,
 	},
 ];
 

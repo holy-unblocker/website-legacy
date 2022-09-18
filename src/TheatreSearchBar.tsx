@@ -10,6 +10,7 @@ import styles from './styles/TheatreSearch.module.scss';
 import Search from '@mui/icons-material/Search';
 import clsx from 'clsx';
 import { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 
 const LIMIT = 8;
@@ -23,6 +24,7 @@ const SearchBar = ({
 	placeholder?: string;
 	showCategory?: boolean;
 }) => {
+	const { t } = useTranslation();
 	const navigate = useNavigate();
 	const input = useRef<HTMLInputElement | null>(null);
 	const bar = useRef<HTMLDivElement | null>(null);
@@ -170,11 +172,13 @@ const SearchBar = ({
 							</div>
 							{showCategory && entry.category[0] && (
 								<div className={styles.category}>
-									{
-										categories.find(
-											(category) => category.id === entry.category[0]
-										)?.name
-									}
+									{t(
+										`gameCategory.${
+											categories.find(
+												(category) => category.id === entry.category[0]
+											)?.id
+										}`
+									)}
 								</div>
 							)}
 						</Link>

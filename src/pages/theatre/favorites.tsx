@@ -7,9 +7,12 @@ import { isFailedToFetch } from '../../isAbortError';
 import { Obfuscated } from '../../obfuscate';
 import styles from '../../styles/TheatreCategory.module.scss';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const Favorites: HolyPage = ({ layout }) => {
 	const [settings, setSettings] = useGlobalSettings();
+	const { t } = useTranslation();
+
 	const [data, setData] = useState<(TheatreEntry | LoadingTheatreEntry)[]>(() =>
 		settings.favorites.map((id) => ({
 			loading: true,
@@ -51,7 +54,7 @@ const Favorites: HolyPage = ({ layout }) => {
 	if (settings.favorites.length === 0) {
 		return (
 			<main className="error">
-				<p>You haven't added any favorites.</p>
+				<p>{t('theatre.noFavorites')}</p>
 			</main>
 		);
 	} else {

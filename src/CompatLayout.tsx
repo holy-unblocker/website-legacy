@@ -1,7 +1,6 @@
-import { ThemeA, ThemeLink } from './ThemeElements';
+import CommonError from './CommonError';
 import { decryptURL } from './cryptURL';
-import { Obfuscated } from './obfuscate';
-import { getHot } from './routes';
+import i18n from './i18n';
 import type { ReactNode } from 'react';
 import {
 	forwardRef,
@@ -10,6 +9,7 @@ import {
 	useMemo,
 	useState,
 } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { Location } from 'react-router-dom';
 
 function loadScript(
@@ -150,8 +150,13 @@ export const Script = forwardRef<ScriptRef, { src: string }>(function Script(
  * @returns
  */
 export const getDestination = (location: Location) => {
-	if (location.hash === '') throw new Error('No hash was provided');
-	return decryptURL(location.hash.slice(1));
+	if (location.hash === '') throw new Error(i18n.t('compat.error.hash'));
+
+	try {
+		return decryptURL(location.hash.slice(1));
+	} catch (err) {
+		throw new Error(i18n.t('compat.error.decryptURL'));
+	}
 };
 
 export interface CompatLayoutRef {
@@ -160,6 +165,8 @@ export interface CompatLayoutRef {
 
 export default forwardRef<CompatLayoutRef, { children?: ReactNode }>(
 	function CompatLayout({ children }, ref) {
+		const { t } = useTranslation();
+
 		const [error, setError] = useState<{
 			error: string;
 			cause: string;
@@ -185,36 +192,10 @@ export default forwardRef<CompatLayoutRef, { children?: ReactNode }>(
 		return (
 			<>
 				{error ? (
-					<main className="error">
-						<p>
-							An error occured when loading{' '}
-							<Obfuscated>{error.origin}</Obfuscated>:
-						</p>
-						<pre>{error.cause || error.error}</pre>
-						<p>
-							Try again by clicking{' '}
-							<ThemeA
-								href="i:"
-								onClick={(event) => {
-									event.preventDefault();
-									global.location.reload();
-								}}
-							>
-								here
-							</ThemeA>
-							.
-							<br />
-							If this problem still occurs, check our{' '}
-							<ThemeLink to={getHot('faq').path} target="_parent">
-								FAQ
-							</ThemeLink>{' '}
-							or{' '}
-							<ThemeLink to={getHot('contact').path} target="_parent">
-								Contact Us
-							</ThemeLink>
-							.
-						</p>
-					</main>
+					<CommonError
+						error={error.cause || error.error}
+						message={t('compat.errorOccurred', { what: error.origin })}
+					/>
 				) : (
 					children
 				)}

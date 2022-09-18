@@ -3,12 +3,14 @@ import { useGlobalCloakSettings } from '../../Layout';
 import { Notification } from '../../Notifications';
 import { ThemeButton, ThemeInputBar, themeStyles } from '../../ThemeElements';
 import { BARE_API } from '../../consts';
+import i18next from '../../i18n';
 import { Obfuscated } from '../../obfuscate';
 import styles from '../../styles/Settings.module.scss';
 import Check from '@mui/icons-material/Check';
 import BareClient from '@tomphttp/bare-client';
 import clsx from 'clsx';
 import { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const bare = new BareClient(BARE_API);
 
@@ -21,9 +23,10 @@ interface ExtractedData {
 async function extractData(url: string): Promise<ExtractedData> {
 	const response = await bare.fetch(url, { redirect: 'follow' });
 
-	if (!response.ok) {
-		throw new Error(`Response was not OK. Got ${response.status}`);
-	}
+	if (!response.ok)
+		throw new Error(
+			i18next.t('settings.tabCloak.error.response', { status: response.status })
+		);
 
 	const parser = new DOMParser();
 
@@ -74,7 +77,7 @@ function resolveURL(input: string) {
 	} else if (input.includes('.') && !input.match(whitespace)) {
 		return `http://${input}`;
 	} else {
-		throw new Error('Bad URL');
+		throw new Error(i18next.t('settings.tabCloak.error.validate'));
 	}
 }
 
@@ -89,6 +92,7 @@ async function blobToDataURL(blob: Blob) {
 }
 
 const TabCloak: HolyPage = ({ layout }) => {
+	const { t } = useTranslation();
 	const [cloak, setCloak] = useGlobalCloakSettings();
 	const input = useRef<HTMLInputElement | null>(null);
 
@@ -106,7 +110,10 @@ const TabCloak: HolyPage = ({ layout }) => {
 					break;
 				default:
 					layout.current!.notifications.current!.add(
-						<Notification description="Fetching..." type="info" />
+						<Notification
+							description={t('settings.tabCloak.notification.fetching')}
+							type="info"
+						/>
 					);
 
 					({ title, icon, url } = await extractData(resolved));
@@ -123,15 +130,22 @@ const TabCloak: HolyPage = ({ layout }) => {
 			});
 
 			layout.current!.notifications.current!.add(
-				<Notification description="Cloak set" type="success" />
+				<Notification
+					description={t('settings.tabCloak.notification.set')}
+					type="success"
+				/>
 			);
 		} catch (err) {
 			console.error(err);
 
 			layout.current!.notifications.current!.add(
 				<Notification
-					title="Unable to fetch cloak"
-					description={err instanceof Error ? err.message : 'Unknown error'}
+					title={t('settings.tabCloak.notification.failure')}
+					description={
+						err instanceof Error
+							? err.message
+							: (i18next.t('commonError.unknownError') as string)
+					}
 					type="error"
 				/>
 			);
@@ -140,16 +154,13 @@ const TabCloak: HolyPage = ({ layout }) => {
 
 	return (
 		<section>
+			<p>
+				<Obfuscated>{t('settings.tabCloak.description')}</Obfuscated>
+			</p>
 			<div>
-				<Obfuscated>
-					Tab Cloaking allows you to disguise Holy Unblocker as any website such
-					as your school's home page, new tab, etc.
-				</Obfuscated>
-			</div>
-			<div>
-				<span>
-					<Obfuscated>URL</Obfuscated>:
-				</span>
+				<p>
+					<Obfuscated>{t('settings.tabCloak.urlField')}</Obfuscated>:
+				</p>
 				<form
 					onSubmit={(event) => {
 						event.preventDefault();
@@ -182,11 +193,14 @@ const TabCloak: HolyPage = ({ layout }) => {
 						input.current!.value = '';
 
 						layout.current!.notifications.current!.add(
-							<Notification description="Cloak reset" type="info" />
+							<Notification
+								description={t('settings.tabCloak.notification.reset')}
+								type="info"
+							/>
 						);
 					}}
 				>
-					<Obfuscated>Reset Cloak</Obfuscated>
+					<Obfuscated>{t('settings.tabCloak.resetButton')}</Obfuscated>
 				</ThemeButton>
 			</div>
 		</section>

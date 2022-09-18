@@ -1,15 +1,32 @@
 import type { HolyPage } from '../../App';
 import { useGlobalSettings } from '../../Layout';
 import { ThemeSelect } from '../../ThemeElements';
+import type { i18nLanguage } from '../../i18n';
+import { getLanguage, setLanguage } from '../../i18n';
 import styles from '../../styles/Settings.module.scss';
+import { useTranslation } from 'react-i18next';
 
 const Appearance: HolyPage = ({ layout }) => {
+	const { t } = useTranslation();
 	const [settings, setSettings] = useGlobalSettings();
 
 	return (
 		<section>
 			<div>
-				<span>Theme:</span>
+				<p>{t('settings.language')}:</p>
+				<ThemeSelect
+					className={styles.ThemeSelect}
+					defaultValue={getLanguage()}
+					onChange={(event) => {
+						setLanguage(event.target.value as i18nLanguage);
+					}}
+				>
+					<option value="en">{t('settings.languageEnglish')}</option>
+					<option value="fr">{t('settings.languageFrench')}</option>
+				</ThemeSelect>
+			</div>
+			<div>
+				<p>{t('settings.theme')}:</p>
 				<ThemeSelect
 					className={styles.ThemeSelect}
 					defaultValue={settings.theme}
@@ -20,8 +37,8 @@ const Appearance: HolyPage = ({ layout }) => {
 						});
 					}}
 				>
-					<option value="day">Day</option>
-					<option value="night">Night</option>
+					<option value="day">{t('settings.themeDay')}</option>
+					<option value="night">{t('settings.themeNight')}</option>
 				</ThemeSelect>
 			</div>
 		</section>

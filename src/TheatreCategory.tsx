@@ -1,17 +1,18 @@
+import CommonError from './CommonError';
 import type { CategoryData, LoadingCategoryData } from './TheatreCommon';
 import { isLoading } from './TheatreCommon';
 import { ItemList, TheatreAPI } from './TheatreCommon';
 import SearchBar from './TheatreSearchBar';
-import { ThemeLink, ThemeSelect } from './ThemeElements';
+import { ThemeSelect } from './ThemeElements';
 import { DB_API } from './consts';
 import isAbortError from './isAbortError';
 import { Obfuscated } from './obfuscate';
-import { getHot } from './routes';
 import styles from './styles/TheatreCategory.module.scss';
 import ChevronLeft from '@mui/icons-material/ChevronLeft';
 import ChevronRight from '@mui/icons-material/ChevronRight';
 import clsx from 'clsx';
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
 
 const LIMIT = 30;
@@ -47,6 +48,7 @@ const Category = ({
 	id: string;
 	showCategory?: boolean;
 }) => {
+	const { t } = useTranslation();
 	const [search, setSearch] = useSearchParams();
 	let page = parseInt(search.get('page')!);
 	if (isNaN(page)) page = 0;
@@ -66,22 +68,16 @@ const Category = ({
 			let sort;
 
 			switch (search.get('sort')) {
-				case 'Least Popular':
+				case 'leastPopular':
 					leastGreatest = true;
 				// falls through
-				case 'Most Popular':
+				case 'mostPopular':
 					sort = 'plays';
 					break;
-				case 'Least Favorites':
+				case 'nameASC':
 					leastGreatest = true;
 				// falls through
-				case 'Most Favorites':
-					sort = 'favorites';
-					break;
-				case 'Name (Z-A)':
-					leastGreatest = true;
-				// falls through
-				case 'Name (A-Z)':
+				case 'nameDES':
 					sort = 'name';
 					break;
 			}
@@ -115,36 +111,10 @@ const Category = ({
 
 	if (error)
 		return (
-			<main className="error">
-				<span>
-					An error occured when loading the category:
-					<br />
-					<pre>{errorCause.current || error.toString()}</pre>
-				</span>
-				<p>
-					Try again by clicking{' '}
-					<a
-						href="i:"
-						onClick={(event) => {
-							event.preventDefault();
-							global.location.reload();
-						}}
-					>
-						here
-					</a>
-					.
-					<br />
-					If this problem still occurs, check our{' '}
-					<ThemeLink to={getHot('faq').path} target="_parent">
-						FAQ
-					</ThemeLink>{' '}
-					or{' '}
-					<ThemeLink to={getHot('contact').path} target="_parent">
-						Contact Us
-					</ThemeLink>
-					.
-				</p>
-			</main>
+			<CommonError
+				error={errorCause.current || error}
+				message={t('theatre.error.generic')}
+			/>
 		);
 
 	return (
@@ -170,10 +140,10 @@ const Category = ({
 							});
 						}}
 					>
-						<option value="Most Popular">Most Popular</option>
-						<option value="Least Popular">Least Popular</option>
-						<option value="Name (A-Z)">Name (A-Z)</option>
-						<option value="Name (Z-A)">Name (Z-A)</option>
+						<option value="mostPopular">{t('theatre.mostPopular')}</option>
+						<option value="Least Popular">{t('theatre.leastPopular')}</option>
+						<option value="nameASC">{t('theatre.nameASC')}</option>
+						<option value="nameDES">{t('theatre.nameDES')}</option>
 					</ThemeSelect>
 				</div>
 				<ItemList className={styles.items} items={data.entries} />

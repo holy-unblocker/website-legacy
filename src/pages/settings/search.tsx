@@ -4,16 +4,18 @@ import { ThemeSelect } from '../../ThemeElements';
 import engines from '../../engines';
 import { Obfuscated } from '../../obfuscate';
 import styles from '../../styles/Settings.module.scss';
+import { useTranslation } from 'react-i18next';
 
-const Search: HolyPage = ({ layout }) => {
+const Search: HolyPage = () => {
+	const { t } = useTranslation();
 	const [settings, setSettings] = useGlobalSettings();
 
 	return (
 		<section>
 			<div>
-				<span>
-					<Obfuscated>Proxy</Obfuscated>:
-				</span>
+				<p>
+					<Obfuscated>{t('settings.proxy')}</Obfuscated>:
+				</p>
 				<ThemeSelect
 					className={styles.ThemeSelect}
 					onChange={(event) =>
@@ -24,16 +26,16 @@ const Search: HolyPage = ({ layout }) => {
 					}
 					defaultValue={settings.proxy}
 				>
-					<option value="automatic">Automatic (Default)</option>
+					<option value="automatic">{t('settings.automaticProxy')}</option>
 					<option value="ultraviolet">Ultraviolet</option>
 					<option value="rammerhead">Rammerhead</option>
 					<option value="stomp">Stomp</option>
 				</ThemeSelect>
 			</div>
 			<div>
-				<span>
-					<Obfuscated>Search Engine</Obfuscated>:
-				</span>
+				<p>
+					<Obfuscated>{t('settings.searchEngine')}</Obfuscated>:
+				</p>
 				<ThemeSelect
 					className={styles.ThemeSelect}
 					onChange={(event) =>
