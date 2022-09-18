@@ -581,19 +581,6 @@ const webpackConfig: Configuration = {
 													voidTag: true,
 												});
 												break;
-											case '.woff2':
-												data.assetTags.styles.push({
-													tagName: 'link',
-													attributes: {
-														rel: 'preload',
-														as: 'font',
-														type: 'font/woff2',
-														href: abs,
-													},
-													meta: {},
-													voidTag: true,
-												});
-												break;
 										}
 									}
 
