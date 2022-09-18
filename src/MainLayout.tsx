@@ -3,7 +3,7 @@ import { ReactComponent as HatBeta } from './assets/hat-beta.svg';
 import { ReactComponent as HatDev } from './assets/hat-dev.svg';
 import { ReactComponent as HatPlain } from './assets/hat.svg';
 import categories from './gameCategories';
-import { ObfuscateLayout, Obfuscated, ObfuscatedA } from './obfuscate';
+import { Obfuscated, ObfuscatedA } from './obfuscate';
 import { getHot } from './routes';
 import styles from './styles/Navigation.module.scss';
 import Apps from '@mui/icons-material/Apps';
@@ -136,7 +136,6 @@ const MainLayout = forwardRef<
 
 	return (
 		<>
-			<ObfuscateLayout />
 			<nav className={styles.nav}>
 				<div className={styles.button} onClick={() => setExpanded(true)}>
 					<Menu />

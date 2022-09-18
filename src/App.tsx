@@ -6,6 +6,7 @@ import Layout from './Layout';
 import type { MainLayoutRef } from './MainLayout';
 import MainLayout from './MainLayout';
 import SettingsLayout from './SettingsLayout';
+import { ObfuscateLayout } from './obfuscate';
 import { hotRoutes } from './routes';
 import type { ComponentType, ReactElement, RefObject } from 'react';
 import { Suspense, lazy, useRef } from 'react';
@@ -30,10 +31,7 @@ declare const __webpack_require__: ((id: string | number) => unknown) & {
 
 const getCurrent = () => {
 	const hot = hotRoutes.find((hot) =>
-		matchPath(
-			hot.path,
-			global.location.pathname + global.location.search + global.location.hash
-		)
+		matchPath(hot.path, global.location.pathname + global.location.search)
 	);
 
 	if (!hot) throw new Error(`current hot was neither a page (/) or 404 (*)`);
@@ -87,6 +85,9 @@ export default function App() {
 				<Suspense fallback={<></>}>{create}</Suspense>
 			);
 
+		if (hot === current?.hot)
+			console.log('not suspending', hot.path, 'instead', suspended);
+
 		allRoutes.push(
 			<Route
 				key={i}
@@ -108,6 +109,7 @@ export default function App() {
 
 	return (
 		<>
+			<ObfuscateLayout />
 			<Layout ref={layout} />
 			<Routes>{allRoutes}</Routes>
 		</>

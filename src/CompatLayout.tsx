@@ -1,6 +1,6 @@
 import { ThemeA, ThemeLink } from './ThemeElements';
 import { decryptURL } from './cryptURL';
-import { ObfuscateLayout, Obfuscated } from './obfuscate';
+import { Obfuscated } from './obfuscate';
 import { getHot } from './routes';
 import type { ReactNode } from 'react';
 import {
@@ -158,7 +158,7 @@ export interface CompatLayoutRef {
 	report: (error: unknown, cause: string | undefined, origin: string) => void;
 }
 
-export default forwardRef<CompatLayoutRef, { children: ReactNode }>(
+export default forwardRef<CompatLayoutRef, { children?: ReactNode }>(
 	function CompatLayout({ children }, ref) {
 		const [error, setError] = useState<{
 			error: string;
@@ -184,7 +184,6 @@ export default forwardRef<CompatLayoutRef, { children: ReactNode }>(
 
 		return (
 			<>
-				<ObfuscateLayout />
 				{error ? (
 					<main className="error">
 						<p>
