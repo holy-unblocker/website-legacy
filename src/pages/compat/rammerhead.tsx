@@ -28,7 +28,7 @@ const Rammerhead: HolyPage = ({ compatLayout }) => {
 						sameSite: 'lax',
 					});
 
-				errorCause = i18n.t('compat.error.rammerhead');
+				errorCause = i18n.t('compat.error.unreachable', { what: 'Rammerhead' });
 				await fetch(RH_API);
 				errorCause = undefined;
 

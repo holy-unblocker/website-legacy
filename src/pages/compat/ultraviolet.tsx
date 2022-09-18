@@ -60,7 +60,7 @@ const Ultraviolet: HolyPage = ({ compatLayout }) => {
 				});
 				errorCause = undefined;
 
-				errorCause = i18n.t('compat.error.bareServer');
+				errorCause = i18n.t('compat.error.unreachable', { what: 'Bare' });
 				{
 					const bare = await fetch(BARE_API);
 					if (!bare.ok) {
