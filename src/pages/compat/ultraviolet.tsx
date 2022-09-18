@@ -1,9 +1,10 @@
 import type { HolyPage } from '../../App';
 import type { ScriptsRef } from '../../CompatLayout';
-import { Script, Scripts } from '../../CompatLayout';
+import { getDestination, Script, Scripts } from '../../CompatLayout';
 import { BARE_API, SERVICEWORKERS } from '../../consts';
 import { Obfuscated } from '../../obfuscate';
 import { useEffect, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 
 type UVEncode = (encoded: string) => string;
 type UVDecode = (encoded: string) => string;
@@ -23,6 +24,7 @@ declare const __uv$config: UVConfig;
 
 const Ultraviolet: HolyPage = ({ compatLayout }) => {
 	const uvBundle = useRef<ScriptsRef | null>(null);
+	const location = useLocation();
 
 	useEffect(() => {
 		(async function () {
@@ -66,7 +68,7 @@ const Ultraviolet: HolyPage = ({ compatLayout }) => {
 
 				global.location.replace(
 					new URL(
-						config.encodeUrl(compatLayout.current.destination),
+						config.encodeUrl(getDestination(location)),
 						new URL(config.prefix, global.location.toString())
 					)
 				);
@@ -74,7 +76,7 @@ const Ultraviolet: HolyPage = ({ compatLayout }) => {
 				compatLayout.current.report(err, errorCause, 'Ultraviolet');
 			}
 		})();
-	}, [compatLayout]);
+	}, [compatLayout, location]);
 
 	return (
 		<main>

@@ -1,4 +1,5 @@
 import type { HolyPage } from '../../App';
+import { useGlobalSettings } from '../../Layout';
 import type { LoadingTheatreEntry, TheatreEntry } from '../../TheatreCommon';
 import { ItemList, TheatreAPI } from '../../TheatreCommon';
 import { DB_API } from '../../consts';
@@ -8,8 +9,9 @@ import styles from '../../styles/TheatreCategory.module.scss';
 import { useEffect, useState } from 'react';
 
 const Favorites: HolyPage = ({ layout }) => {
+	const [settings, setSettings] = useGlobalSettings();
 	const [data, setData] = useState<(TheatreEntry | LoadingTheatreEntry)[]>(() =>
-		layout.current!.settings.favorites.map((id) => ({
+		settings.favorites.map((id) => ({
 			loading: true,
 			id,
 			category: [],
@@ -23,33 +25,30 @@ const Favorites: HolyPage = ({ layout }) => {
 			const api = new TheatreAPI(DB_API, abort.signal);
 			const data = [];
 
-			for (const id of layout.current!.settings.favorites) {
+			for (const id of settings.favorites) {
 				try {
 					data.push(await api.show(id));
 				} catch (err) {
 					// cancelled? page unload?
 					if (!isFailedToFetch(err)) {
 						console.warn('Unable to fetch entry:', id, err);
-						layout.current!.settings.favorites.splice(
-							layout.current!.settings.favorites.indexOf(id),
-							1
-						);
+						settings.favorites.splice(settings.favorites.indexOf(id), 1);
 					}
 				}
 			}
 
 			// update settings
-			layout.current!.setSettings({
-				...layout.current!.settings,
+			setSettings({
+				...settings,
 			});
 
 			setData(data);
 		})();
 
 		return () => abort.abort();
-	}, [layout]);
+	}, [layout, setSettings, settings]);
 
-	if (layout.current!.settings.favorites.length === 0) {
+	if (settings.favorites.length === 0) {
 		return (
 			<main className="error">
 				<p>You haven't added any favorites.</p>

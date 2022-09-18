@@ -1,4 +1,5 @@
 import type { HolyPage, LayoutDump } from '../App';
+import { useGlobalSettings } from '../Layout';
 import SearchBuilder from '../SearchBuilder';
 import ServiceFrame from '../ServiceFrame';
 import type { ServiceFrameRef } from '../ServiceFrame';
@@ -26,11 +27,9 @@ const SearchBar = ({ layout }: { layout: LayoutDump['layout'] }) => {
 	const serviceFrame = useRef<ServiceFrameRef | null>(null);
 	const abort = useRef(new AbortController());
 	const bare = useMemo(() => new BareClient(BARE_API), []);
-
+	const [settings] = useGlobalSettings();
 	const engine =
-		engines.find(
-			(engine) => engine.format === layout.current!.settings.search
-		) || engines[0];
+		engines.find((engine) => engine.format === settings.search) || engines[0];
 
 	async function onInput() {
 		if (inputValue.current !== input.current!.value) {
@@ -85,7 +84,7 @@ const SearchBar = ({ layout }: { layout: LayoutDump['layout'] }) => {
 
 		input.current!.value = value;
 
-		const builder = new SearchBuilder(layout.current!.settings.search);
+		const builder = new SearchBuilder(settings.search);
 
 		setInputFocused(false);
 		serviceFrame.current!.proxy(builder.query(input.current!.value));

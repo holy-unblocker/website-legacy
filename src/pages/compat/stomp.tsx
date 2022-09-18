@@ -1,9 +1,11 @@
 import type { HolyPage } from '../../App';
 import type { ScriptRef } from '../../CompatLayout';
+import { getDestination } from '../../CompatLayout';
 import { Script } from '../../CompatLayout';
 import { BARE_API, SERVICEWORKERS } from '../../consts';
 import { Obfuscated } from '../../obfuscate';
 import { useEffect, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 
 interface StompBootConfig {
 	bare_server: string;
@@ -27,6 +29,7 @@ declare class StompBoot {
 }
 
 const Stomp: HolyPage = ({ compatLayout }) => {
+	const location = useLocation();
 	const bootstrapper = useRef<ScriptRef | null>(null);
 
 	useEffect(() => {
@@ -78,12 +81,12 @@ const Stomp: HolyPage = ({ compatLayout }) => {
 				}
 				errorCause = undefined;
 
-				global.location.replace(boot.html(compatLayout.current.destination));
+				global.location.replace(boot.html(getDestination(location)));
 			} catch (err) {
 				compatLayout.current.report(err, errorCause, 'Stomp');
 			}
 		})();
-	}, [compatLayout, bootstrapper]);
+	}, [compatLayout, bootstrapper, location]);
 
 	return (
 		<main>

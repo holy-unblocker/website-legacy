@@ -10,7 +10,7 @@ import {
 	useMemo,
 	useState,
 } from 'react';
-import { useLocation } from 'react-router-dom';
+import type { Location } from 'react-router-dom';
 
 function loadScript(
 	src: string
@@ -55,7 +55,7 @@ export interface ScriptsRef {
 /**
  * Loads multiple scripts
  */
-export const Scripts = forwardRef<ScriptsRef, { children: ReactNode }>(
+export const Scripts = forwardRef<ScriptsRef, { children?: ReactNode }>(
 	function Scripts({ children }, ref) {
 		const [promise, promiseExternal] = useMemo(
 			() => createPromiseExternal<void>(),
@@ -144,15 +144,22 @@ export const Script = forwardRef<ScriptRef, { src: string }>(function Script(
 	return <></>;
 });
 
+/**
+ *
+ * @param location Derived from useLocation
+ * @returns
+ */
+export const getDestination = (location: Location) => {
+	if (location.hash === '') throw new Error('No hash was provided');
+	return decryptURL(location.hash.slice(1));
+};
+
 export interface CompatLayoutRef {
-	destination: string;
 	report: (error: unknown, cause: string | undefined, origin: string) => void;
 }
 
 export default forwardRef<CompatLayoutRef, { children: ReactNode }>(
 	function CompatLayout({ children }, ref) {
-		const location = useLocation();
-
 		const [error, setError] = useState<{
 			error: string;
 			cause: string;
@@ -162,11 +169,6 @@ export default forwardRef<CompatLayoutRef, { children: ReactNode }>(
 		useImperativeHandle(
 			ref,
 			() => ({
-				get destination() {
-					if (location.hash === '') throw new Error('No hash was provided');
-
-					return decryptURL(location.hash.slice(1));
-				},
 				report: (error: unknown, cause: string | undefined, origin: string) => {
 					console.error(error);
 
@@ -177,7 +179,7 @@ export default forwardRef<CompatLayoutRef, { children: ReactNode }>(
 					});
 				},
 			}),
-			[location]
+			[]
 		);
 
 		return (

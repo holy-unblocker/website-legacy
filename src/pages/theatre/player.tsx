@@ -1,4 +1,5 @@
 import type { HolyPage } from '../../App';
+import { useGlobalSettings } from '../../Layout';
 import resolveProxy from '../../ProxyResolver';
 import { TheatreAPI } from '../../TheatreCommon';
 import type { TheatreEntry } from '../../TheatreCommon';
@@ -53,12 +54,13 @@ async function resolveSrc(
 	}
 }
 
-const Player: HolyPage = ({ layout }) => {
+const Player: HolyPage = () => {
 	const [searchParams] = useSearchParams();
 	const id = searchParams.get('id')!;
 	if (!id) throw new Error('Bad ID');
+	const [settings, setSettings] = useGlobalSettings();
 	const [favorited, setFavorited] = useState(() =>
-		layout.current!.settings.favorites.includes(id)
+		settings.favorites.includes(id)
 	);
 	const [panorama, setPanorama] = useState(false);
 	const [controlsExpanded, setControlsExpanded] = useState(false);
@@ -69,16 +71,14 @@ const Player: HolyPage = ({ layout }) => {
 	const controlsOpen = useRef<HTMLDivElement | null>(null);
 	const [resolvedSrc, setResolvedSrc] = useState<string | null>(null);
 	const controlsPopup = useRef<HTMLDivElement | null>(null);
-	const [seen, _setSeen] = useState(() =>
-		layout.current!.settings.seen_games.includes(id)
-	);
+	const [seen, _setSeen] = useState(() => settings.seen_games.includes(id));
 	const [iframeFocused, setIFrameFocused] = useState(true);
 
 	useEffect(() => {
 		const abort = new AbortController();
 
 		async function setSeen(value: boolean) {
-			const seen = layout.current!.settings.seen_games;
+			const seen = settings.seen_games;
 
 			if (value) {
 				seen.push(id);
@@ -87,8 +87,8 @@ const Player: HolyPage = ({ layout }) => {
 				seen.splice(i, 1);
 			}
 
-			layout.current!.setSettings({
-				...layout.current!.settings,
+			setSettings({
+				...settings,
 				seen_games: seen,
 			});
 
@@ -106,7 +106,7 @@ const Player: HolyPage = ({ layout }) => {
 				const resolvedSrc = await resolveSrc(
 					new URL(data.src, THEATRE_CDN).toString(),
 					data.type,
-					layout.current!.settings.proxy
+					settings.proxy
 				);
 				errorCause.current = null;
 				setData(data);
@@ -126,7 +126,7 @@ const Player: HolyPage = ({ layout }) => {
 		})();
 
 		return () => abort.abort();
-	}, [seen, id, layout]);
+	}, [seen, id, settings, setSettings]);
 
 	useEffect(() => {
 		function focusListener() {
@@ -340,7 +340,7 @@ const Player: HolyPage = ({ layout }) => {
 				<div
 					className={styles.button}
 					onClick={() => {
-						const favorites = layout.current!.settings.favorites;
+						const favorites = settings.favorites;
 						const i = favorites.indexOf(id);
 
 						if (i === -1) {
@@ -349,8 +349,8 @@ const Player: HolyPage = ({ layout }) => {
 							favorites.splice(i, 1);
 						}
 
-						layout.current!.setSettings({
-							...layout.current!.settings,
+						setSettings({
+							...settings,
 							favorites,
 						});
 

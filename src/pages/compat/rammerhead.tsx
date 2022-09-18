@@ -1,11 +1,15 @@
 import type { HolyPage } from '../../App';
+import { getDestination } from '../../CompatLayout';
 import { RammerheadAPI, StrShuffler } from '../../RammerheadAPI';
 import { RH_API } from '../../consts';
 import { Obfuscated } from '../../obfuscate';
 import Cookies from 'js-cookie';
 import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 const Rammerhead: HolyPage = ({ compatLayout }) => {
+	const location = useLocation();
+
 	useEffect(() => {
 		(async function () {
 			let errorCause: string | undefined;
@@ -53,7 +57,7 @@ const Rammerhead: HolyPage = ({ compatLayout }) => {
 
 				global.location.replace(
 					new URL(
-						`${session}/${shuffler.shuffle(compatLayout.current!.destination)}`,
+						`${session}/${shuffler.shuffle(getDestination(location))}`,
 						RH_API
 					)
 				);
@@ -61,7 +65,7 @@ const Rammerhead: HolyPage = ({ compatLayout }) => {
 				compatLayout.current!.report(err, errorCause, 'Rammerhead');
 			}
 		})();
-	}, [compatLayout]);
+	}, [compatLayout, location]);
 
 	return (
 		<main>

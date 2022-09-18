@@ -1,9 +1,10 @@
 import type { HolyPage } from '../../App';
 import type { ScriptRef } from '../../CompatLayout';
-import { Script } from '../../CompatLayout';
+import { getDestination, Script } from '../../CompatLayout';
 import { Obfuscated } from '../../obfuscate';
 import styles from '../../styles/CompatFlash.module.scss';
 import { useEffect, useRef, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 interface RufflePlayerElement extends HTMLElement {
 	load(data: { url: string }): void;
@@ -17,6 +18,7 @@ declare const RufflePlayer: {
 };
 
 const Flash: HolyPage = ({ compatLayout }) => {
+	const location = useLocation();
 	const container = useRef<HTMLElement | null>(null);
 	const ruffleBundle = useRef<ScriptRef | null>(null);
 	const [ruffleLoaded, setRuffleLoaded] = useState(false);
@@ -47,7 +49,7 @@ const Flash: HolyPage = ({ compatLayout }) => {
 				});
 
 				player.load({
-					url: compatLayout.current!.destination.toString(),
+					url: getDestination(location),
 				});
 			} catch (err) {
 				compatLayout.current!.report(err, errorCause, 'Rammerhead');
@@ -57,7 +59,7 @@ const Flash: HolyPage = ({ compatLayout }) => {
 		return () => {
 			player?.remove();
 		};
-	}, [compatLayout, ruffleBundle]);
+	}, [compatLayout, location, ruffleBundle]);
 
 	return (
 		<main

@@ -96,7 +96,7 @@ export interface MainLayoutRef {
 const MainLayout = forwardRef<
 	MainLayoutRef,
 	{
-		children: ReactNode;
+		children?: ReactNode;
 	}
 >(function MainLayout({ children }, ref) {
 	const [expanded, setExpanded] = useState(false);

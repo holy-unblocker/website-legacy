@@ -1,4 +1,5 @@
 import type { HolyPage } from '../../App';
+import { useGlobalCloakSettings } from '../../Layout';
 import { Notification } from '../../Notifications';
 import { ThemeButton, ThemeInputBar, themeStyles } from '../../ThemeElements';
 import { BARE_API } from '../../consts';
@@ -88,6 +89,7 @@ async function blobToDataURL(blob: Blob) {
 }
 
 const TabCloak: HolyPage = ({ layout }) => {
+	const [cloak, setCloak] = useGlobalCloakSettings();
 	const input = useRef<HTMLInputElement | null>(null);
 
 	async function onSubmit() {
@@ -114,7 +116,7 @@ const TabCloak: HolyPage = ({ layout }) => {
 
 			input.current!.value = url;
 
-			layout.current!.setCloak({
+			setCloak({
 				title: title!,
 				icon: icon!,
 				url: url!,
@@ -157,7 +159,7 @@ const TabCloak: HolyPage = ({ layout }) => {
 					<ThemeInputBar className={styles.ThemeInputBar}>
 						<input
 							className={themeStyles.themePadRight}
-							defaultValue={layout.current!.cloak.url}
+							defaultValue={cloak.url}
 							placeholder="https://example.org/"
 							ref={input}
 						/>
@@ -171,7 +173,7 @@ const TabCloak: HolyPage = ({ layout }) => {
 			<div>
 				<ThemeButton
 					onClick={() => {
-						layout.current!.setCloak({
+						setCloak({
 							title: '',
 							icon: '',
 							url: '',

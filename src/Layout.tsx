@@ -6,13 +6,10 @@ import {
 	forwardRef,
 	useEffect,
 	useImperativeHandle,
-	useMemo,
 	useRef,
 	useState,
 } from 'react';
 import { useLocation } from 'react-router-dom';
-
-export const THEMES: string[] = ['night', 'day'];
 
 class Scroll {
 	x: number;
@@ -95,55 +92,44 @@ export interface GlobalSettings {
 
 export interface LayoutRef {
 	notifications: RefObject<NotificationsManagerRef>;
-	settings: GlobalSettings;
-	setSettings: (
-		state: GlobalSettings | ((prevState: GlobalSettings) => GlobalSettings)
-	) => void;
-	cloak: CloakSettings;
-	setCloak: (
-		state: CloakSettings | ((prevState: CloakSettings) => CloakSettings)
-	) => void;
 }
+
+export const useGlobalSettings = (): [
+	settings: ReturnType<typeof useSettings<GlobalSettings>>[0],
+	setSettings: ReturnType<typeof useSettings<GlobalSettings>>[1]
+] =>
+	useSettings<GlobalSettings>('global settings', () => ({
+		theme: matchMedia('(prefers-color-scheme: light)').matches
+			? 'day'
+			: 'night',
+		proxy: 'automatic',
+		search: 'https://www.google.com/search?q=%s',
+		favorites: [],
+		seen_games: [],
+	}));
+
+export const useGlobalCloakSettings = (): [
+	cloak: ReturnType<typeof useSettings<CloakSettings>>[0],
+	setCloak: ReturnType<typeof useSettings<CloakSettings>>[1]
+] =>
+	useSettings<CloakSettings>('cloak settings', () => ({
+		url: '',
+		title: '',
+		icon: '',
+	}));
 
 const Layout = forwardRef<LayoutRef>(function Layout(props, ref) {
 	const notifications = useRef<NotificationsManagerRef | null>(null);
 
-	const theme = useMemo(
-		() =>
-			matchMedia('(prefers-color-scheme: light)').matches ? 'day' : 'night',
-		[]
-	);
-
-	const [settings, setSettings] = useSettings<GlobalSettings>(
-		'global settings',
-		() => ({
-			theme,
-			proxy: 'automatic',
-			search: 'https://www.google.com/search?q=%s',
-			favorites: [],
-			seen_games: [],
-		})
-	);
-
-	const [cloak, setCloak] = useSettings<CloakSettings>(
-		'cloak settings',
-		() => ({
-			url: '',
-			title: '',
-			icon: '',
-		})
-	);
+	const [settings] = useGlobalSettings();
+	const [cloak] = useGlobalCloakSettings();
 
 	useImperativeHandle(
 		ref,
 		() => ({
 			notifications,
-			settings,
-			setSettings,
-			cloak,
-			setCloak,
 		}),
-		[cloak, notifications, setCloak, setSettings, settings]
+		[notifications]
 	);
 
 	useEffect(() => {

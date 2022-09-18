@@ -1,18 +1,21 @@
 import type { HolyPage } from '../../App';
+import { useGlobalSettings } from '../../Layout';
 import { ThemeSelect } from '../../ThemeElements';
 import styles from '../../styles/Settings.module.scss';
 
 const Appearance: HolyPage = ({ layout }) => {
+	const [settings, setSettings] = useGlobalSettings();
+
 	return (
 		<section>
 			<div>
 				<span>Theme:</span>
 				<ThemeSelect
 					className={styles.ThemeSelect}
-					defaultValue={layout.current!.settings.theme}
+					defaultValue={settings.theme}
 					onChange={(event) => {
-						layout.current!.setSettings({
-							...layout.current!.settings,
+						setSettings({
+							...settings,
 							theme: event.target.value,
 						});
 					}}

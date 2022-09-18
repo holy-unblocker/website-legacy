@@ -1,13 +1,30 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 
+const settingsUpdates = new EventTarget();
+
 export default class Settings<T> {
 	private defaultSettings: T;
 	private key: string;
-	value: T;
+	value!: T;
 	constructor(key: string, defaultSettings: T) {
 		this.key = key;
 		this.defaultSettings = defaultSettings;
-
+		this.sync();
+	}
+	validValue<K extends keyof T>(key: K, value: T[K]) {
+		return typeof value === typeof this.defaultSettings[key];
+	}
+	get<K extends keyof T>(key: K): T[K] {
+		return this.value[key];
+	}
+	private update() {
+		localStorage[this.key] = JSON.stringify(this.value);
+		settingsUpdates.dispatchEvent(new Event(this.key));
+	}
+	/**
+	 * Syncs with the current value in localStorage
+	 */
+	sync() {
 		if (localStorage[this.key] === undefined) {
 			localStorage[this.key] = '{}';
 		}
@@ -40,12 +57,6 @@ export default class Settings<T> {
 			localStorage[this.key] = JSON.stringify(this.value);
 		}
 	}
-	validValue<K extends keyof T>(key: K, value: T[K]) {
-		return typeof value === typeof this.defaultSettings[key];
-	}
-	get<K extends keyof T>(key: K): T[K] {
-		return this.value[key];
-	}
 	setObject(object: { [K in keyof T]: T[K] }) {
 		let updated = false;
 
@@ -56,7 +67,7 @@ export default class Settings<T> {
 			}
 		}
 
-		if (updated) localStorage[this.key] = JSON.stringify(this.value);
+		if (updated) this.update();
 
 		return updated;
 	}
@@ -85,6 +96,22 @@ export function useSettings<T>(
 	useEffect(() => {
 		if (oldCurrent.current !== current) settings.setObject(current);
 	}, [settings, current]);
+
+	useEffect(() => {
+		const listener = () => {
+			settings.sync();
+			const newValue = { ...settings.value };
+			// prevent infinite loop
+			oldCurrent.current = newValue;
+			setCurrent(newValue);
+		};
+
+		settingsUpdates.addEventListener(key, listener);
+
+		return () => {
+			settingsUpdates.removeEventListener(key, listener);
+		};
+	}, [key, settings]);
 
 	return [current, setCurrent];
 }

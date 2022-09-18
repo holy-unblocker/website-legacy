@@ -1,5 +1,6 @@
 import type { LayoutDump } from './App';
 import { isDatabaseError } from './DatabaseAPI';
+import { useGlobalSettings } from './Layout';
 import { Notification } from './Notifications';
 import resolveProxy from './ProxyResolver';
 import { BARE_API } from './consts';
@@ -44,6 +45,7 @@ const ServiceFrame = forwardRef<
 	);
 	const [title, setTitle] = useState(src);
 	const [icon, setIcon] = useState('');
+	const [settings] = useGlobalSettings();
 
 	useEffect(() => {
 		if (src) {
@@ -51,10 +53,7 @@ const ServiceFrame = forwardRef<
 				if (!iframe.current || !iframe.current.contentWindow) return;
 
 				try {
-					const proxiedSrc = await resolveProxy(
-						src,
-						layout.current!.settings.proxy
-					);
+					const proxiedSrc = await resolveProxy(src, settings.proxy);
 
 					iframe.current.contentWindow.location.href = proxiedSrc;
 					setLastSrc(proxiedSrc);
@@ -78,7 +77,7 @@ const ServiceFrame = forwardRef<
 			iframe.current.contentWindow.location.href = 'about:blank';
 			setLastSrc('about:blank');
 		}
-	}, [iframe, layout, src]);
+	}, [iframe, layout, settings.proxy, src]);
 
 	useImperativeHandle(ref, () => ({
 		proxy: (src: string) => {
