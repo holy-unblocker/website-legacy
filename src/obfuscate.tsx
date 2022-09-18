@@ -2,8 +2,7 @@ import clsx from 'clsx';
 import type { RandomSeed } from 'random-seed';
 import { create } from 'random-seed';
 import type { HTMLAttributes, MouseEventHandler, ReactNode } from 'react';
-import { useRef } from 'react';
-import { memo, useEffect } from 'react';
+import { memo } from 'react';
 
 const rand = create(navigator.userAgent + global.location.origin);
 
@@ -42,32 +41,18 @@ const ellipsisClasses = classes();
 const charClass = unusedChar();
 const stringClass = unusedChar();
 
-export function ObfuscateLayout() {
-	const style = useRef<HTMLStyleElement | null>(null);
+export const ObfuscateLayout = () => {
+	const style =
+		`${junkClasses
+			.map((junk) => `.${stringClass} .${junk}`)
+			.join(',')}{position:absolute;z-index:-10;opacity:0}` +
+		`.${stringClass}>span{display:inline-block}` +
+		`${ellipsisClasses
+			.map((ellipsis) => `.${stringClass} .${ellipsis}`)
+			.join(',')}{display:inline}`;
 
-	useEffect(() => {
-		if (!style.current || !style.current.sheet) return;
-
-		for (const junk of junkClasses) {
-			style.current.sheet.insertRule(
-				`.${stringClass} .${junk}{position:absolute;z-index:-10;opacity:0}`
-			);
-		}
-
-		// word
-		style.current.sheet.insertRule(
-			`.${stringClass}>span{display:inline-block}`
-		);
-
-		for (const ellipsis of ellipsisClasses) {
-			style.current.sheet.insertRule(
-				`.${stringClass} .${ellipsis}{display:inline}`
-			);
-		}
-	}, [style]);
-
-	return <style ref={style}></style>;
-}
+	return <style>{style}</style>;
+};
 
 class ObfuscateContext {
 	rand: RandomSeed;
