@@ -17,6 +17,7 @@ export interface Hot {
 	 * default should be HolyPage
 	 */
 	import: () => Promise<{ default: HolyPage }>;
+	src: string;
 	layout: LayoutID;
 }
 
@@ -73,6 +74,8 @@ const lazyLoc = (path: string) => {
 	};
 };
 
+// export const determineHotChunkName =
+
 // wrap in React.lazy()
 export const hotRoutes: Hot[] = [
 	{
@@ -83,48 +86,56 @@ export const hotRoutes: Hot[] = [
 		file: '404.html',
 		alias: '404',
 		import: () => import(/* webpackPrefetch: true */ './pages/404'),
+		src: './pages/404',
 		layout: 'main',
 	},
 	{
 		...lazyLoc('/'),
 		alias: 'home',
 		import: () => import(/* webpackPrefetch: true */ './pages/index'),
+		src: './pages/index',
 		layout: 'main',
 	},
 	{
 		...lazyLoc('/faq'),
 		alias: 'faq',
 		import: () => import(/* webpackPrefetch: true */ './pages/faq'),
+		src: './pages/faq',
 		layout: 'main',
 	},
 	{
 		...lazyLoc('/contact'),
 		alias: 'contact',
 		import: () => import(/* webpackPrefetch: true */ './pages/contact'),
+		src: './pages/contact',
 		layout: 'main',
 	},
 	{
 		...lazyLoc('/privacy'),
 		alias: 'privacy',
 		import: () => import(/* webpackPrefetch: true */ './pages/privacy'),
+		src: './pages/privacy',
 		layout: 'main',
 	},
 	{
 		...lazyLoc('/terms'),
 		alias: 'terms',
 		import: () => import(/* webpackPrefetch: true */ './pages/terms'),
+		src: './pages/terms',
 		layout: 'main',
 	},
 	{
 		...lazyLoc(routeType === 'id' ? '/' + i++ : '/credits'),
 		alias: 'credits',
 		import: () => import(/* webpackPrefetch: true */ './pages/credits'),
+		src: './pages/credits',
 		layout: 'main',
 	},
 	{
 		...lazyLoc(routeType === 'id' ? '/' + i++ : '/proxy'),
 		alias: 'proxy',
 		import: () => import(/* webpackPrefetch: true */ './pages/proxy'),
+		src: './pages/proxy',
 		layout: 'main',
 	},
 	{
@@ -132,6 +143,7 @@ export const hotRoutes: Hot[] = [
 		alias: 'compat ultraviolet',
 		import: () =>
 			import(/* webpackPrefetch: true */ './pages/compat/ultraviolet'),
+		src: './pages/compat/ultraviolet',
 		layout: 'compat',
 	},
 	{
@@ -139,24 +151,28 @@ export const hotRoutes: Hot[] = [
 		alias: 'compat rammerhead',
 		import: () =>
 			import(/* webpackPrefetch: true */ './pages/compat/rammerhead'),
+		src: './pages/compat/rammerhead',
 		layout: 'compat',
 	},
 	{
 		...lazyLoc(routeType === 'id' ? '/' + i++ : '/compat/stomp'),
 		alias: 'compat stomp',
 		import: () => import(/* webpackPrefetch: true */ './pages/compat/stomp'),
+		src: './pages/compat/stomp',
 		layout: 'compat',
 	},
 	{
 		...lazyLoc(routeType === 'id' ? '/' + i++ : '/compat/flash'),
 		alias: 'compat flash',
 		import: () => import(/* webpackPrefetch: true */ './pages/compat/flash'),
+		src: './pages/compat/flash',
 		layout: 'compat',
 	},
 	{
 		...lazyLoc(routeType === 'id' ? '/' + i++ : '/settings/search'),
 		alias: 'settings search',
 		import: () => import(/* webpackPrefetch: true */ './pages/settings/search'),
+		src: './pages/settings/search',
 		layout: 'settings',
 	},
 	{
@@ -164,6 +180,7 @@ export const hotRoutes: Hot[] = [
 		alias: 'settings appearance',
 		import: () =>
 			import(/* webpackPrefetch: true */ './pages/settings/appearance'),
+		src: './pages/settings/appearance',
 		layout: 'settings',
 	},
 	{
@@ -171,6 +188,7 @@ export const hotRoutes: Hot[] = [
 		alias: 'settings tabcloak',
 		import: () =>
 			import(/* webpackPrefetch: true */ './pages/settings/tabcloak'),
+		src: './pages/settings/tabcloak',
 		layout: 'settings',
 	},
 	{
@@ -178,18 +196,21 @@ export const hotRoutes: Hot[] = [
 		alias: 'theatre favorites',
 		import: () =>
 			import(/* webpackPrefetch: true */ './pages/theatre/favorites'),
+		src: './pages/theatre/favorites',
 		layout: 'main',
 	},
 	{
 		...lazyLoc(routeType === 'id' ? '/' + i++ : '/theatre/apps'),
 		alias: 'theatre apps',
 		import: () => import(/* webpackPrefetch: true */ './pages/theatre/apps'),
+		src: './pages/theatre/apps',
 		layout: 'main',
 	},
 	{
 		...lazyLoc(routeType === 'id' ? '/' + i++ : '/theatre/player'),
 		alias: 'theatre player',
 		import: () => import(/* webpackPrefetch: true */ './pages/theatre/player'),
+		src: './pages/theatre/player',
 		layout: 'main',
 	},
 	{
@@ -197,6 +218,7 @@ export const hotRoutes: Hot[] = [
 		alias: 'theatre games popular',
 		import: () =>
 			import(/* webpackPrefetch: true */ './pages/theatre/games/index'),
+		src: './pages/theatre/games/index',
 		layout: 'main',
 	},
 	{
@@ -204,6 +226,7 @@ export const hotRoutes: Hot[] = [
 		alias: 'theatre games category',
 		import: () =>
 			import(/* webpackPrefetch: true */ './pages/theatre/category'),
+		src: './pages/theatre/category',
 		layout: 'main',
 	},
 	{
@@ -211,6 +234,7 @@ export const hotRoutes: Hot[] = [
 		alias: 'theatre games all',
 		import: () =>
 			import(/* webpackPrefetch: true */ './pages/theatre/games/all'),
+		src: './pages/theatre/games/all',
 		layout: 'main',
 	},
 ];
