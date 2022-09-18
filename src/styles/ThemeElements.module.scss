@@ -173,10 +173,10 @@ html[data-tab='1'] {
 
 .ThemeSelect {
 	color: var(--text);
-	position: relative;
 	user-select: none;
 	text-align: left;
 	box-sizing: content-box;
+	max-height: 40px;
 
 	> .toggle {
 		display: flex;
@@ -190,31 +190,40 @@ html[data-tab='1'] {
 		align-items: center;
 
 		> svg {
+			margin-left: 6px;
+			width: 24px;
+			height: 24px;
 			margin-left: auto;
 			line-height: inherit;
 		}
 	}
 
 	> .list {
-		z-index: 2;
-		display: none;
-		position: absolute;
+		z-index: 1;
+		position: relative;
+		visibility: hidden;
+		display: flex;
 		flex-direction: column;
-		border-radius: 8px;
 		border: 1px solid var(--border);
 		border-top: none;
-		border-top-left-radius: 0px;
-		border-top-right-radius: 0px;
-		width: calc(100% - 2px);
-		top: calc(100% - 1px);
+		border-bottom-left-radius: 8px;
+		border-bottom-right-radius: 8px;
 		background-color: var(--background-accent);
-		overflow: hidden;
 
 		> .plainOption {
-			border-top: 1px solid var(--border);
+			&:last-of-type {
+				border-bottom: none;
+				border-bottom-left-radius: 8px;
+				border-bottom-right-radius: 8px;
+			}
+
+			border-bottom: 1px solid var(--border);
 			height: 40px;
 			line-height: 40px;
-			padding: 0px 15px;
+			// add space for toggle icon
+			// toggle icon adds 30px (width + padding)
+			// add 15 px to factor in 15px padding on both sides
+			padding: 0px calc(30px + 15px) 0px 15px;
 			cursor: pointer;
 
 			&.disabled {
@@ -236,7 +245,7 @@ html[data-tab='1'] {
 		}
 
 		> .list {
-			display: flex;
+			visibility: visible;
 		}
 	}
 }
