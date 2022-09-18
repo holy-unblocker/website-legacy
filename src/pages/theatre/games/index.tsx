@@ -112,7 +112,7 @@ const Popular: HolyPage = () => {
 								}`}
 								className={styles.seeAll}
 							>
-								See All
+								{t('theatre.seeAll')}
 								<ArrowForward />
 							</ThemeLink>
 						</div>

@@ -41,6 +41,7 @@
 	},
 	"theatre": {
 		"noFavorites": "You haven't added any favorites.",
+		"seeAll": "See All",
 		"apps": "Apps",
 		"allGames": "All Games",
 		"searchByGame": "Search by game name",
