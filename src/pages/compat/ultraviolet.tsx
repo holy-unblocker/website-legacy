@@ -41,7 +41,7 @@ const Ultraviolet: HolyPage = ({ compatLayout }) => {
 					throw new Error(errorCause);
 				}
 
-				if (!('serviceWorker' in navigator)) {
+				if (!navigator.serviceWorker) {
 					errorCause = i18n.t('compat.error.swSupport');
 					throw new Error(errorCause);
 				}
