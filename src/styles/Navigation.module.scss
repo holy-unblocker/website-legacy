@@ -184,8 +184,13 @@
 		height: 24px;
 		padding: 10px 25px;
 
+		@include screen_mobile {
+			height: 30px;
+		}
+
 		&[data-selected='1'] {
 			background-color: var(--background-accent-deep-1);
+
 			> .name {
 				font-weight: bold;
 			}
@@ -207,10 +212,10 @@
 
 		&:hover {
 			color: var(--text);
-			background: var(--background-accent);
+			background-color: var(--background-accent);
 
 			&[data-selected='1'] {
-				background: var(--background-accent);
+				background-color: var(--background-accent);
 			}
 
 			@include screen_mobile {
