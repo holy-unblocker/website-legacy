@@ -17,7 +17,7 @@ export interface LayoutDump {
 	compatLayout: RefObject<CompatLayoutRef | null>;
 }
 
-export type HolyPage<T extends object = {}> = ComponentType<LayoutDump & T>;
+export type HolyPage = ComponentType<LayoutDump>;
 
 export interface LayoutProps {
 	Component: ReactElement<LayoutProps>;

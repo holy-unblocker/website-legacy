@@ -1,4 +1,3 @@
-import type { HolyPage } from './App';
 import type { CategoryData, LoadingCategoryData } from './TheatreCommon';
 import { isLoading } from './TheatreCommon';
 import { ItemList, TheatreAPI } from './TheatreCommon';
@@ -35,13 +34,19 @@ function createLoading(total: number) {
 	return loading;
 }
 
-const Category: HolyPage<{
+const Category = ({
+	name,
+	category,
+	placeholder,
+	id,
+	showCategory,
+}: {
 	name: string;
 	category: string;
 	placeholder?: string;
 	id: string;
 	showCategory?: boolean;
-}> = ({ name, category, placeholder, id, showCategory }) => {
+}) => {
 	const [search, setSearch] = useSearchParams();
 	let page = parseInt(search.get('page')!);
 	if (isNaN(page)) page = 0;
