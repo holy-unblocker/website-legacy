@@ -28,25 +28,17 @@ declare const __webpack_require__: ((id: string | number) => unknown) & {
 	e(id: string | number): PromiseLike<void>;
 };
 
-// https://reactrouter.com/docs/en/v6/getting-started/overview
-export default function App() {
-	const layout = useRef<LayoutRef | null>(null);
-	const mainLayout = useRef<MainLayoutRef | null>(null);
-	const compatLayout = useRef<CompatLayoutRef | null>(null);
-
-	const allRoutes = [];
-
-	const currentHot = hotRoutes.find((hot) =>
+const getCurrent = () => {
+	const hot = hotRoutes.find((hot) =>
 		matchPath(
 			hot.path,
 			global.location.pathname + global.location.search + global.location.hash
 		)
 	);
 
-	if (!currentHot)
-		throw new Error(`currentHot was neither a page (/) or 404 (*)`);
+	if (!hot) throw new Error(`current hot was neither a page (/) or 404 (*)`);
 
-	const importSrc = currentHot.import.toString();
+	const importSrc = hot.import.toString();
 
 	// ()=>__webpack_require__.e(/*! import() */ "src_pages_404_tsx").then(__webpack_require__.bind(__webpack_require__, /*! ./pages/404 */ "./src/pages/404.tsx"))
 	// ()=>n.e(697).then(n.bind(n,5697))
@@ -57,13 +49,28 @@ export default function App() {
 
 	if (!id) throw new Error('Failure');
 
-	const currentComponent = (
-		__webpack_require__(JSON.parse(id)) as { default: HolyPage }
-	).default;
+	return {
+		component: (__webpack_require__(JSON.parse(id)) as { default: HolyPage })
+			.default,
+		hot,
+	};
+};
+
+// https://reactrouter.com/docs/en/v6/getting-started/overview
+export default function App() {
+	const layout = useRef<LayoutRef | null>(null);
+	const mainLayout = useRef<MainLayoutRef | null>(null);
+	const compatLayout = useRef<CompatLayoutRef | null>(null);
+
+	const allRoutes = [];
+
+	const current =
+		process.env.NODE_ENV !== 'production' ? undefined : getCurrent();
 
 	for (let i = 0; i < hotRoutes.length; i++) {
 		const hot = hotRoutes[i];
-		const Component = hot === currentHot ? currentComponent : lazy(hot.import);
+		const Component =
+			hot === current?.hot ? current.component : lazy(hot.import);
 
 		const create = (
 			<Component
@@ -74,7 +81,7 @@ export default function App() {
 		);
 
 		const suspended =
-			hot === currentHot ? (
+			hot === current?.hot ? (
 				create
 			) : (
 				<Suspense fallback={<></>}>{create}</Suspense>
