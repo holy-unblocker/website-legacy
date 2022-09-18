@@ -134,6 +134,7 @@ const Category = ({
 						defaultValue={search.get('sort')!}
 						onChange={(event) => {
 							setData(createLoading(lastTotal));
+							search.delete('page');
 							setSearch({
 								...Object.fromEntries(search),
 								sort: event.target.value,
