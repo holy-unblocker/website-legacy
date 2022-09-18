@@ -85,9 +85,6 @@ export default function App() {
 				<Suspense fallback={<></>}>{create}</Suspense>
 			);
 
-		if (hot === current?.hot)
-			console.log('not suspending', hot.path, 'instead', suspended);
-
 		allRoutes.push(
 			<Route
 				key={i}
