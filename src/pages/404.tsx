@@ -1,17 +1,22 @@
 import type { HolyPage } from '../App';
 import { ThemeLink } from '../ThemeElements';
 import { getHot } from '../routes';
+import { Trans, useTranslation } from 'react-i18next';
 
 const NotFound: HolyPage = () => {
+	const { t } = useTranslation();
+
 	return (
 		<main>
-			<h1>The page you are looking for is not available.</h1>
+			<h1>{t('404.title')}</h1>
 			<hr />
 			<p>
-				If you typed in the URL yourself, please double-check the spelling.
+				{t('404.suggestion')}
 				<br />
-				If you got here from a link within our site, please{' '}
-				<ThemeLink to={getHot('contact').path}>Contact Us</ThemeLink>.
+				<Trans
+					i18nKey="404.contactUs"
+					components={[<ThemeLink to={getHot('contact').path} />]}
+				/>
 			</p>
 		</main>
 	);
