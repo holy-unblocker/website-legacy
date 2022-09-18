@@ -9,7 +9,7 @@ import SettingsLayout from './SettingsLayout';
 import { hotRoutes } from './routes';
 import type { ComponentType, ReactElement, RefObject } from 'react';
 import { Suspense, lazy, useRef } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, matchPath } from 'react-router-dom';
 
 export interface LayoutDump {
 	layout: RefObject<LayoutRef | null>;
@@ -24,6 +24,10 @@ export interface LayoutProps {
 	componentProps: LayoutProps;
 }
 
+declare const __webpack_require__: ((id: string | number) => unknown) & {
+	e(id: string | number): PromiseLike<void>;
+};
+
 // https://reactrouter.com/docs/en/v6/getting-started/overview
 export default function App() {
 	const layout = useRef<LayoutRef | null>(null);
@@ -32,19 +36,49 @@ export default function App() {
 
 	const allRoutes = [];
 
+	const currentHot = hotRoutes.find((hot) =>
+		matchPath(
+			hot.path,
+			global.location.pathname + global.location.search + global.location.hash
+		)
+	);
+
+	if (!currentHot)
+		throw new Error(`currentHot was neither a page (/) or 404 (*)`);
+
+	const importSrc = currentHot.import.toString();
+
+	// ()=>__webpack_require__.e(/*! import() */ "src_pages_404_tsx").then(__webpack_require__.bind(__webpack_require__, /*! ./pages/404 */ "./src/pages/404.tsx"))
+	// ()=>n.e(697).then(n.bind(n,5697))
+
+	// webpack uses JSON.stringify to produce IDs?
+	const [, , id] =
+		importSrc.match(/\.then\((\w+)\.bind\(\1,.*?(".*?"|\d+)\)\)/) || [];
+
+	if (!id) throw new Error('Failure');
+
+	const currentComponent = (
+		__webpack_require__(JSON.parse(id)) as { default: HolyPage }
+	).default;
+
 	for (let i = 0; i < hotRoutes.length; i++) {
 		const hot = hotRoutes[i];
-		const Component = lazy(hot.import);
+		const Component = hot === currentHot ? currentComponent : lazy(hot.import);
 
-		const suspended = (
-			<Suspense fallback={<></>}>
-				<Component
-					layout={layout}
-					mainLayout={mainLayout}
-					compatLayout={compatLayout}
-				/>
-			</Suspense>
+		const create = (
+			<Component
+				layout={layout}
+				mainLayout={mainLayout}
+				compatLayout={compatLayout}
+			/>
 		);
+
+		const suspended =
+			hot === currentHot ? (
+				create
+			) : (
+				<Suspense fallback={<></>}>{create}</Suspense>
+			);
 
 		allRoutes.push(
 			<Route
