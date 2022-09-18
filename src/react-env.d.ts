@@ -16,6 +16,11 @@ declare module '*.scss' {}
 
 declare module '*.css' {}
 
+declare module '*?file' {
+	const url: string;
+	export default url;
+}
+
 declare module '*.avif' {
 	const url: string;
 	export default url;
