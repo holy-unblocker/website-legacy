@@ -58,7 +58,8 @@
 		"error": {
 			"generic": "An error occurred while loading the category",
 			"playerEntryLoad": "An error occurred while loading the app/game",
-			"popularGamesLoad": "An error occurred while loading popular games"
+			"popularGamesLoad": "An error occurred while loading popular games",
+			"categoryData": "Unable to fetch the category data."
 		}
 	},
 	"proxy": {

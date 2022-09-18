@@ -84,7 +84,7 @@ const Category = ({
 
 			const api = new TheatreAPI(DB_API, abort.signal);
 
-			errorCause.current = 'Unable to fetch the category data.';
+			errorCause.current = 'theatre.error.categoryData';
 
 			try {
 				const data = await api.category({
@@ -112,7 +112,7 @@ const Category = ({
 	if (error)
 		return (
 			<CommonError
-				error={errorCause.current || error}
+				error={errorCause.current ? t(errorCause.current) : error}
 				message={t('theatre.error.generic')}
 			/>
 		);
