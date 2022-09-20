@@ -631,14 +631,6 @@ const webpackConfig: Configuration = {
 					filename: 'static/css/[name].[contenthash:8].css',
 					chunkFilename: 'static/css/[name].[contenthash:8].chunk.css',
 				}),
-			// Moment.js is an extremely popular library that bundles large locale files
-			// by default due to how webpack interprets its code. This is a practical
-			// solution that requires the user to opt into importing specific locales.
-			// https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
-			// You can remove this if you don't use Moment.js:
-			new webpack.IgnorePlugin({
-				resourceRegExp: /^\.\/locale$/,
-			}),
 			process.env.WEBPACK_BUNDLE_ANALYZER === 'true' &&
 				new BundleAnalyzerPlugin({
 					analyzerMode: 'static',
