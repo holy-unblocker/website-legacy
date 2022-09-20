@@ -82,8 +82,7 @@
 		"webpack": "^5.74.0",
 		"webpack-bundle-analyzer": "^4.6.1",
 		"webpack-cli": "^4.10.0",
-		"webpack-dev-server": "^4.11.0",
-		"webpack-manifest-plugin": "^5.0.0"
+		"webpack-dev-server": "^4.11.0"
 	},
 	"scripts": {
 		"start": "http-server ./dist/ --port 3000",
