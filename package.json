@@ -41,6 +41,7 @@
 		"@types/crypto-js": "^4.1.1",
 		"@types/dotenv-flow": "^3.2.0",
 		"@types/js-cookie": "^3.0.2",
+		"@types/node": "^18.7.18",
 		"@types/random-seed": "^0.3.3",
 		"@types/react-dom": "^18.0.6",
 		"@types/webpack-bundle-analyzer": "^4.4.2",
