@@ -678,11 +678,6 @@ const webpackConfig: Configuration = {
 					);
 				},
 			},
-			/*!isDevelopment &&
-				new BasicWebpackObfuscator({
-					sourceMap: shouldUseSourceMap,
-				}),*/
-			// new RouterPlugin(),
 		] as (PluginEntry | false)[]
 	).filter(Boolean) as PluginEntry[],
 	// Turn off performance processing because we utilize
