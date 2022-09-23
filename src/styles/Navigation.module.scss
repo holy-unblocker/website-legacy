@@ -24,7 +24,7 @@
 
 	width: 35px;
 
-	@include screen_mobile {
+	@include screenMobile {
 		position: absolute;
 		left: 0px;
 		right: 0px;
@@ -54,12 +54,12 @@
 	&:hover {
 		background-color: var(--background-accent);
 
-		@include screen_mobile {
+		@include screenMobile {
 			background-color: transparent;
 		}
 	}
 
-	@include screen_mobile {
+	@include screenMobile {
 		padding: calc(($nav-height - 20px) / 2) 10px;
 		margin: 0px;
 	}
@@ -84,7 +84,7 @@
 		flex-direction: row;
 	}
 
-	@include screen_mobile {
+	@include screenMobile {
 		> .shiftRight {
 			display: none;
 		}
@@ -132,7 +132,7 @@
 		transition: transform 0.3s, visibility 0.3s 0.3s;
 		overflow: hidden;
 
-		@include screen_mobile {
+		@include screenMobile {
 			width: 100%;
 			height: 100vh;
 			transition: none;
@@ -184,7 +184,7 @@
 		height: 24px;
 		padding: 10px 25px;
 
-		@include screen_mobile {
+		@include screenMobile {
 			height: 30px;
 		}
 
@@ -218,7 +218,7 @@
 				background-color: var(--background-accent);
 			}
 
-			@include screen_mobile {
+			@include screenMobile {
 				color: var(--contrast-background);
 				background-color: transparent;
 			}
@@ -261,7 +261,7 @@
 			&:hover {
 				background-color: var(--background-accent);
 
-				@include screen_mobile {
+				@include screenMobile {
 					background-color: transparent;
 				}
 			}
@@ -284,7 +284,7 @@ html[data-expanded='1'] {
 			opacity: 1;
 			visibility: visible;
 
-			@include screen_mobile {
+			@include screenMobile {
 				opacity: 0;
 			}
 		}

@@ -15,7 +15,7 @@
 		width: 100%;
 	}
 
-	@include screen_mobile {
+	@include screenMobile {
 		&[data-focused='1'] {
 			position: fixed;
 			z-index: 100;
@@ -41,7 +41,7 @@
 		z-index: 3;
 		user-select: none;
 
-		@include screen_mobile {
+		@include screenMobile {
 			width: calc(100% - 20px); // - padding - border
 		}
 

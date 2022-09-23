@@ -82,7 +82,7 @@ footer {
 				}
 			}
 
-			@include screen_mobile {
+			@include screenMobile {
 				justify-content: space-around;
 
 				> a:nth-child(1) {

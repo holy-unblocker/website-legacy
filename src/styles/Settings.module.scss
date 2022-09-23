@@ -61,7 +61,7 @@
 		z-index: 1;
 	}
 
-	@include screen_mobile {
+	@include screenMobile {
 		--menu-height: 76px;
 		padding-left: 0px;
 		padding-top: var(--menu-height);
