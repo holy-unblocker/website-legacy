@@ -42,6 +42,8 @@ const Rammerhead: HolyPage = ({ compatLayout }) => {
 						new URL(localStorage.rammerhead_session, RH_API)
 					);
 
+					await api.deleteSession(localStorage.rammerhead_session);
+
 					// 404 = good, 403 = Sessions must come from the same IP
 					if (test.status === 403) delete localStorage.rammerhead_session;
 				} else {
