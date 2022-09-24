@@ -34,8 +34,8 @@
 			"rammerheadNewSession": "Impossible de créer une nouvelle session Rammerhead.",
 			"rammerheadEditSession": "Impossible de modifier une session Rammerhead.",
 			"rammerheadDict": "Impossible de récupérer le dictionnaire mélangé.",
-			"hash": "No hash was provided",
-			"decryptURL": "Failed to decrypt destination"
+			"hash": "Aucun hachage n'a été fourni",
+			"decryptURL": "Échec du déchiffrement de la destination"
 		},
 		"loading": "Chargement de {{what}}..."
 	},
