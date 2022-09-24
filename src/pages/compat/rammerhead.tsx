@@ -33,17 +33,25 @@ const Rammerhead: HolyPage = ({ compatLayout }) => {
 				errorCause = undefined;
 
 				errorCause = i18n.t('compat.error.rammerheadSavedSession');
+
 				if (
-					!localStorage.rammerhead_session ||
-					!(await api.sessionExists(localStorage.rammerhead_session))
+					localStorage.rammerhead_session &&
+					(await api.sessionExists(localStorage.rammerhead_session))
 				) {
-					errorCause = i18n.t('compat.error.rammerheadNewSession');
-					const session = await api.newSession();
-					errorCause = undefined;
-					localStorage.rammerhead_session = session;
+					const test = await fetch(
+						new URL(localStorage.rammerhead_session, RH_API)
+					);
+
+					// 404 = good, 403 = Sessions must come from the same IP
+					if (test.status === 403) delete localStorage.rammerhead_session;
+				} else {
+					delete localStorage.rammerhead_session;
 				}
 
-				const session = localStorage.rammerhead_session;
+				errorCause = i18n.t('compat.error.rammerheadNewSession');
+				const session =
+					localStorage.rammerhead_session || (await api.newSession());
+				errorCause = undefined;
 
 				errorCause = undefined;
 
