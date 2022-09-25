@@ -13,7 +13,7 @@
 		"@emotion/styled": "^11.10.4",
 		"@mui/icons-material": "^5.10.3",
 		"@swc/helpers": "^0.4.11",
-		"@tomphttp/bare-client": "^1.0.5",
+		"@tomphttp/bare-client": "^1.1.0",
 		"clean-webpack-plugin": "^4.0.0",
 		"clsx": "^1.2.1",
 		"crypto-js": "^4.1.1",
