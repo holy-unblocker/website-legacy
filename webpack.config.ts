@@ -160,6 +160,10 @@ const copyPluginPatterns: {
 	filter?: CopyPlugin.Filter;
 }[] = [
 	{
+		from: './public',
+		filter: (file) => file !== resolve('public/index.html'),
+	},
+	{
 		from: stompPath,
 		to: 'stomp',
 	},
@@ -168,18 +172,10 @@ const copyPluginPatterns: {
 		to: 'uv',
 	},
 	{
-		from: './uv',
-		to: 'uv',
-	},
-	{
 		from: resolve('node_modules/@ruffle-rs/ruffle'),
 		// don't filter licenses!
 		filter: (file) => !['package.json', 'README.md'].includes(basename(file)),
 		to: 'ruffle',
-	},
-	{
-		from: './public',
-		filter: (file) => file !== resolve('public/index.html'),
 	},
 ];
 
