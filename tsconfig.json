@@ -8,9 +8,8 @@
 		"strict": true,
 		"noEmit": true,
 		"sourceMap": true,
-		"paths": {
-			"*": ["src/@types/*"]
-		}
+		"baseUrl": "types",
+		"typeRoots": ["node_modules/@types", "types"]
 	},
-	"include": ["src/node_modules", "src/react-env.d.ts", "src/**/*"]
+	"include": ["src/react-env.d.ts", "src/**/*"]
 }
