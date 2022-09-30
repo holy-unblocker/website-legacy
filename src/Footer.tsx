@@ -9,7 +9,7 @@ const Footer = () => {
 	const { t } = useTranslation();
 
 	return (
-		<footer>
+		<footer className={styles.footer}>
 			<Waves />
 			<div className={styles.background}>
 				<div className={styles.content}>
