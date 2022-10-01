@@ -23,7 +23,7 @@ const Contact: HolyPage = () => {
 					<tr>
 						<td>Email:</td>
 						<td>
-							<ObfuscatedThemeA href="mailto:support@holy.how">
+							<ObfuscatedThemeA href={'mailto:' + SUPPORT_EMAIL}>
 								<Obfuscated>{SUPPORT_EMAIL}</Obfuscated>
 							</ObfuscatedThemeA>
 						</td>
