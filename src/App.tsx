@@ -2,7 +2,6 @@ import './styles/root.scss';
 import './styles/fonts/Lato.scss';
 import './styles/fonts/MontserratAlternates.scss';
 import './styles/theme.scss';
-import './styles/common.scss';
 import type { CompatLayoutRef } from './CompatLayout';
 import CompatLayout from './CompatLayout';
 import type { LayoutRef } from './Layout';
