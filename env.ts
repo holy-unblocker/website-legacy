@@ -35,6 +35,7 @@ export const envRaw: typeof process.env = {
 
 const envRequired: string[] = [
 	'REACT_APP_ROUTER',
+	'REACT_APP_SUPPORT_EMAIL',
 	'REACT_APP_HAT_BADGE',
 	'REACT_APP_DEFAULT_PROXY',
 	'REACT_APP_TN_DISCORD_URL',

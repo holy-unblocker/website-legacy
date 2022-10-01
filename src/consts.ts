@@ -31,3 +31,7 @@ export const TN_DISCORD_URL = /*#__PURE__*/ format(
 export const HU_DISCORD_URL = /*#__PURE__*/ format(
 	process.env.REACT_APP_HU_DISCORD_URL!
 );
+
+export const SUPPORT_EMAIL = /*#__PURE__*/ format(
+	process.env.REACT_APP_SUPPORT_EMAIL!
+);

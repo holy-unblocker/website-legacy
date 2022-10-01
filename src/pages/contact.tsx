@@ -1,6 +1,6 @@
 import type { HolyPage } from '../App';
 import { ObfuscatedThemeA } from '../ThemeElements';
-import { HU_DISCORD_URL } from '../consts';
+import { HU_DISCORD_URL, SUPPORT_EMAIL } from '../consts';
 import { Obfuscated } from '../obfuscate';
 import { useTranslation } from 'react-i18next';
 
@@ -10,26 +10,34 @@ const Contact: HolyPage = () => {
 	return (
 		<main>
 			<h1>{t('contact.title')}</h1>
-			<ul>
-				<li>
-					GitHub:{' '}
-					<ObfuscatedThemeA href="https://git.holy.how/holy">
-						<Obfuscated>https://git.holy.how/holy</Obfuscated>
-					</ObfuscatedThemeA>
-				</li>
-				<li>
-					Email:{' '}
-					<ObfuscatedThemeA href="mailto:support@holy.how">
-						<Obfuscated>support@holy.how</Obfuscated>
-					</ObfuscatedThemeA>
-				</li>
-				<li>
-					<Obfuscated>Discord</Obfuscated>:{' '}
-					<ObfuscatedThemeA href={HU_DISCORD_URL}>
-						<Obfuscated>{HU_DISCORD_URL}</Obfuscated>
-					</ObfuscatedThemeA>
-				</li>
-			</ul>
+			<table>
+				<tbody>
+					<tr>
+						<td>GitHub:</td>
+						<td>
+							<ObfuscatedThemeA href="https://git.holy.how/holy">
+								<Obfuscated>https://git.holy.how/holy</Obfuscated>
+							</ObfuscatedThemeA>
+						</td>
+					</tr>
+					<tr>
+						<td>Email:</td>
+						<td>
+							<ObfuscatedThemeA href="mailto:support@holy.how">
+								<Obfuscated>{SUPPORT_EMAIL}</Obfuscated>
+							</ObfuscatedThemeA>
+						</td>
+					</tr>
+					<tr>
+						<td>Discord:</td>
+						<td>
+							<ObfuscatedThemeA href={HU_DISCORD_URL}>
+								<Obfuscated>{HU_DISCORD_URL}</Obfuscated>
+							</ObfuscatedThemeA>
+						</td>
+					</tr>
+				</tbody>
+			</table>
 		</main>
 	);
 };
