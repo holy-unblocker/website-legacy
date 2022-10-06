@@ -56,6 +56,7 @@ const Stomp: HolyPage = ({ compatLayout }) => {
 				errorCause = undefined;
 
 				const config = {
+					// eslint-disable-next-line camelcase
 					bare_server: BARE_API,
 					directory: '/stomp/',
 				} as Partial<StompBootConfig>;

@@ -87,7 +87,7 @@ export interface GlobalSettings {
 	proxy: string;
 	search: string;
 	favorites: string[];
-	seen_games: string[];
+	seenGames: string[];
 }
 
 export interface LayoutRef {
@@ -97,16 +97,35 @@ export interface LayoutRef {
 export const useGlobalSettings = (): [
 	settings: ReturnType<typeof useSettings<GlobalSettings>>[0],
 	setSettings: ReturnType<typeof useSettings<GlobalSettings>>[1]
-] =>
-	useSettings<GlobalSettings>('global settings', () => ({
+] => {
+	// remove artifact of old casing
+	if ('global settings' in localStorage)
+		try {
+			const parsed = JSON.parse(
+				localStorage['global settings']
+			) as GlobalSettings & { seen_games?: GlobalSettings['seenGames'] };
+
+			if (parsed.seen_games) {
+				parsed.seenGames = parsed.seen_games;
+				delete parsed.seen_games;
+				console.log('Migrated seen_games => seen_games');
+				localStorage['global settings'] = JSON.stringify(parsed);
+			}
+		} catch (err) {
+			// parse error
+			if (!(err instanceof SyntaxError)) throw err;
+		}
+
+	return useSettings<GlobalSettings>('global settings', () => ({
 		theme: matchMedia('(prefers-color-scheme: light)').matches
 			? 'day'
 			: 'night',
 		proxy: 'automatic',
 		search: 'https://www.google.com/search?q=%s',
 		favorites: [],
-		seen_games: [],
+		seenGames: [],
 	}));
+};
 
 export const useGlobalCloakSettings = (): [
 	cloak: ReturnType<typeof useSettings<CloakSettings>>[0],

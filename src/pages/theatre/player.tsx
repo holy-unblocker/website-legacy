@@ -73,14 +73,14 @@ const Player: HolyPage = () => {
 	const controlsOpen = useRef<HTMLDivElement | null>(null);
 	const [resolvedSrc, setResolvedSrc] = useState<string | null>(null);
 	const controlsPopup = useRef<HTMLDivElement | null>(null);
-	const [seen, _setSeen] = useState(() => settings.seen_games.includes(id));
+	const [seen, _setSeen] = useState(() => settings.seenGames.includes(id));
 	const [iframeFocused, setIFrameFocused] = useState(true);
 
 	useEffect(() => {
 		const abort = new AbortController();
 
 		async function setSeen(value: boolean) {
-			const seen = settings.seen_games;
+			const seen = settings.seenGames;
 
 			if (value) {
 				seen.push(id);
@@ -91,7 +91,7 @@ const Player: HolyPage = () => {
 
 			setSettings({
 				...settings,
-				seen_games: seen,
+				seenGames: seen,
 			});
 
 			_setSeen(value);
