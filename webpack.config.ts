@@ -6,7 +6,8 @@ import hotRoutes from './src/routes.js';
 import type swcrcSchema from './swcrc.js';
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import type { JsMinifyOptions } from '@swc/core';
-import { stompPath } from '@sysce/stomp';
+import stompPath from '@sysce/stomp';
+import uvPath from '@titaniumnetwork-dev/ultraviolet';
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import CopyPlugin from 'copy-webpack-plugin';
@@ -22,7 +23,6 @@ import InlineChunkHtmlPlugin from 'react-dev-utils/InlineChunkHtmlPlugin.js';
 import ModuleNotFoundPlugin from 'react-dev-utils/ModuleNotFoundPlugin.js';
 import getCSSModuleLocalIdent from 'react-dev-utils/getCSSModuleLocalIdent.js';
 import TerserPlugin from 'terser-webpack-plugin';
-import { uvPath } from 'ultraviolet';
 import { promisify } from 'util';
 import type {
 	Compiler,
