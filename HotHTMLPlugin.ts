@@ -1,6 +1,6 @@
 import hotRoutes from './src/routes.js';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import { extname } from 'path';
+import { extname } from 'node:path';
 import webpack from 'webpack';
 import type { Compilation, Compiler, WebpackPluginInstance } from 'webpack';
 
