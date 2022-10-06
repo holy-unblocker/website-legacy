@@ -3,7 +3,6 @@ import HotHTMLPlugin from './HotHTMLPlugin.js';
 import type { CSSLoaderOptions } from './css-loader.js';
 import { envRaw, envRawHash, envRawStringified } from './env.js';
 import hotRoutes from './src/routes.js';
-import type swcrcSchema from './swcrc.js';
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import type { JsMinifyOptions } from '@swc/core';
 import stompPath from '@sysce/stomp';
@@ -381,7 +380,7 @@ const webpackConfig: Configuration = {
 								target: 'es2015',
 								externalHelpers: true,
 							},
-						} as swcrcSchema,
+						},
 					},
 					// Process any JS outside of the app with SWC.
 					// Unlike the application JS, we only compile the standard ES features.
@@ -396,7 +395,7 @@ const webpackConfig: Configuration = {
 								target: 'es2015',
 								externalHelpers: true,
 							},
-						} as swcrcSchema,
+						},
 					},
 					// "postcss" loader applies autoprefixer to our CSS.
 					// "css" loader resolves paths in CSS and adds assets as dependencies.
