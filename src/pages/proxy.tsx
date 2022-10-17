@@ -1,9 +1,11 @@
 import type { HolyPage, LayoutDump } from '../App';
 import { useGlobalSettings } from '../Layout';
+import resolveProxy from '../ProxyResolver';
 import SearchBuilder from '../SearchBuilder';
 import ServiceFrame from '../ServiceFrame';
 import type { ServiceFrameRef } from '../ServiceFrame';
 import { ThemeInputBar, ThemeLink, themeStyles } from '../ThemeElements';
+import presentAboutBlank from '../aboutBlank';
 import { BARE_API } from '../consts';
 import engines from '../engines';
 import isAbortError, { isFailedToFetch } from '../isAbortError';
@@ -79,7 +81,7 @@ const SearchBar = ({ layout }: { layout: LayoutDump['layout'] }) => {
 		}
 	}
 
-	function searchSubmit() {
+	async function searchSubmit() {
 		const value =
 			lastSelect === -1 || lastInput.current === 'input'
 				? input.current!.value
@@ -88,9 +90,22 @@ const SearchBar = ({ layout }: { layout: LayoutDump['layout'] }) => {
 		input.current!.value = value;
 
 		const builder = new SearchBuilder(settings.search);
+		const src = builder.query(input.current!.value);
 
 		setInputFocused(false);
-		serviceFrame.current!.proxy(builder.query(input.current!.value));
+
+		switch (settings.proxyMode) {
+			case 'embedded':
+				serviceFrame.current!.proxy(src);
+				break;
+			case 'redirect':
+				window.location.assign(await resolveProxy(src, settings.proxy));
+				break;
+			case 'about:blank':
+				presentAboutBlank(await resolveProxy(src, settings.proxy));
+				break;
+		}
+
 		onInput();
 	}
 
