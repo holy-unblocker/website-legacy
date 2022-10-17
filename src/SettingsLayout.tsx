@@ -26,8 +26,8 @@ const SettingsLayout = ({ children }: { children: ReactNode }) => {
 					/>
 					<MenuTab
 						className={styles.entry}
-						route={getHot('settings search').path}
-						name={t('link.settingsSearch')}
+						route={getHot('settings proxy').path}
+						name={t('link.proxy')}
 						iconFilled={<Public />}
 					/>
 					<MenuTab

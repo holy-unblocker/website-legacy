@@ -42,7 +42,7 @@ export type SomeAlias =
 	| 'compat rammerhead'
 	| 'compat stomp'
 	| 'compat flash'
-	| 'settings search'
+	| 'settings proxy'
 	| 'settings appearance'
 	| 'settings tabcloak'
 	| 'theatre favorites'
@@ -158,10 +158,10 @@ export const hotRoutes: Hot[] = [
 		layout: 'compat',
 	},
 	{
-		...lazyLoc(routeType === 'id' ? '/' + i++ : '/settings/search'),
-		alias: 'settings search',
-		import: () => import(/* webpackPrefetch: true */ './pages/settings/search'),
-		src: './pages/settings/search',
+		...lazyLoc(routeType === 'id' ? '/' + i++ : '/settings/proxy'),
+		alias: 'settings proxy',
+		import: () => import(/* webpackPrefetch: true */ './pages/settings/proxy'),
+		src: './pages/settings/proxy',
 		layout: 'settings',
 	},
 	{
