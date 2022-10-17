@@ -88,7 +88,6 @@ const ServiceFrame = forwardRef<
 
 	useImperativeHandle(ref, () => ({
 		proxy: (src: string) => {
-			search.has('query') && decryptURL(search.get('query')! as string);
 			setSearch({
 				...Object.fromEntries(search),
 				query: encryptURL(src),
