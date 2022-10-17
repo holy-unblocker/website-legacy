@@ -75,7 +75,10 @@
 		"themeNight": "Night",
 		"automaticProxy": "Automatic",
 		"searchEngine": "Search Engine",
-		"proxy": "Proxy",
+		"proxy": {
+			"mode": "Proxy Mode",
+			"setting": ["Embedded", "Redirect", "about:blank"]
+		},
 		"tabCloak": {
 			"description": "Tab Cloaking allows you to disguise Holy Unblocker as any website such as your school's home page, new tab, etc.",
 			"urlField": "URL",

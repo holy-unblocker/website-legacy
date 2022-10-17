@@ -14,7 +14,7 @@ const Search: HolyPage = () => {
 		<section>
 			<div>
 				<p>
-					<Obfuscated>{t('settings.proxy')}</Obfuscated>:
+					<Obfuscated>{t('link.proxy')}</Obfuscated>:
 				</p>
 				<ThemeSelect
 					className={styles.ThemeSelect}
@@ -30,6 +30,25 @@ const Search: HolyPage = () => {
 					<option value="ultraviolet">Ultraviolet</option>
 					<option value="rammerhead">Rammerhead</option>
 					<option value="stomp">Stomp</option>
+				</ThemeSelect>
+			</div>
+			<div>
+				<p>
+					<Obfuscated>{t('settings.proxy.mode')}</Obfuscated>:
+				</p>
+				<ThemeSelect
+					className={styles.ThemeSelect}
+					onChange={(event) =>
+						setSettings({
+							...settings,
+							proxyMode: event.target.value,
+						})
+					}
+					defaultValue={settings.proxyMode}
+				>
+					<option value="embedded">{t('settings.proxy.setting.0')}</option>
+					<option value="redirect">{t('settings.proxy.setting.1')}</option>
+					<option value="about:blank">{t('settings.proxy.setting.2')}</option>
 				</ThemeSelect>
 			</div>
 			<div>

@@ -85,6 +85,7 @@ export interface CloakSettings {
 export interface GlobalSettings {
 	theme: string;
 	proxy: string;
+	proxyMode: string;
 	search: string;
 	favorites: string[];
 	seenGames: string[];
@@ -121,6 +122,7 @@ export const useGlobalSettings = (): [
 			? 'day'
 			: 'night',
 		proxy: 'automatic',
+		proxyMode: 'embedded',
 		search: 'https://www.google.com/search?q=%s',
 		favorites: [],
 		seenGames: [],
