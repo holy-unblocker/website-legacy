@@ -3,8 +3,6 @@ const presentAboutBlank = (src: string) => {
 
 	if (!newWindow) throw new Error(`Could not create new window`);
 
-	console.log(newWindow);
-
 	newWindow.addEventListener(
 		'DOMContentLoaded',
 		() => {
