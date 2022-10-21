@@ -171,6 +171,18 @@ const Player: HolyPage = () => {
 		};
 	}, [data, iframeFocused]);
 
+	useEffect(() => {
+		const listener = () => {
+			setIFrameFocused(document.fullscreenElement === iframe.current);
+		};
+
+		document.addEventListener('fullscreenchange', listener);
+
+		return () => {
+			document.removeEventListener('fullscreenchange', listener);
+		};
+	}, []);
+
 	if (error)
 		return (
 			<CommonError
