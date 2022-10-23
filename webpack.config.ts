@@ -6,7 +6,7 @@ import hotRoutes from './src/routes.js';
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import type { JsMinifyOptions } from '@swc/core';
 import stompPath from '@sysce/stomp';
-import uvPath from '@titaniumnetwork-dev/ultraviolet';
+import { uvPath } from '@titaniumnetwork-dev/ultraviolet';
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import CopyPlugin from 'copy-webpack-plugin';
@@ -36,7 +36,6 @@ import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import type { Configuration as WebpackDevServerConfiguration } from 'webpack-dev-server';
 
 const globA = promisify(glob);
-// import BasicWebpackObfuscator from 'basic-webpack-obfuscator';
 
 const require = createRequire(import.meta.url);
 

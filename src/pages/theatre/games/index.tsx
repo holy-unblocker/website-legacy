@@ -105,7 +105,7 @@ const Popular: HolyPage = () => {
 				return (
 					<section className={styles.expand} key={section.category.id}>
 						<div className={styles.name}>
-							<h1>{t(`gameCategory.${section.category.id}`)}</h1>
+							<h1>{t(`gameCategory.${section.category.id}`).toString()}</h1>
 							<ThemeLink
 								to={`${getHot('theatre games category').path}?id=${
 									section.category.id
