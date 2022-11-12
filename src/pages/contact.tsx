@@ -15,10 +15,8 @@ const Contact: HolyPage = () => {
 					<tr>
 						<td>GitHub:</td>
 						<td>
-							<ObfuscatedThemeA href="https://https://github.com/holy-unblocker">
-								<Obfuscated>
-									https://https://github.com/holy-unblocker
-								</Obfuscated>
+							<ObfuscatedThemeA href="https://github.com/holy-unblocker">
+								<Obfuscated>https://github.com/holy-unblocker</Obfuscated>
 							</ObfuscatedThemeA>
 						</td>
 					</tr>
