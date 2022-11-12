@@ -6,7 +6,7 @@
 	"private": true,
 	"repository": {
 		"type": "git",
-		"url": "https://git.holy.how/holy/website.git"
+		"url": "https://github.com/holy-unblocker/website.git"
 	},
 	"dependencies": {
 		"@emotion/react": "^11.10.4",
