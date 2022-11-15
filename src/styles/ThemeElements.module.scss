@@ -33,11 +33,6 @@ html[data-tab='1'] {
 	.ThemeInputBar > input:focus {
 		outline-offset: 2px;
 	}
-
-	a:focus {
-		outline: var(--action) solid 1px;
-		border-radius: 5px;
-	}
 }
 
 /*.ThemeInput,

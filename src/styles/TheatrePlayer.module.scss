@@ -267,13 +267,6 @@
 	}
 }
 
-html[data-lock-frame-scroll='1'] {
-	body {
-		margin-right: 16px;
-		overflow: hidden;
-	}
-}
-
 html[data-lock-frame-scroll='0'] .frame > .iframeContainer > .iframeCover {
 	opacity: 1;
 	visibility: visible;

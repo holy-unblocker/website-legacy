@@ -1,0 +1,6 @@
+html[data-tab='1'] {
+	a:focus {
+		outline: var(--action) solid 1px;
+		border-radius: 5px;
+	}
+}
