@@ -52,9 +52,9 @@ const Credits: HolyPage = () => {
 				</li>
 				<li>
 					<Obfuscated>Ultraviolet:</Obfuscated>{' '}
-					<ObfuscatedThemeA href="https://github.com/titaniumnetwork-development/Ultraviolet">
+					<ObfuscatedThemeA href="https://github.com/titaniumnetwork-dev/Ultraviolet">
 						<Obfuscated>
-							https://github.com/titaniumnetwork-development/Ultraviolet
+							https://github.com/titaniumnetwork-dev/Ultraviolet
 						</Obfuscated>
 					</ObfuscatedThemeA>
 				</li>
