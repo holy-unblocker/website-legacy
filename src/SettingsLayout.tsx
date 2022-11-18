@@ -21,6 +21,7 @@ const SettingsLayout = ({ children }: { children: ReactNode }) => {
 						className={styles.entry}
 						route={getHot('settings appearance').path}
 						name={t('link.settingsAppearance')}
+						iconClassName={styles.icon}
 						iconFilled={<Brush />}
 						iconOutlined={<BrushOutlined />}
 					/>
@@ -28,12 +29,14 @@ const SettingsLayout = ({ children }: { children: ReactNode }) => {
 						className={styles.entry}
 						route={getHot('settings proxy').path}
 						name={t('link.proxy')}
+						iconClassName={styles.icon}
 						iconFilled={<Public />}
 					/>
 					<MenuTab
 						className={styles.entry}
 						route={getHot('settings tabcloak').path}
 						name={t('link.settingsTabCloak')}
+						iconClassName={styles.icon}
 						iconFilled={<DriveFileRenameOutline />}
 						iconOutlined={<DriveFileRenameOutlineOutlined />}
 					/>

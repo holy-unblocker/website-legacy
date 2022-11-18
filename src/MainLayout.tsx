@@ -40,6 +40,7 @@ export function MenuTab({
 	name,
 	className,
 	onClick,
+	iconClassName,
 	iconFilled,
 	iconOutlined,
 }: {
@@ -48,6 +49,7 @@ export function MenuTab({
 	name: string;
 	className?: string;
 	onClick?: MouseEventHandler;
+	iconClassName?: string;
 	iconFilled: ReactNode;
 	iconOutlined?: ReactNode;
 }) {
@@ -55,7 +57,7 @@ export function MenuTab({
 	const selected = location.pathname === route;
 	const content = (
 		<>
-			<span className={styles.icon}>
+			<span className={clsx(styles.icon, iconClassName)}>
 				{(selected && iconFilled) || iconOutlined || iconFilled}
 			</span>
 			<span className={styles.name}>
