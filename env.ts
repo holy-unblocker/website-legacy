@@ -43,13 +43,14 @@ const envOptional = ['WDS_SOCKET_HOST', 'WDS_SOCKET_PATH', 'WDS_SOCKET_PORT'];
 
 for (const env of envRequired) {
 	const value = process.env[env];
-	if (!value) throw new Error(`Missing required environment variable: ${env}`);
+	if (typeof value === 'undefined')
+		throw new Error(`Missing required environment variable: ${env}`);
 	envRaw[env] = value;
 }
 
 for (const env of envOptional) {
 	const value = process.env[env];
-	if (!value) continue;
+	if (typeof value === 'undefined') continue;
 	envRaw[env] = value;
 }
 
