@@ -10,7 +10,9 @@
 	"link": {
 		"credits": "Crédits",
 		"privacy": "Intimité",
+		"contact": "Contact",
 		"tou": "Conditions d'utilisation",
+		"touShort": "Conditions",
 		"home": "Maison",
 		"proxy": "Procuration",
 		"faq": "FAQ",

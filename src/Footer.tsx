@@ -13,9 +13,13 @@ const Footer = () => {
 			<Waves />
 			<div className={styles.background}>
 				<div className={styles.content}>
+					<ThemeLink to={getHot('contact').path}>{t('link.contact')}</ThemeLink>
 					<ThemeLink to={getHot('credits').path}>{t('link.credits')}</ThemeLink>
 					<ThemeLink to={getHot('privacy').path}>{t('link.privacy')}</ThemeLink>
-					<ThemeLink to={getHot('terms').path}>{t('link.tou')}</ThemeLink>
+					<ThemeLink to={getHot('terms').path}>
+						<span className={styles.long}>{t('link.tou')}</span>
+						<span className={styles.short}>{t('link.touShort')}</span>
+					</ThemeLink>
 					<ThemeLink to={getHot('contact').path}>
 						&copy; <Obfuscated>Holy Unblocker</Obfuscated>{' '}
 						{new Date().getUTCFullYear()}
