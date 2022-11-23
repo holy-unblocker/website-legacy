@@ -93,7 +93,10 @@ const Stomp: HolyPage = ({ compatLayout }) => {
 
 	return (
 		<main>
-			<Script src="/stomp/bootstrapper.js" ref={bootstrapper} />
+			<Script
+				src={process.env.PUBLIC_PATH + '/stomp/bootstrapper.js'}
+				ref={bootstrapper}
+			/>
 			{t('compat.loading', { what: 'Stomp' })}
 		</main>
 	);

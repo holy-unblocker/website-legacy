@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
-importScripts('/uv/uv.bundle.js');
-importScripts('/uv/uv.config.js');
-importScripts('/uv/uv.sw.js');
+importScripts('uv.bundle.js');
+importScripts('uv.config.js');
+importScripts('uv.sw.js');
 const sw = new UVServiceWorker();
 
 globalThis.addEventListener('fetch', (event) => {

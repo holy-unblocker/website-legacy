@@ -2,7 +2,7 @@ import './env.js';
 import HotHTMLPlugin from './HotHTMLPlugin.js';
 import type { CSSLoaderOptions } from './css-loader.js';
 import { envRaw, envRawHash, envRawStringified } from './env.js';
-import hotRoutes from './src/routes.js';
+import hotRoutes, { PUBLIC_PATH } from './src/routes.js';
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import type { JsMinifyOptions } from '@swc/core';
 import stompPath from '@sysce/stomp';
@@ -19,6 +19,7 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import { createRequire } from 'node:module';
 import { relative, basename, resolve, join } from 'node:path';
 import InlineChunkHtmlPlugin from 'react-dev-utils/InlineChunkHtmlPlugin.js';
+import InterpolateHtmlPlugin from 'react-dev-utils/InterpolateHtmlPlugin.js';
 import ModuleNotFoundPlugin from 'react-dev-utils/ModuleNotFoundPlugin.js';
 import getCSSModuleLocalIdent from 'react-dev-utils/getCSSModuleLocalIdent.js';
 import TerserPlugin from 'terser-webpack-plugin';
@@ -259,7 +260,7 @@ const webpackConfig: Configuration = {
 		// webpack uses `publicPath` to determine where the app is being served from.
 		// It requires a trailing slash, or the file assets will get an incorrect path.
 		// We inferred the "public path" (such as / or /my-project) from homepage.
-		publicPath: '/',
+		publicPath: PUBLIC_PATH + '/',
 	},
 	cache: {
 		type: 'filesystem',
@@ -501,6 +502,7 @@ const webpackConfig: Configuration = {
 			new CopyPlugin({
 				patterns: copyPluginPatterns,
 			}),
+			new InterpolateHtmlPlugin(HtmlWebpackPlugin, envRaw),
 			// Define process.env constants in uv.config.js
 			new DefineUVPlugin(),
 			// Inlines the webpack runtime script. This script is too small to warrant

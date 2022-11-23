@@ -3,6 +3,7 @@ import type { ScriptsRef } from '../../CompatLayout';
 import { getDestination, Script, Scripts } from '../../CompatLayout';
 import { BARE_API, SERVICEWORKERS } from '../../consts';
 import i18n from '../../i18n';
+import { PUBLIC_PATH } from '../../routes';
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
@@ -54,7 +55,7 @@ const Ultraviolet: HolyPage = ({ compatLayout }) => {
 
 				// register sw
 				errorCause = i18n.t('compat.error.registeringSW');
-				await navigator.serviceWorker.register('/uv/sw.js', {
+				await navigator.serviceWorker.register(PUBLIC_PATH + '/uv/sw.js', {
 					scope: config.prefix,
 					updateViaCache: 'none',
 				});
@@ -84,8 +85,8 @@ const Ultraviolet: HolyPage = ({ compatLayout }) => {
 	return (
 		<main>
 			<Scripts ref={uvBundle}>
-				<Script src="/uv/uv.bundle.js" />
-				<Script src="/uv/uv.config.js" />
+				<Script src={PUBLIC_PATH + '/uv/uv.bundle.js'} />
+				<Script src={PUBLIC_PATH + '/uv/uv.config.js'} />
 			</Scripts>
 			{t('compat.loading', { what: 'Ultraviolet' })}
 		</main>

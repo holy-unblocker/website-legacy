@@ -3,6 +3,9 @@
  */
 import type { HolyPage } from './App';
 
+// should NOT be set when running the dev server
+export const PUBLIC_PATH = process.env.PUBLIC_PATH || '';
+
 export type LayoutID = 'main' | 'compat' | 'settings';
 
 export interface Hot {
@@ -69,7 +72,7 @@ const lazyLoc = (path: string) => {
 	}
 
 	return {
-		path,
+		path: PUBLIC_PATH + path,
 		file,
 	};
 };

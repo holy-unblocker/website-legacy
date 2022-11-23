@@ -2,6 +2,7 @@ import type { HolyPage } from '../../App';
 import type { ScriptRef } from '../../CompatLayout';
 import { getDestination, Script } from '../../CompatLayout';
 import i18n from '../../i18n';
+import { PUBLIC_PATH } from '../../routes';
 import styles from '../../styles/CompatFlash.module.scss';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -69,7 +70,7 @@ const Flash: HolyPage = ({ compatLayout }) => {
 			data-loaded={Number(ruffleLoaded)}
 			ref={container}
 		>
-			<Script src="/ruffle/ruffle.js" ref={ruffleBundle} />
+			<Script src={PUBLIC_PATH + '/ruffle/ruffle.js'} ref={ruffleBundle} />
 			{!ruffleLoaded && t('compat.loading', { what: 'Flash Player' })}
 		</main>
 	);

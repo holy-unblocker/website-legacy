@@ -39,14 +39,14 @@
 	 * @type {UVConfig}
 	 */
 	const config = {
-		prefix: '/uv/service/',
+		prefix: process.env.PUBLIC_PATH + '/uv/service/',
 		bare: format(process.env.REACT_APP_BARE_API),
 		encodeUrl: Ultraviolet.codec.xor.encode,
 		decodeUrl: Ultraviolet.codec.xor.decode,
-		handler: '/uv/uv.handler.js',
-		bundle: '/uv/uv.bundle.js',
-		config: '/uv/uv.config.js',
-		sw: '/uv/uv.sw.js',
+		handler: process.env.PUBLIC_PATH + '/uv/uv.handler.js',
+		bundle: process.env.PUBLIC_PATH + '/uv/uv.bundle.js',
+		config: process.env.PUBLIC_PATH + '/uv/uv.config.js',
+		sw: process.env.PUBLIC_PATH + '/uv/uv.sw.js',
 	};
 
 	globalThis.__uv$config = config;
