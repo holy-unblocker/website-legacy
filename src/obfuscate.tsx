@@ -202,11 +202,12 @@ export const Obfuscated = memo<{ ellipsis?: boolean; children?: ReactNode }>(
 	}
 );
 
-export interface ObfuscatedAProps extends HTMLAttributes<HTMLSpanElement> {
+export interface ObfuscatedAProps
+	extends HTMLAttributes<HTMLSpanElement | HTMLAnchorElement> {
 	href: string;
 	target?: string;
-	onClick?: MouseEventHandler<HTMLSpanElement>;
-	onMouseUp?: MouseEventHandler<HTMLSpanElement>;
+	onClick?: MouseEventHandler<HTMLSpanElement | HTMLAnchorElement>;
+	onMouseUp?: MouseEventHandler<HTMLSpanElement | HTMLAnchorElement>;
 	// would be optional if this wasn't for accessibility
 	title: string;
 }
@@ -223,6 +224,7 @@ export function ObfuscatedA({
 	if (!OBFUSCATE)
 		return (
 			<a
+				{...attributes}
 				href={href}
 				onClick={onClick}
 				onMouseUp={onMouseUp}
