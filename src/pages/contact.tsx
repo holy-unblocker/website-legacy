@@ -15,7 +15,10 @@ const Contact: HolyPage = () => {
 					<tr>
 						<td>GitHub:</td>
 						<td>
-							<ObfuscatedThemeA href="https://github.com/holy-unblocker">
+							<ObfuscatedThemeA
+								href="https://github.com/holy-unblocker"
+								title="Git repository"
+							>
 								<Obfuscated>https://github.com/holy-unblocker</Obfuscated>
 							</ObfuscatedThemeA>
 						</td>
@@ -23,7 +26,10 @@ const Contact: HolyPage = () => {
 					<tr>
 						<td>Email:</td>
 						<td>
-							<ObfuscatedThemeA href={'mailto:' + SUPPORT_EMAIL}>
+							<ObfuscatedThemeA
+								href={'mailto:' + SUPPORT_EMAIL}
+								title="Email address"
+							>
 								<Obfuscated>{SUPPORT_EMAIL}</Obfuscated>
 							</ObfuscatedThemeA>
 						</td>
@@ -31,7 +37,7 @@ const Contact: HolyPage = () => {
 					<tr>
 						<td>Discord:</td>
 						<td>
-							<ObfuscatedThemeA href={HU_DISCORD_URL}>
+							<ObfuscatedThemeA href={HU_DISCORD_URL} title="Server invite">
 								<Obfuscated>{HU_DISCORD_URL}</Obfuscated>
 							</ObfuscatedThemeA>
 						</td>

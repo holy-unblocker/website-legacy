@@ -74,6 +74,7 @@ export function MenuTab({
 				data-selected={Number(selected)}
 				className={clsx(styles.entry, className)}
 				onClick={onClick}
+				title={name}
 			>
 				{content}
 			</ObfuscatedA>

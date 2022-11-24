@@ -7,19 +7,25 @@ import type { ReactNode } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 
 const WebsiteAIOLink = ({ children }: { children?: ReactNode }) => (
-	<ObfuscatedThemeA href="https://github.com/holy-unblocker/website-aio#website-aio">
+	<ObfuscatedThemeA
+		href="https://github.com/holy-unblocker/website-aio#website-aio"
+		title="Invite"
+	>
 		{children}
 	</ObfuscatedThemeA>
 );
 
 const TNInviteLink = ({ children }: { children?: ReactNode }) => (
-	<ObfuscatedThemeA href={TN_DISCORD_URL}>
+	<ObfuscatedThemeA href={TN_DISCORD_URL} title="Invite">
 		<Obfuscated>{children}</Obfuscated>
 	</ObfuscatedThemeA>
 );
 
 const GitLink = ({ children }: { children?: ReactNode }) => (
-	<ObfuscatedThemeA href="https://github.com/holy-unblocker/holy/website">
+	<ObfuscatedThemeA
+		href="https://github.com/holy-unblocker/holy/website"
+		title="Git repository"
+	>
 		{children}
 	</ObfuscatedThemeA>
 );

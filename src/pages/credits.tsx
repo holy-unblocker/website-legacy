@@ -40,13 +40,19 @@ const Credits: HolyPage = () => {
 			<ul>
 				<li>
 					<Obfuscated>Rammerhead:</Obfuscated>{' '}
-					<ObfuscatedThemeA href="https://github.com/binary-person/rammerhead">
+					<ObfuscatedThemeA
+						href="https://github.com/binary-person/rammerhead"
+						title="Git repository"
+					>
 						<Obfuscated>https://github.com/binary-person/rammerhead</Obfuscated>
 					</ObfuscatedThemeA>
 				</li>
 				<li>
 					<Obfuscated>Ultraviolet:</Obfuscated>{' '}
-					<ObfuscatedThemeA href="https://github.com/titaniumnetwork-dev/Ultraviolet">
+					<ObfuscatedThemeA
+						href="https://github.com/titaniumnetwork-dev/Ultraviolet"
+						title="Git repository"
+					>
 						<Obfuscated>
 							https://github.com/titaniumnetwork-dev/Ultraviolet
 						</Obfuscated>
@@ -54,7 +60,10 @@ const Credits: HolyPage = () => {
 				</li>
 				<li>
 					<Obfuscated>Stomp:</Obfuscated>{' '}
-					<ObfuscatedThemeA href="https://github.com/sysce/stomp">
+					<ObfuscatedThemeA
+						href="https://github.com/sysce/stomp"
+						title="Git repository"
+					>
 						<Obfuscated>https://github.com/sysce/stomp</Obfuscated>
 					</ObfuscatedThemeA>
 				</li>
