@@ -30,7 +30,7 @@ export default class HotHTMLPlugin implements WebpackPluginInstance {
 							'HotHTML',
 							(data) => {
 								const hot = this.findFile(data.outputName);
-								if (!hot) throw new Error(`Bad hot file: ${data.outputName}`);
+								if (!hot) return data;
 
 								type ChunkID = string | number;
 
