@@ -1,28 +1,28 @@
 /* eslint-disable @typescript-eslint/consistent-type-imports */
-import enCommonError from '../assets/locales/fr/commonError.json?file';
-import enCompat from '../assets/locales/fr/compat.json?file';
-import enCredits from '../assets/locales/fr/credits.json?file';
-import enFaq from '../assets/locales/fr/faq.json?file';
-import enGameCategory from '../assets/locales/fr/gameCategory.json?file';
-import enLanding from '../assets/locales/fr/landing.json?file';
-import enLink from '../assets/locales/fr/link.json?file';
-import enNotFound from '../assets/locales/fr/notFound.json?file';
-import enProxy from '../assets/locales/fr/proxy.json?file';
-import enSettings from '../assets/locales/fr/settings.json?file';
-import enTheatre from '../assets/locales/fr/theatre.json?file';
+import commonError from '../assets/locales/fr/commonError.json?file';
+import compat from '../assets/locales/fr/compat.json?file';
+import credits from '../assets/locales/fr/credits.json?file';
+import faq from '../assets/locales/fr/faq.json?file';
+import gameCategory from '../assets/locales/fr/gameCategory.json?file';
+import landing from '../assets/locales/fr/landing.json?file';
+import link from '../assets/locales/fr/link.json?file';
+import notFound from '../assets/locales/fr/notFound.json?file';
+import proxy from '../assets/locales/fr/proxy.json?file';
+import settings from '../assets/locales/fr/settings.json?file';
+import theatre from '../assets/locales/fr/theatre.json?file';
 
 const frLang = {
-	commonError: enCommonError,
-	compat: enCompat,
-	credits: enCredits,
-	faq: enFaq,
-	gameCategory: enGameCategory,
-	landing: enLanding,
-	link: enLink,
-	notFound: enNotFound,
-	proxy: enProxy,
-	settings: enSettings,
-	theatre: enTheatre,
+	commonError,
+	compat,
+	credits,
+	faq,
+	gameCategory,
+	landing,
+	link,
+	notFound,
+	proxy,
+	settings,
+	theatre,
 };
 
 export type frResources = {
