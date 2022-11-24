@@ -202,19 +202,19 @@ export function getRoutes(routeType: RouteType, publicPath: string) {
 			layout: 'main',
 		},
 		{
-			...lazyLoc(routeType === 'id' ? '/' + i++ : '/theatre/games/'),
-			alias: 'theatre games popular',
-			import: () =>
-				import(/* webpackPrefetch: true */ './pages/theatre/games/index'),
-			src: './pages/theatre/games/index',
-			layout: 'main',
-		},
-		{
 			...lazyLoc(routeType === 'id' ? '/' + i++ : '/theatre/category'),
 			alias: 'theatre games category',
 			import: () =>
 				import(/* webpackPrefetch: true */ './pages/theatre/category'),
 			src: './pages/theatre/category',
+			layout: 'main',
+		},
+		{
+			...lazyLoc(routeType === 'id' ? '/' + i++ : '/theatre/games/'),
+			alias: 'theatre games popular',
+			import: () =>
+				import(/* webpackPrefetch: true */ './pages/theatre/games/index'),
+			src: './pages/theatre/games/index',
 			layout: 'main',
 		},
 		{
