@@ -202,7 +202,7 @@ export function getRoutes(routeType: RouteType, publicPath: string) {
 			layout: 'main',
 		},
 		{
-			...lazyLoc(routeType === 'id' ? '/' + i++ : '/theatre/'),
+			...lazyLoc(routeType === 'id' ? '/' + i++ : '/theatre/games/'),
 			alias: 'theatre games popular',
 			import: () =>
 				import(/* webpackPrefetch: true */ './pages/theatre/games/index'),
