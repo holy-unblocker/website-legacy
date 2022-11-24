@@ -80,7 +80,8 @@
 			font-size: 12px;
 			line-height: 16px;
 
-			> a {
+			> a,
+			> div {
 				margin-left: 15px;
 
 				&:nth-child(1) {

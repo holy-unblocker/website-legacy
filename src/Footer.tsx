@@ -20,10 +20,10 @@ const Footer = () => {
 						<span className={styles.long}>{t('link.tou')}</span>
 						<span className={styles.short}>{t('link.touShort')}</span>
 					</ThemeLink>
-					<ThemeLink to={getHot('contact').path}>
+					<div>
 						&copy; <Obfuscated>Holy Unblocker</Obfuscated>{' '}
 						{new Date().getUTCFullYear()}
-					</ThemeLink>
+					</div>
 				</div>
 			</div>
 		</footer>
