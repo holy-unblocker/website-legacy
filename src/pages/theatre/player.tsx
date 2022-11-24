@@ -41,6 +41,7 @@ async function resolveSrc(
 		case 'emulator':
 		case 'emulator.gba':
 		case 'emulator.nes':
+		case 'emulator.n64':
 		case 'emulator.genesis':
 			return new URL(
 				'./html5/webretro/?' +
