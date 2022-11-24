@@ -1,6 +1,7 @@
 import './initEnv.ts';
-import { PUBLIC_PATH } from './src/routes.js';
 import { createHash } from 'crypto';
+
+export const PUBLIC_PATH = process.env.PUBLIC_PATH || '';
 
 if (!process.env.NODE_ENV)
 	throw new Error(

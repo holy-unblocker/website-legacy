@@ -1,7 +1,7 @@
 import './env.js';
 import HotHTMLPlugin from './HotHTMLPlugin.js';
 import type { CSSLoaderOptions } from './css-loader.js';
-import { envRaw, envRawHash, envRawStringified } from './env.js';
+import { envRaw, envRawHash, envRawStringified, PUBLIC_PATH } from './env.js';
 import type { RouteType } from './src/appRoutes.js';
 import { getRoutes } from './src/appRoutes.js';
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
@@ -52,8 +52,6 @@ declare module 'webpack' {
 		devServer?: WebpackDevServerConfiguration;
 	}
 }
-
-const PUBLIC_PATH = process.env.PUBLIC_PATH || '';
 
 const routeType = process.env.REACT_APP_ROUTER! as RouteType;
 
