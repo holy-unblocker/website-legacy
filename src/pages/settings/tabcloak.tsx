@@ -3,7 +3,7 @@ import { useGlobalCloakSettings } from '../../Layout';
 import { Notification } from '../../Notifications';
 import { ThemeButton, ThemeInputBar, themeStyles } from '../../ThemeElements';
 import { BARE_API } from '../../consts';
-import i18next from '../../i18n';
+import i18n from '../../i18n';
 import { Obfuscated } from '../../obfuscate';
 import styles from '../../styles/Settings.module.scss';
 import Check from '@mui/icons-material/Check';
@@ -25,7 +25,7 @@ async function extractData(url: string): Promise<ExtractedData> {
 
 	if (!response.ok)
 		throw new Error(
-			i18next.t('settings.tabCloak.error.response', { status: response.status })
+			i18n.t('settings.tabCloak.error.response', { status: response.status })
 		);
 
 	const parser = new DOMParser();
@@ -77,7 +77,7 @@ function resolveURL(input: string) {
 	} else if (input.includes('.') && !input.match(whitespace)) {
 		return `http://${input}`;
 	} else {
-		throw new Error(i18next.t('settings.tabCloak.error.validate'));
+		throw new Error(i18n.t('settings.tabCloak.error.validate'));
 	}
 }
 
@@ -144,7 +144,7 @@ const TabCloak: HolyPage = ({ layout }) => {
 					description={
 						err instanceof Error
 							? err.message
-							: (i18next.t('commonError.unknownError') as string)
+							: (i18n.t('commonError.unknownError') as string)
 					}
 					type="error"
 				/>
