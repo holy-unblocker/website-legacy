@@ -147,7 +147,10 @@ const MainLayout = forwardRef<
 				<div className={styles.button} onClick={() => setExpanded(true)}>
 					<Menu />
 				</div>
-				<Link to={PUBLIC_PATH} className={clsx(styles.entry, styles.logo)}>
+				<Link
+					to={PUBLIC_PATH + '/'}
+					className={clsx(styles.entry, styles.logo)}
+				>
 					<Hat />
 				</Link>
 				<div className={styles.shiftRight}></div>
@@ -163,7 +166,7 @@ const MainLayout = forwardRef<
 							<Menu />
 						</div>
 						<Link
-							to={PUBLIC_PATH}
+							to={PUBLIC_PATH + '/'}
 							className={clsx(styles.entry, styles.logo)}
 							onClick={closeMenu}
 						>
