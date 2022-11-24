@@ -43,6 +43,8 @@ const charClass = unusedChar();
 const stringClass = unusedChar();
 
 export const ObfuscateLayout = () => {
+	if (!OBFUSCATE) return <></>;
+
 	const style =
 		`${junkClasses
 			.map((junk) => `.${stringClass} .${junk}`)
