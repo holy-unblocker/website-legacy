@@ -1,13 +1,19 @@
-import hotRoutes from './src/routes.js';
+import type { Hot } from './src/appRoutes.js';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import { extname } from 'node:path';
 import webpack from 'webpack';
 import type { Compilation, Compiler, WebpackPluginInstance } from 'webpack';
 
+type FindFileCallback = (outputName: string) => Hot | void;
+
 /**
  * Locates the compiled paths of nested chunks for individual hot routes and includes them in the HTML asset tags.
  */
 export default class HotHTMLPlugin implements WebpackPluginInstance {
+	findFile: FindFileCallback;
+	constructor(findFile: FindFileCallback) {
+		this.findFile = findFile;
+	}
 	apply(compiler: Compiler) {
 		compiler.hooks.thisCompilation.tap(
 			'HotHTML',
@@ -23,10 +29,7 @@ export default class HotHTMLPlugin implements WebpackPluginInstance {
 						HtmlWebpackPlugin.getHooks(compilation).alterAssetTags.tap(
 							'HotHTML',
 							(data) => {
-								const hot = hotRoutes.find(
-									(hot) => hot.file === data.outputName
-								);
-
+								const hot = this.findFile(data.outputName);
 								if (!hot) throw new Error(`Bad hot file: ${data.outputName}`);
 
 								type ChunkID = string | number;
