@@ -51,7 +51,7 @@ const Stomp: HolyPage = ({ compatLayout }) => {
 					throw new Error(errorCause);
 				}
 
-				errorCause = i18n.t('compat.error.genericBootstrapper');
+				errorCause = i18n.t('compat.error.generic');
 				await bootstrapper.current.promise;
 				errorCause = undefined;
 

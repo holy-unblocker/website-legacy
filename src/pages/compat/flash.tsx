@@ -35,7 +35,7 @@ const Flash: HolyPage = ({ compatLayout }) => {
 			let errorCause: string | undefined;
 
 			try {
-				errorCause = i18n.t('compat.error.genericBootstrapper');
+				errorCause = i18n.t('compat.error.generic');
 				await ruffleBundle.current.promise;
 				errorCause = undefined;
 
