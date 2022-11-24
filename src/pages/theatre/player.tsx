@@ -57,7 +57,7 @@ async function resolveSrc(
 }
 
 const Player: HolyPage = () => {
-	const { t } = useTranslation();
+	const { t } = useTranslation('theatre');
 	const [searchParams] = useSearchParams();
 	const id = searchParams.get('id')!;
 	if (!id) throw new Error('Bad ID');
@@ -188,7 +188,7 @@ const Player: HolyPage = () => {
 		return (
 			<CommonError
 				error={errorCause.current || error}
-				message={t('theatre.error.playerEntryLoad')}
+				message={t('error.playerEntryLoad')}
 			/>
 		);
 
@@ -273,7 +273,7 @@ const Player: HolyPage = () => {
 				<div className={styles.iframeContainer}>
 					<div
 						className={styles.iframeCover}
-						title={t('theatre.click')}
+						title={t('click')}
 						onClick={(event) => {
 							event.stopPropagation();
 							setIFrameFocused(true);
@@ -311,7 +311,7 @@ const Player: HolyPage = () => {
 					onClick={() => {
 						iframe.current!.requestFullscreen();
 					}}
-					title={t('theatre.fullscreen')}
+					title={t('fullscreen')}
 				>
 					<Fullscreen />
 				</div>
@@ -324,7 +324,7 @@ const Player: HolyPage = () => {
 							setControlsExpanded(!controlsExpanded);
 							controlsPopup.current!.focus();
 						}}
-						title={t('theatre.controls')}
+						title={t('controls')}
 					>
 						<VideogameAsset />
 					</div>
@@ -348,7 +348,7 @@ const Player: HolyPage = () => {
 
 						setFavorited(favorites.includes(id));
 					}}
-					title={t('theatre.favorite')}
+					title={t('favorite')}
 				>
 					{favorited ? <Star /> : <StarBorder />}
 				</div>
@@ -357,7 +357,7 @@ const Player: HolyPage = () => {
 					onClick={async () => {
 						setPanorama(!panorama);
 					}}
-					title={t('theatre.panorama')}
+					title={t('panorama')}
 				>
 					{panorama ? <ChevronLeft /> : <Panorama />}
 				</div>

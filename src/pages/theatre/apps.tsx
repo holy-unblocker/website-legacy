@@ -3,16 +3,16 @@ import TheatreCategory from '../../TheatreCategory';
 import { useTranslation } from 'react-i18next';
 
 const Apps: HolyPage = (props) => {
-	const { t } = useTranslation();
+	const { t } = useTranslation('theatre');
 
 	return (
 		<TheatreCategory
 			{...props}
-			name={t('theatre.apps')}
+			name={t('apps')}
 			id="apps"
 			key="apps"
 			category="app"
-			placeholder={t('theatre.searchByApp')}
+			placeholder={t('searchByApp')}
 		/>
 	);
 };

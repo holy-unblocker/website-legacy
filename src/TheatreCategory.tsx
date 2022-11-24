@@ -5,6 +5,7 @@ import { ItemList, TheatreAPI } from './TheatreCommon';
 import SearchBar from './TheatreSearchBar';
 import { ThemeSelect } from './ThemeElements';
 import { DB_API } from './consts';
+import i18n from './i18n';
 import isAbortError from './isAbortError';
 import { Obfuscated } from './obfuscate';
 import styles from './styles/TheatreCategory.module.scss';
@@ -48,7 +49,7 @@ const Category = ({
 	id: string;
 	showCategory?: boolean;
 }) => {
-	const { t } = useTranslation();
+	const { t } = useTranslation(['theatre', 'commonError']);
 	const [search, setSearch] = useSearchParams();
 	let page = parseInt(search.get('page')!);
 	if (isNaN(page)) page = 0;
@@ -84,7 +85,7 @@ const Category = ({
 
 			const api = new TheatreAPI(DB_API, abort.signal);
 
-			errorCause.current = 'theatre.error.categoryData';
+			errorCause.current = i18n.t('theatre:error.categoryData');
 
 			try {
 				const data = await api.category({
@@ -112,8 +113,8 @@ const Category = ({
 	if (error)
 		return (
 			<CommonError
-				error={errorCause.current ? t(errorCause.current) : error}
-				message={t('theatre.error.generic')}
+				error={errorCause.current || error}
+				message={t('theatre:error.generic')}
 			/>
 		);
 
@@ -141,10 +142,10 @@ const Category = ({
 							});
 						}}
 					>
-						<option value="mostPopular">{t('theatre.mostPopular')}</option>
-						<option value="Least Popular">{t('theatre.leastPopular')}</option>
-						<option value="nameASC">{t('theatre.nameASC')}</option>
-						<option value="nameDES">{t('theatre.nameDES')}</option>
+						<option value="mostPopular">{t('theatre:mostPopular')}</option>
+						<option value="Least Popular">{t('theatre:leastPopular')}</option>
+						<option value="nameASC">{t('theatre:nameASC')}</option>
+						<option value="nameDES">{t('theatre:nameDES')}</option>
 					</ThemeSelect>
 				</div>
 				<ItemList className={styles.items} items={data.entries} />

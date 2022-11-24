@@ -33,7 +33,7 @@ const PrivacyLink = ({ children }: { children?: ReactNode }) => (
 );
 
 const FAQ: HolyPage = () => {
-	const { t } = useTranslation();
+	const { t } = useTranslation('faq');
 
 	// <0> = obfuscated always
 
@@ -41,50 +41,54 @@ const FAQ: HolyPage = () => {
 		<main>
 			<section>
 				<h1>
-					<Obfuscated>{t(`faq.list.selfhost.q`)}</Obfuscated>
+					<Obfuscated>{t(`list.selfhost.q`)}</Obfuscated>
 				</h1>
 				<p>
 					<Trans
-						i18nKey={`faq.list.selfhost.a`}
+						ns="faq"
+						i18nKey={`list.selfhost.a`}
 						components={[<Obfuscated />, <WebsiteAIOLink />]}
 					/>
 				</p>
 			</section>
 			<section>
 				<h1>
-					<Obfuscated>{t(`faq.list.morelinks.q`)}</Obfuscated>
+					<Obfuscated>{t(`list.morelinks.q`)}</Obfuscated>
 				</h1>
 				<p>
 					<Trans
-						i18nKey={`faq.list.morelinks.a`}
+						ns="faq"
+						i18nKey={`list.morelinks.a`}
 						components={[<Obfuscated />, <TNInviteLink />]}
 					/>
 				</p>
 			</section>
 			<section>
 				<h1>
-					<Obfuscated>{t(`faq.list.source.q`)}</Obfuscated>
+					<Obfuscated>{t(`list.source.q`)}</Obfuscated>
 				</h1>
 				<p>
 					<Trans
-						i18nKey={`faq.list.source.a`}
+						ns="faq"
+						i18nKey={`list.source.a`}
 						components={[<Obfuscated />, <GitLink />]}
 					/>
 				</p>
 			</section>
 			<section>
 				<h1>
-					<Obfuscated>{t(`faq.list.secure.q`)}</Obfuscated>
+					<Obfuscated>{t(`list.secure.q`)}</Obfuscated>
 				</h1>
 				<p>
 					<Trans
-						i18nKey={`faq.list.secure.a`}
+						ns="faq"
+						i18nKey={`list.secure.a`}
 						components={[<Obfuscated />, <PrivacyLink />]}
 					/>
 				</p>
 			</section>
 			<p style={{ marginTop: 30, opacity: 0.75 }}>
-				<Trans i18nKey={`faq.contact`} components={[<ContactLink />]} />
+				<Trans ns="faq" i18nKey={`contact`} components={[<ContactLink />]} />
 			</p>
 		</main>
 	);

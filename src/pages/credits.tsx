@@ -4,35 +4,29 @@ import { Obfuscated } from '../obfuscate';
 import { useTranslation } from 'react-i18next';
 
 const Credits: HolyPage = () => {
-	const { t } = useTranslation();
+	const { t } = useTranslation('credits');
 
 	return (
 		<main>
-			<h2>{t('credits.titles.credits')}</h2>
-			<h4>{t('credits.titles.development')}</h4>
+			<h2>{t('titles.credits')}</h2>
+			<h4>{t('titles.development')}</h4>
 			<ul>
 				<li>
 					<Obfuscated>
-						sexyduceduce - {t('credits.positions.frontendDev')}, Ultraviolet
+						sexyduceduce - {t('positions.frontendDev')}, Ultraviolet
 					</Obfuscated>
 				</li>
 				<li>
-					<Obfuscated>
-						Device - {t('credits.positions.frontendDev')}, Stomp
-					</Obfuscated>
+					<Obfuscated>Device - {t('positions.frontendDev')}, Stomp</Obfuscated>
 				</li>
 				<li>
-					<Obfuscated>
-						OlyB - {t('credits.positions.frontendDev')}, WebRetro
-					</Obfuscated>
+					<Obfuscated>OlyB - {t('positions.frontendDev')}, WebRetro</Obfuscated>
 				</li>
 				<li>
-					<Obfuscated>
-						luphoria - {t('credits.positions.backendDev')}
-					</Obfuscated>
+					<Obfuscated>luphoria - {t('positions.backendDev')}</Obfuscated>
 				</li>
 				<li>
-					<Obfuscated>Ender - {t('credits.positions.backendDev')}</Obfuscated>
+					<Obfuscated>Ender - {t('positions.backendDev')}</Obfuscated>
 				</li>
 				<li>
 					<Obfuscated>011011000110111101101100 - Rammerhead</Obfuscated>
@@ -40,7 +34,7 @@ const Credits: HolyPage = () => {
 			</ul>
 
 			<h2>
-				<Obfuscated>{t('credits.titles.proxyScripts')}</Obfuscated>
+				<Obfuscated>{t('titles.proxyScripts')}</Obfuscated>
 			</h2>
 
 			<ul>

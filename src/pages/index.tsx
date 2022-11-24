@@ -5,21 +5,21 @@ import styles from '../styles/Home.module.scss';
 import { useTranslation } from 'react-i18next';
 
 const Home: HolyPage = ({ mainLayout }) => {
-	const { t } = useTranslation();
+	const { t } = useTranslation('landing');
 
 	return (
 		<main className={styles.main}>
 			<h1>
-				<Obfuscated>{t('landing.title')}</Obfuscated>
+				<Obfuscated>{t('title')}</Obfuscated>
 			</h1>
 			<h2>
-				<Obfuscated>{t('landing.caption')}</Obfuscated>
+				<Obfuscated>{t('caption')}</Obfuscated>
 			</h2>
 			<ThemeButton
 				className={styles.button}
 				onClick={() => mainLayout.current!.setExpanded(true)}
 			>
-				<Obfuscated>{t('landing.getStarted')}</Obfuscated>
+				<Obfuscated>{t('getStarted')}</Obfuscated>
 			</ThemeButton>
 		</main>
 	);

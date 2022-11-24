@@ -4,16 +4,16 @@ import categories from '../../../gameCategories';
 import { useTranslation } from 'react-i18next';
 
 const All: HolyPage = (props) => {
-	const { t } = useTranslation();
+	const { t } = useTranslation('theatre');
 
 	return (
 		<Category
-			name={t('theatre.allGames')}
+			name={t('allGames')}
 			id="all"
 			key="all"
 			showCategory
 			category={categories.map((category) => category.id).join(',')}
-			placeholder={t('theatre.searchByGame')}
+			placeholder={t('searchByGame')}
 			{...props}
 		/>
 	);

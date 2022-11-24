@@ -1,0 +1,20 @@
+{
+	"credits": "Crédits",
+	"privacy": "Intimité",
+	"contact": "Contact",
+	"tou": "Conditions d'utilisation",
+	"touShort": "Conditions",
+	"home": "Maison",
+	"proxy": "Procuration",
+	"faq": "FAQ",
+	"theatreApps": "Apps",
+	"theatreFavorites": "Favoris",
+	"theatreGamesPopular": "Populaire",
+	"theatreGamesAll": "Tout",
+	"settingsAppearance": "Apparence",
+	"settingsTabCloak": "Camouflage",
+	"nav": {
+		"games": "Jeux",
+		"genre": "Genre"
+	}
+}

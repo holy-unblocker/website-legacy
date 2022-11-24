@@ -7,14 +7,14 @@ import styles from '../../styles/Settings.module.scss';
 import { useTranslation } from 'react-i18next';
 
 const Search: HolyPage = () => {
-	const { t } = useTranslation();
+	const { t } = useTranslation(['settings', 'link']);
 	const [settings, setSettings] = useGlobalSettings();
 
 	return (
 		<section>
 			<div>
 				<p>
-					<Obfuscated>{t('link.proxy')}</Obfuscated>:
+					<Obfuscated>{t('link:proxy')}</Obfuscated>:
 				</p>
 				<ThemeSelect
 					className={styles.ThemeSelect}
@@ -26,7 +26,7 @@ const Search: HolyPage = () => {
 					}
 					defaultValue={settings.proxy}
 				>
-					<option value="automatic">{t('settings.automaticProxy')}</option>
+					<option value="automatic">{t('settings:automaticProxy')}</option>
 					<option value="ultraviolet">Ultraviolet</option>
 					<option value="rammerhead">Rammerhead</option>
 					<option value="stomp">Stomp</option>
@@ -34,7 +34,7 @@ const Search: HolyPage = () => {
 			</div>
 			<div>
 				<p>
-					<Obfuscated>{t('settings.proxy.mode')}</Obfuscated>:
+					<Obfuscated>{t('settings:proxy.mode')}</Obfuscated>:
 				</p>
 				<ThemeSelect
 					className={styles.ThemeSelect}
@@ -46,14 +46,18 @@ const Search: HolyPage = () => {
 					}
 					defaultValue={settings.proxyMode}
 				>
-					<option value="embedded">{t('settings.proxy.setting.0')}</option>
-					<option value="redirect">{t('settings.proxy.setting.1')}</option>
-					<option value="about:blank">{t('settings.proxy.setting.2')}</option>
+					<option value="embedded">
+						{t('settings:proxy.setting.embedded')}
+					</option>
+					<option value="redirect">
+						{t('settings:proxy.setting.redirect')}
+					</option>
+					<option value="about:blank">{t('settings:proxy.setting.ab')}</option>
 				</ThemeSelect>
 			</div>
 			<div>
 				<p>
-					<Obfuscated>{t('settings.searchEngine')}</Obfuscated>:
+					<Obfuscated>{t('settings:searchEngine')}</Obfuscated>:
 				</p>
 				<ThemeSelect
 					className={styles.ThemeSelect}

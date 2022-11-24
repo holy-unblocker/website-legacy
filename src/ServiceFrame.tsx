@@ -62,7 +62,7 @@ const ServiceFrame = forwardRef<
 					console.error(err);
 					layout.current!.notifications.current!.add(
 						<Notification
-							title={i18n.t('proxy.error.compatibleProxy') as string}
+							title={i18n.t('proxy:error.compatibleProxy') as string}
 							description={isDatabaseError(err) ? err.message : String(err)}
 							type="error"
 						/>

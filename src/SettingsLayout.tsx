@@ -11,7 +11,7 @@ import type { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 
 const SettingsLayout = ({ children }: { children: ReactNode }) => {
-	const { t } = useTranslation();
+	const { t } = useTranslation('link');
 
 	return (
 		<main className={styles.main}>
@@ -20,7 +20,7 @@ const SettingsLayout = ({ children }: { children: ReactNode }) => {
 					<MenuTab
 						className={styles.entry}
 						route={getHot('settings appearance').path}
-						name={t('link.settingsAppearance')}
+						name={t('settingsAppearance')}
 						iconClassName={styles.icon}
 						iconFilled={<Brush />}
 						iconOutlined={<BrushOutlined />}
@@ -28,14 +28,14 @@ const SettingsLayout = ({ children }: { children: ReactNode }) => {
 					<MenuTab
 						className={styles.entry}
 						route={getHot('settings proxy').path}
-						name={t('link.proxy')}
+						name={t('proxy')}
 						iconClassName={styles.icon}
 						iconFilled={<Public />}
 					/>
 					<MenuTab
 						className={styles.entry}
 						route={getHot('settings tabcloak').path}
-						name={t('link.settingsTabCloak')}
+						name={t('settingsTabCloak')}
 						iconClassName={styles.icon}
 						iconFilled={<DriveFileRenameOutline />}
 						iconOutlined={<DriveFileRenameOutlineOutlined />}

@@ -11,7 +11,7 @@ import SearchBar from '../../../TheatreSearchBar';
 import { ThemeLink } from '../../../ThemeElements';
 import { DB_API } from '../../../consts';
 import categories from '../../../gameCategories';
-import type { Category } from '../../../gameCategories';
+import type { Category, categoryKey } from '../../../gameCategories';
 import isAbortError from '../../../isAbortError';
 import { getHot } from '../../../routes';
 import styles from '../../../styles/TheatreCategory.module.scss';
@@ -38,7 +38,7 @@ for (const category of categories)
 const categoryQuery = categories.map((category) => category.id).join(',');
 
 const Popular: HolyPage = () => {
-	const { t } = useTranslation();
+	const { t } = useTranslation(['theatre', 'gameCategory']);
 
 	const [data, setData] = useState<LoadingCategoryData | CategoryData>(
 		loadingCategories
@@ -75,7 +75,7 @@ const Popular: HolyPage = () => {
 		return (
 			<CommonError
 				error={error}
-				message={t('theatre.error.popularGamesLoad')}
+				message={t('theatre:error.popularGamesLoad')}
 			/>
 		);
 	}
@@ -99,20 +99,24 @@ const Popular: HolyPage = () => {
 			<SearchBar
 				showCategory
 				category={categoryQuery}
-				placeholder={t('theatre.searchByGame')}
+				placeholder={t('theatre:searchByGame')}
 			/>
 			{Object.values(_categories).map((section) => {
 				return (
 					<section className={styles.expand} key={section.category.id}>
 						<div className={styles.name}>
-							<h1>{t(`gameCategory.${section.category.id}`).toString()}</h1>
+							<h1>
+								{t(
+									`gameCategory:${section.category.id as categoryKey}`
+								).toString()}
+							</h1>
 							<ThemeLink
 								to={`${getHot('theatre games category').path}?id=${
 									section.category.id
 								}`}
 								className={styles.seeAll}
 							>
-								{t('theatre.seeAll')}
+								{t('theatre:seeAll')}
 								<ArrowForward />
 							</ThemeLink>
 						</div>

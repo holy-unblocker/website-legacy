@@ -1,0 +1,14 @@
+{
+	"action_": "Action",
+	"action": "Action & Adventure",
+	"platformer": "Platformer",
+	"shooter_": "Shooters",
+	"shooter": "Shooters & Strategy",
+	"rpg": "RPG",
+	"sandbox": "Sandbox",
+	"survival_": "Survival",
+	"survival": "Survival & Horror",
+	"sports_": "Sports",
+	"sports": "Simulation & Sports",
+	"puzzle": "Puzzle"
+}

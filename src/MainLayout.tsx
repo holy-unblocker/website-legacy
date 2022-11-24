@@ -2,6 +2,7 @@ import Footer from './Footer';
 import { ReactComponent as HatBeta } from './assets/hat-beta.svg';
 import { ReactComponent as HatDev } from './assets/hat-dev.svg';
 import { ReactComponent as HatPlain } from './assets/hat.svg';
+import type { categoryKey } from './gameCategories';
 import categories from './gameCategories';
 import { Obfuscated, ObfuscatedA } from './obfuscate';
 import { PUBLIC_PATH, getHot } from './routes';
@@ -137,7 +138,7 @@ const MainLayout = forwardRef<
 		setExpanded(false);
 	}
 
-	const { t } = useTranslation();
+	const { t } = useTranslation(['link', 'gameCategory']);
 
 	return (
 		<>
@@ -171,20 +172,20 @@ const MainLayout = forwardRef<
 					<div className={styles.menuList}>
 						<MenuTab
 							route={getHot('home').path}
-							name={t('link.home')}
+							name={t('link:home')}
 							iconFilled={<Home />}
 							iconOutlined={<HomeOutlined />}
 							onClick={closeMenu}
 						/>
 						<MenuTab
 							route={getHot('proxy').path}
-							name={t('link.proxy')}
+							name={t('link:proxy')}
 							iconFilled={<WebAsset />}
 							onClick={closeMenu}
 						/>
 						<MenuTab
 							route={getHot('faq').path}
-							name={t('link.faq')}
+							name={t('link:faq')}
 							iconFilled={<QuestionMark />}
 							onClick={closeMenu}
 						/>
@@ -193,14 +194,14 @@ const MainLayout = forwardRef<
 
 						<MenuTab
 							route={getHot('theatre apps').path}
-							name={t('link.theatreApps')}
+							name={t('link:theatreApps')}
 							iconFilled={<Apps />}
 							onClick={closeMenu}
 						/>
 
 						<MenuTab
 							route={getHot('theatre favorites').path}
-							name={t('link.theatreFavorites')}
+							name={t('link:theatreFavorites')}
 							iconFilled={<StarRounded />}
 							iconOutlined={<StarOutlineRounded />}
 							onClick={closeMenu}
@@ -209,22 +210,22 @@ const MainLayout = forwardRef<
 						<div className={styles.bar} />
 
 						<div className={styles.title}>
-							<Obfuscated>{t('navSection.games')}</Obfuscated>
+							<Obfuscated>{t('link:nav.games')}</Obfuscated>
 						</div>
 
 						<MenuTab
 							route={getHot('theatre games popular').path}
-							name={t('link.theatreGamesPopular')}
+							name={t('link:theatreGamesPopular')}
 							iconFilled={<SortRounded />}
 							onClick={closeMenu}
 						/>
 						<MenuTab
 							route={getHot('theatre games all').path}
-							name={t('link.theatreGamesAll')}
+							name={t('link:theatreGamesAll')}
 							iconFilled={<List />}
 							onClick={closeMenu}
 						/>
-						<div className={styles.title}>{t('navSection.genre')}</div>
+						<div className={styles.title}>{t('link:nav.genre')}</div>
 						<div className={styles.genres}>
 							{categories.map((category) => (
 								<Link
@@ -237,7 +238,9 @@ const MainLayout = forwardRef<
 								>
 									<Obfuscated>
 										{t(
-											`gameCategory.${category.id}${category.short ? '_' : ''}`
+											`gameCategory:${
+												(category.id + category.short ? '_' : '') as categoryKey
+											}`
 										)}
 									</Obfuscated>
 								</Link>

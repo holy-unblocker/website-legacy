@@ -1,0 +1,20 @@
+{
+	"credits": "Credits",
+	"privacy": "Privacy",
+	"contact": "Contact",
+	"tou": "Terms of Use",
+	"touShort": "Terms",
+	"home": "Home",
+	"proxy": "Proxy",
+	"faq": "FAQ",
+	"theatreApps": "Apps",
+	"theatreFavorites": "Favorites",
+	"theatreGamesPopular": "Popular",
+	"theatreGamesAll": "All",
+	"settingsAppearance": "Appearance",
+	"settingsTabCloak": "Tab Cloak",
+	"nav": {
+		"games": "Games",
+		"genre": "Genre"
+	}
+}

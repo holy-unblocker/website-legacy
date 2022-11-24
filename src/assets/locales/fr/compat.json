@@ -1,0 +1,17 @@
+{
+	"error": {
+		"generic": "Une erreur s'est produite lors du chargement de {{what}}",
+		"swHTTPS": "HTTPS doit être activé pour utiliser ce proxy.",
+		"swSupport": "Votre navigateur ne prend pas en charge les service workers.",
+		"loadingBootstrapper": "Échec du chargement du programme d'amorçage.",
+		"registeringSW": "Échec de l'enregistrement du service worker.",
+		"unreachable": "Le serveur {{what}} est inaccessible",
+		"rammerheadSavedSession": "Impossible de vérifier si la session enregistrée existe.",
+		"rammerheadNewSession": "Impossible de créer une nouvelle session Rammerhead.",
+		"rammerheadEditSession": "Impossible de modifier une session Rammerhead.",
+		"rammerheadDict": "Impossible de récupérer le dictionnaire mélangé.",
+		"hash": "Aucun hachage n'a été fourni",
+		"decryptURL": "Échec du déchiffrement de la destination"
+	},
+	"loading": "Chargement de {{what}}..."
+}

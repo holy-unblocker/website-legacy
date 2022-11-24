@@ -22,7 +22,7 @@ import { createRef, useMemo, useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 
 const SearchBar = ({ layout }: { layout: LayoutDump['layout'] }) => {
-	const { t } = useTranslation();
+	const { t } = useTranslation('proxy');
 	const input = useRef<HTMLInputElement | null>(null);
 	const inputValue = useRef<string | null>(null);
 	const lastInput = useRef<'select' | 'input' | null>(null);
@@ -136,7 +136,7 @@ const SearchBar = ({ layout }: { layout: LayoutDump['layout'] }) => {
 					<Search className={themeStyles.icon} />
 					<input
 						type="text"
-						placeholder={t('proxy.search', {
+						placeholder={t('search', {
 							engine: engine.name,
 						})}
 						required={lastSelect === -1}
@@ -264,7 +264,7 @@ const Proxies: HolyPage = ({ layout }) => {
 		<main className={styles.main}>
 			<SearchBar layout={layout} />
 			<p>
-				<Trans i18nKey="proxy.faq" components={[<FAQLink />]} />
+				<Trans ns="proxy" i18nKey="faq" components={[<FAQLink />]} />
 			</p>
 		</main>
 	);

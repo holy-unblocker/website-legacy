@@ -1,0 +1,21 @@
+{
+	"list": {
+		"selfhost": {
+			"q": "How can I self-host Holy Unblocker?",
+			"a": "<0>You can self-host/deploy Holy Unblocker by using our all-in-one script</0> <1>here</1>."
+		},
+		"morelinks": {
+			"q": "How do I get more links?",
+			"a": "<0>You can join the</0> <1>TitaniumNetwork Discord Server</1> <0>to receive more links. In any channel, enter /proxy and select Holy Unblocker.</0>"
+		},
+		"source": {
+			"q": "Where is this website's source code?",
+			"a": "<0>The source code to this website can be found in our</0> <1>Git repository</1>."
+		},
+		"secure": {
+			"q": "Is my information on the proxy secure?",
+			"a": "We do not collect any data, your information is only as secure as the sites you are accessing. For privacy concerns, you can review our <1>Privacy Policy</1>."
+		}
+	},
+	"contact": "Not what you're looking for? <0>Contact Us</0>."
+}

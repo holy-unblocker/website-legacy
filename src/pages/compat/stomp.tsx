@@ -30,7 +30,7 @@ declare class StompBoot {
 }
 
 const Stomp: HolyPage = ({ compatLayout }) => {
-	const { t } = useTranslation();
+	const { t } = useTranslation('compat');
 	const location = useLocation();
 	const bootstrapper = useRef<ScriptRef | null>(null);
 
@@ -42,16 +42,16 @@ const Stomp: HolyPage = ({ compatLayout }) => {
 
 			try {
 				if (!SERVICEWORKERS) {
-					errorCause = i18n.t('compat.error.swHTTPS');
+					errorCause = i18n.t('compat:error.swHTTPS');
 					throw new Error(errorCause);
 				}
 
 				if (!navigator.serviceWorker) {
-					errorCause = i18n.t('compat.error.swSupport');
+					errorCause = i18n.t('compat:error.swSupport');
 					throw new Error(errorCause);
 				}
 
-				errorCause = i18n.t('compat.error.generic');
+				errorCause = i18n.t('compat:error.generic');
 				await bootstrapper.current.promise;
 				errorCause = undefined;
 
@@ -71,11 +71,11 @@ const Stomp: HolyPage = ({ compatLayout }) => {
 
 				const boot = new StompBoot(config as StompBootConfig);
 
-				errorCause = i18n.t('compat.error.registeringSW');
+				errorCause = i18n.t('compat:error.registeringSW');
 				await boot.ready;
 				errorCause = undefined;
 
-				errorCause = i18n.t('compat.error.unreachable', { what: 'Bare' });
+				errorCause = i18n.t('compat:error.unreachable', { what: 'Bare' });
 				{
 					const bare = await fetch(BARE_API);
 					if (!bare.ok) {
@@ -97,7 +97,7 @@ const Stomp: HolyPage = ({ compatLayout }) => {
 				src={process.env.PUBLIC_PATH + '/stomp/bootstrapper.js'}
 				ref={bootstrapper}
 			/>
-			{t('compat.loading', { what: 'Stomp' })}
+			{t('loading', { what: 'Stomp' })}
 		</main>
 	);
 };

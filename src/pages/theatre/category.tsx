@@ -1,11 +1,12 @@
 import type { HolyPage } from '../../App';
 import TheatreCategory from '../../TheatreCategory';
+import type { categoryKey } from '../../gameCategories';
 import categories from '../../gameCategories';
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
 
 const Category: HolyPage = (props) => {
-	const { t } = useTranslation();
+	const { t } = useTranslation(['theatre', 'gameCategory']);
 	const [searchParams] = useSearchParams();
 	const id = searchParams.get('id')!;
 	const category = categories.find((category) => category.id === id);
@@ -16,10 +17,10 @@ const Category: HolyPage = (props) => {
 		<TheatreCategory
 			{...props}
 			key={id}
-			name={t(`gameCategory.${category.id}`)}
+			name={t(`gameCategory:${category.id as categoryKey}`)}
 			category={id}
 			id={id}
-			placeholder={t('theatre.searchByGame')}
+			placeholder={t('theatre:searchByGame')}
 		/>
 	);
 };

@@ -39,10 +39,15 @@ const CommonError = ({
 			<p>{message}:</p>
 			<pre>{error}</pre>
 			<p>
-				<Trans i18nKey="commonError.tryAgain" components={[<TryAgainHere />]} />
+				<Trans
+					ns="commonError"
+					i18nKey="tryAgain"
+					components={[<TryAgainHere />]}
+				/>
 				<br />
 				<Trans
-					i18nKey="commonError.stillOccurs"
+					ns="commonError"
+					i18nKey="stillOccurs"
 					components={[<FAQLink />, <ContactLink />]}
 				/>
 			</p>

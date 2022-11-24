@@ -2,6 +2,7 @@ import type { CategoryData } from './TheatreCommon';
 import { TheatreAPI } from './TheatreCommon';
 import { ThemeInputBar, themeStyles } from './ThemeElements';
 import { DB_API } from './consts';
+import type { categoryKey } from './gameCategories';
 import categories from './gameCategories';
 import isAbortError from './isAbortError';
 import { Obfuscated } from './obfuscate';
@@ -24,7 +25,7 @@ const SearchBar = ({
 	placeholder?: string;
 	showCategory?: boolean;
 }) => {
-	const { t } = useTranslation();
+	const { t } = useTranslation('gameCategory');
 	const navigate = useNavigate();
 	const input = useRef<HTMLInputElement | null>(null);
 	const bar = useRef<HTMLDivElement | null>(null);
@@ -173,11 +174,9 @@ const SearchBar = ({
 							{showCategory && entry.category[0] && (
 								<div className={styles.category}>
 									{t(
-										`gameCategory.${
-											categories.find(
-												(category) => category.id === entry.category[0]
-											)?.id
-										}`
+										categories.find(
+											(category) => category.id === entry.category[0]
+										)?.id as categoryKey
 									)}
 								</div>
 							)}

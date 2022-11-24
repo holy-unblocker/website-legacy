@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next';
 
 const Favorites: HolyPage = ({ layout }) => {
 	const [settings, setSettings] = useGlobalSettings();
-	const { t } = useTranslation();
+	const { t } = useTranslation('theatre');
 
 	const [data, setData] = useState<(TheatreEntry | LoadingTheatreEntry)[]>(() =>
 		settings.favorites.map((id) => ({
@@ -54,7 +54,7 @@ const Favorites: HolyPage = ({ layout }) => {
 	if (settings.favorites.length === 0) {
 		return (
 			<main className="error">
-				<p>{t('theatre.noFavorites')}</p>
+				<p>{t('noFavorites')}</p>
 			</main>
 		);
 	} else {

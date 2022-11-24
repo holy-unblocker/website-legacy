@@ -150,12 +150,12 @@ export const Script = forwardRef<ScriptRef, { src: string }>(function Script(
  * @returns
  */
 export const getDestination = (location: Location) => {
-	if (location.hash === '') throw new Error(i18n.t('compat.error.hash'));
+	if (location.hash === '') throw new Error(i18n.t('compat:error.hash'));
 
 	try {
 		return decryptURL(location.hash.slice(1));
 	} catch (err) {
-		throw new Error(i18n.t('compat.error.decryptURL'));
+		throw new Error(i18n.t('compat:error.decryptURL'));
 	}
 };
 
@@ -165,7 +165,7 @@ export interface CompatLayoutRef {
 
 export default forwardRef<CompatLayoutRef, { children?: ReactNode }>(
 	function CompatLayout({ children }, ref) {
-		const { t } = useTranslation();
+		const { t } = useTranslation('compat');
 
 		const [error, setError] = useState<{
 			error: string;
@@ -194,7 +194,7 @@ export default forwardRef<CompatLayoutRef, { children?: ReactNode }>(
 				{error ? (
 					<CommonError
 						error={error.cause || error.error}
-						message={t('compat.error.generic', { what: error.origin })}
+						message={t('error.generic', { what: error.origin })}
 					/>
 				) : (
 					children

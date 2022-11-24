@@ -5,11 +5,11 @@ import { Obfuscated } from '../obfuscate';
 import { useTranslation } from 'react-i18next';
 
 const Contact: HolyPage = () => {
-	const { t } = useTranslation();
+	const { t } = useTranslation('link');
 
 	return (
 		<main>
-			<h1>{t('link.contact')}</h1>
+			<h1>{t('contact')}</h1>
 			<table>
 				<tbody>
 					<tr>

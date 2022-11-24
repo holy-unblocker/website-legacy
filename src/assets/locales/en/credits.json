@@ -1,0 +1,11 @@
+{
+	"titles": {
+		"credits": "Credits",
+		"development": "Development",
+		"proxyScripts": "Proxy Scripts"
+	},
+	"positions": {
+		"frontendDev": "Frontend Developer",
+		"backendDev": "Backend Developer"
+	}
+}

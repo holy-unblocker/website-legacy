@@ -7,13 +7,13 @@ import styles from '../../styles/Settings.module.scss';
 import { useTranslation } from 'react-i18next';
 
 const Appearance: HolyPage = ({ layout }) => {
-	const { t } = useTranslation();
+	const { t } = useTranslation('settings');
 	const [settings, setSettings] = useGlobalSettings();
 
 	return (
 		<section>
 			<div>
-				<p>{t('settings.language')}:</p>
+				<p>{t('language')}:</p>
 				<ThemeSelect
 					className={styles.ThemeSelect}
 					defaultValue={getLanguage()}
@@ -26,7 +26,7 @@ const Appearance: HolyPage = ({ layout }) => {
 				</ThemeSelect>
 			</div>
 			<div>
-				<p>{t('settings.theme')}:</p>
+				<p>{t('theme')}:</p>
 				<ThemeSelect
 					className={styles.ThemeSelect}
 					defaultValue={settings.theme}
@@ -37,8 +37,8 @@ const Appearance: HolyPage = ({ layout }) => {
 						});
 					}}
 				>
-					<option value="day">{t('settings.themeDay')}</option>
-					<option value="night">{t('settings.themeNight')}</option>
+					<option value="day">{t('themeDay')}</option>
+					<option value="night">{t('themeNight')}</option>
 				</ThemeSelect>
 			</div>
 		</section>

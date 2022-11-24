@@ -1,0 +1,7 @@
+{
+	"search": "Recherchez {{engine}} ou saisissez une URL",
+	"faq": "Si vous rencontrez des problèmes avec le proxy, essayez de résoudre votre problème en consultant la <0>FAQ</0>.",
+	"error": {
+		"compatibleProxy": "Impossible de trouver un proxy compatible"
+	}
+}

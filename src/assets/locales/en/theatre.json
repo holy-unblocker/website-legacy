@@ -1,0 +1,23 @@
+{
+	"noFavorites": "You haven't added any favorites.",
+	"seeAll": "See All",
+	"apps": "Apps",
+	"allGames": "All Games",
+	"searchByGame": "Search by game name",
+	"searchByApp": "Search by app name",
+	"mostPopular": "Most Popular",
+	"leastPopular": "Least Popular",
+	"nameASC": "Name (A-Z)",
+	"nameDES": "Name (Z-A)",
+	"click": "Click to focus",
+	"panorama": "Panorama mode",
+	"favorite": "Add to favorites",
+	"controls": "Controls",
+	"fullscreen": "Fullscreen mode",
+	"error": {
+		"generic": "An error occurred while loading the category",
+		"playerEntryLoad": "An error occurred while loading the app/game",
+		"popularGamesLoad": "An error occurred while loading popular games",
+		"categoryData": "Unable to fetch the category data."
+	}
+}

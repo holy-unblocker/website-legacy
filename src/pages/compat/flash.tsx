@@ -20,7 +20,7 @@ declare const RufflePlayer: {
 };
 
 const Flash: HolyPage = ({ compatLayout }) => {
-	const { t } = useTranslation();
+	const { t } = useTranslation('compat');
 	const location = useLocation();
 	const container = useRef<HTMLElement | null>(null);
 	const ruffleBundle = useRef<ScriptRef | null>(null);
@@ -35,7 +35,7 @@ const Flash: HolyPage = ({ compatLayout }) => {
 			let errorCause: string | undefined;
 
 			try {
-				errorCause = i18n.t('compat.error.generic');
+				errorCause = i18n.t('compat:error.generic');
 				await ruffleBundle.current.promise;
 				errorCause = undefined;
 
@@ -71,7 +71,7 @@ const Flash: HolyPage = ({ compatLayout }) => {
 			ref={container}
 		>
 			<Script src={PUBLIC_PATH + '/ruffle/ruffle.js'} ref={ruffleBundle} />
-			{!ruffleLoaded && t('compat.loading', { what: 'Flash Player' })}
+			{!ruffleLoaded && t('loading', { what: 'Flash Player' })}
 		</main>
 	);
 };

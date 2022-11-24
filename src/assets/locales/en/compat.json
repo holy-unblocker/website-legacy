@@ -1,0 +1,17 @@
+{
+	"error": {
+		"generic": "An error occurred while loading {{what}}",
+		"swHTTPS": "HTTPS must be enabled to use this proxy.",
+		"swSupport": "Your browser doesn't support service workers.",
+		"loadingBootstrapper": "Failure loading the bootstrapper.",
+		"registeringSW": "Failure registering the service worker.",
+		"unreachable": "{{what}} server is unreachable.",
+		"rammerheadSavedSession": "Unable to check if the saved session exists.",
+		"rammerheadNewSession": "Unable to create a new Rammerhead session.",
+		"rammerheadEditSession": "Unable to edit a Rammerhead session.",
+		"rammerheadDict": "Unable to retrieve shuffled dictionary.",
+		"hash": "No hash was provided",
+		"decryptURL": "Failed to decrypt destination"
+	},
+	"loading": "Loading {{what}}..."
+}

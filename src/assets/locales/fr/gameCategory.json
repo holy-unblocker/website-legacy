@@ -1,0 +1,14 @@
+{
+	"action_": "Action",
+	"action": "Action & Aventure",
+	"platformer": "Plateforme",
+	"shooter_": "Tireurs",
+	"shooter": "Jeux de tir et stratégie",
+	"rpg": "Jeu de rôle",
+	"sandbox": "Bac à sable",
+	"survival_": "Survie",
+	"survival": "Survie et Horreur",
+	"sports_": "Des Sports",
+	"sports": "Simulation et Sport",
+	"puzzle": "Puzzle"
+}

@@ -1,0 +1,31 @@
+{
+	"language": "Language",
+	"theme": "Theme",
+	"themeDay": "Day",
+	"themeNight": "Night",
+	"automaticProxy": "Automatic",
+	"searchEngine": "Search Engine",
+	"proxy": {
+		"mode": "Proxy Mode",
+		"setting": {
+			"embedded": "Embedded",
+			"redirect": "Redirect",
+			"ab": "about:blank"
+		}
+	},
+	"tabCloak": {
+		"description": "Tab Cloaking allows you to disguise Holy Unblocker as any website such as your school's home page, new tab, etc.",
+		"urlField": "URL",
+		"resetButton": "Reset Cloak",
+		"notification": {
+			"reset": "Cloak reset.",
+			"fetching": "Requesting cloak data...",
+			"failure": "Unable to request cloak data.",
+			"set": "Cloak set."
+		},
+		"error": {
+			"response": "Cloak response was not OK. Got {{status}}.",
+			"validate": "Bad URL."
+		}
+	}
+}

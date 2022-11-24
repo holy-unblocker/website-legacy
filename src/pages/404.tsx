@@ -4,17 +4,18 @@ import { getHot } from '../routes';
 import { Trans, useTranslation } from 'react-i18next';
 
 const NotFound: HolyPage = () => {
-	const { t } = useTranslation();
+	const { t } = useTranslation('notFound');
 
 	return (
 		<main>
-			<h1>{t('404.title')}</h1>
+			<h1>{t('title')}</h1>
 			<hr />
 			<p>
-				{t('404.suggestion')}
+				{t('suggestion')}
 				<br />
 				<Trans
-					i18nKey="404.contactUs"
+					ns="notFound"
+					i18nKey="contactUs"
 					components={[<ThemeLink to={getHot('contact').path} />]}
 				/>
 			</p>

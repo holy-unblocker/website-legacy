@@ -1,3 +1,17 @@
+export type categoryKey =
+	| 'action_'
+	| 'action'
+	| 'platformer'
+	| 'shooter_'
+	| 'shooter'
+	| 'rpg'
+	| 'sandbox'
+	| 'survival_'
+	| 'survival'
+	| 'sports_'
+	| 'sports'
+	| 'puzzle';
+
 export interface Category {
 	/**
 	 * ID

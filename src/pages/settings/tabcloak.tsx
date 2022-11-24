@@ -25,7 +25,7 @@ async function extractData(url: string): Promise<ExtractedData> {
 
 	if (!response.ok)
 		throw new Error(
-			i18n.t('settings.tabCloak.error.response', { status: response.status })
+			i18n.t('settings:tabCloak.error.response', { status: response.status })
 		);
 
 	const parser = new DOMParser();
@@ -77,7 +77,7 @@ function resolveURL(input: string) {
 	} else if (input.includes('.') && !input.match(whitespace)) {
 		return `http://${input}`;
 	} else {
-		throw new Error(i18n.t('settings.tabCloak.error.validate'));
+		throw new Error(i18n.t('settings:tabCloak.error.validate'));
 	}
 }
 
@@ -92,7 +92,7 @@ async function blobToDataURL(blob: Blob) {
 }
 
 const TabCloak: HolyPage = ({ layout }) => {
-	const { t } = useTranslation();
+	const { t } = useTranslation(['settings', 'commonError']);
 	const [cloak, setCloak] = useGlobalCloakSettings();
 	const input = useRef<HTMLInputElement | null>(null);
 
@@ -111,7 +111,7 @@ const TabCloak: HolyPage = ({ layout }) => {
 				default:
 					layout.current!.notifications.current!.add(
 						<Notification
-							description={t('settings.tabCloak.notification.fetching')}
+							description={t('settings:tabCloak.notification.fetching')}
 							type="info"
 						/>
 					);
@@ -131,7 +131,7 @@ const TabCloak: HolyPage = ({ layout }) => {
 
 			layout.current!.notifications.current!.add(
 				<Notification
-					description={t('settings.tabCloak.notification.set')}
+					description={t('settings:tabCloak.notification.set')}
 					type="success"
 				/>
 			);
@@ -140,11 +140,11 @@ const TabCloak: HolyPage = ({ layout }) => {
 
 			layout.current!.notifications.current!.add(
 				<Notification
-					title={t('settings.tabCloak.notification.failure')}
+					title={t('settings:tabCloak.notification.failure')}
 					description={
 						err instanceof Error
 							? err.message
-							: (i18n.t('commonError.unknownError') as string)
+							: (i18n.t('commonError:unknownError') as string)
 					}
 					type="error"
 				/>
@@ -155,11 +155,11 @@ const TabCloak: HolyPage = ({ layout }) => {
 	return (
 		<section>
 			<p>
-				<Obfuscated>{t('settings.tabCloak.description')}</Obfuscated>
+				<Obfuscated>{t('settings:tabCloak.description')}</Obfuscated>
 			</p>
 			<div>
 				<p>
-					<Obfuscated>{t('settings.tabCloak.urlField')}</Obfuscated>:
+					<Obfuscated>{t('settings:tabCloak.urlField')}</Obfuscated>:
 				</p>
 				<form
 					onSubmit={(event) => {
@@ -194,13 +194,13 @@ const TabCloak: HolyPage = ({ layout }) => {
 
 						layout.current!.notifications.current!.add(
 							<Notification
-								description={t('settings.tabCloak.notification.reset')}
+								description={t('settings:tabCloak.notification.reset')}
 								type="info"
 							/>
 						);
 					}}
 				>
-					<Obfuscated>{t('settings.tabCloak.resetButton')}</Obfuscated>
+					<Obfuscated>{t('settings:tabCloak.resetButton')}</Obfuscated>
 				</ThemeButton>
 			</div>
 		</section>

@@ -25,7 +25,7 @@ interface UVConfig {
 declare const __uv$config: UVConfig;
 
 const Ultraviolet: HolyPage = ({ compatLayout }) => {
-	const { t } = useTranslation();
+	const { t } = useTranslation('compat');
 
 	const uvBundle = useRef<ScriptsRef | null>(null);
 	const location = useLocation();
@@ -38,30 +38,30 @@ const Ultraviolet: HolyPage = ({ compatLayout }) => {
 
 			try {
 				if (!SERVICEWORKERS) {
-					errorCause = i18n.t('compat.error.swHTTPS');
+					errorCause = i18n.t('compat:error.swHTTPS');
 					throw new Error(errorCause);
 				}
 
 				if (!navigator.serviceWorker) {
-					errorCause = i18n.t('compat.error.swSupport');
+					errorCause = i18n.t('compat:error.swSupport');
 					throw new Error(errorCause);
 				}
 
-				errorCause = i18n.t('compat.error.generic');
+				errorCause = i18n.t('compat:error.generic');
 				await uvBundle.current.promise;
 				errorCause = undefined;
 
 				const config = __uv$config;
 
 				// register sw
-				errorCause = i18n.t('compat.error.registeringSW');
+				errorCause = i18n.t('compat:error.registeringSW');
 				await navigator.serviceWorker.register(PUBLIC_PATH + '/uv/sw.js', {
 					scope: config.prefix,
 					updateViaCache: 'none',
 				});
 				errorCause = undefined;
 
-				errorCause = i18n.t('compat.error.unreachable', { what: 'Bare' });
+				errorCause = i18n.t('compat:error.unreachable', { what: 'Bare' });
 				{
 					const bare = await fetch(BARE_API);
 					if (!bare.ok) {
@@ -88,7 +88,7 @@ const Ultraviolet: HolyPage = ({ compatLayout }) => {
 				<Script src={PUBLIC_PATH + '/uv/uv.bundle.js'} />
 				<Script src={PUBLIC_PATH + '/uv/uv.config.js'} />
 			</Scripts>
-			{t('compat.loading', { what: 'Ultraviolet' })}
+			{t('loading', { what: 'Ultraviolet' })}
 		</main>
 	);
 };

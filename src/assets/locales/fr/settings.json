@@ -1,0 +1,31 @@
+{
+	"language": "Langue",
+	"theme": "Thème",
+	"themeDay": "Jour",
+	"themeNight": "Nuit",
+	"automaticProxy": "Automatique",
+	"searchEngine": "Moteur de recherche",
+	"proxy": {
+		"mode": "Mode proxy",
+		"setting": {
+			"embedded": "Intégré",
+			"redirect": "Redirection",
+			"ab": "about:blank"
+		}
+	},
+	"tabCloak": {
+		"description": "Tab Cloaking vous permet de déguiser Holy Unblocker en n'importe quel site Web tel que la page d'accueil de votre école, un nouvel onglet, etc.",
+		"urlField": "URL",
+		"resetButton": "Réinitialiser la Cape",
+		"notification": {
+			"reset": "Réinitialisation du camouflage.",
+			"fetching": "Demande de données de camouflage...",
+			"failure": "Impossible de demander les données de camouflage.",
+			"set": "Ensemble camouflé."
+		},
+		"error": {
+			"response": "La réponse de la cape n'était pas OK. J'ai {{status}}.",
+			"validate": "Mauvaise URL."
+		}
+	}
+}
