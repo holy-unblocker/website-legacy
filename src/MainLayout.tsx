@@ -240,7 +240,8 @@ const MainLayout = forwardRef<
 									<Obfuscated>
 										{t(
 											`gameCategory:${
-												(category.id + category.short ? '_' : '') as categoryKey
+												(category.id +
+													(category.short ? '_' : '')) as categoryKey
 											}`
 										)}
 									</Obfuscated>
