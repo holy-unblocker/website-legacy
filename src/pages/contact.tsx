@@ -9,7 +9,7 @@ const Contact: HolyPage = () => {
 
 	return (
 		<main>
-			<h1>{t('contact.title')}</h1>
+			<h1>{t('link.contact')}</h1>
 			<table>
 				<tbody>
 					<tr>
