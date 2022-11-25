@@ -272,6 +272,16 @@ const ProxyMeta = () => (
 				},
 			},
 		]}
+		actions={[
+			{
+				target: {
+					urlTemplate:
+						new URL(getHot('proxy').path, global.location.toString()) +
+						'?search={search_term_string}',
+				},
+				'query-input': 'required name=search_term_string',
+			},
+		]}
 	/>
 );
 
