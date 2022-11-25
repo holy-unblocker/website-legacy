@@ -260,11 +260,13 @@ const FAQLink = ({ children }: { children?: ReactNode }) => (
 );
 
 const Proxies: HolyPage = ({ layout }) => {
+	const { t } = useTranslation('proxy');
+
 	return (
 		<main className={styles.main}>
 			<SearchBar layout={layout} />
 			<p>
-				<Trans ns="proxy" i18nKey="faq" components={[<FAQLink />]} />
+				<Trans t={t} i18nKey="faq" components={[<FAQLink />]} />
 			</p>
 		</main>
 	);

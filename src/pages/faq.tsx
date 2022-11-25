@@ -51,7 +51,7 @@ const FAQ: HolyPage = () => {
 				</h1>
 				<p>
 					<Trans
-						ns="faq"
+						t={t}
 						i18nKey={`list.selfhost.a`}
 						components={[<Obfuscated />, <WebsiteAIOLink />]}
 					/>
@@ -63,7 +63,7 @@ const FAQ: HolyPage = () => {
 				</h1>
 				<p>
 					<Trans
-						ns="faq"
+						t={t}
 						i18nKey={`list.morelinks.a`}
 						components={[<Obfuscated />, <TNInviteLink />]}
 					/>
@@ -75,7 +75,7 @@ const FAQ: HolyPage = () => {
 				</h1>
 				<p>
 					<Trans
-						ns="faq"
+						t={t}
 						i18nKey={`list.source.a`}
 						components={[<Obfuscated />, <GitLink />]}
 					/>
@@ -87,14 +87,14 @@ const FAQ: HolyPage = () => {
 				</h1>
 				<p>
 					<Trans
-						ns="faq"
+						t={t}
 						i18nKey={`list.secure.a`}
 						components={[<Obfuscated />, <PrivacyLink />]}
 					/>
 				</p>
 			</section>
 			<p style={{ marginTop: 30, opacity: 0.75 }}>
-				<Trans ns="faq" i18nKey={`contact`} components={[<ContactLink />]} />
+				<Trans t={t} i18nKey={`contact`} components={[<ContactLink />]} />
 			</p>
 		</main>
 	);
