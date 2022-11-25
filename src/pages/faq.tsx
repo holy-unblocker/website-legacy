@@ -47,54 +47,54 @@ const FAQ: HolyPage = () => {
 		<main>
 			<section>
 				<h1>
-					<Obfuscated>{t(`list.selfhost.q`)}</Obfuscated>
+					<Obfuscated>{t('list.selfhost.q')}</Obfuscated>
 				</h1>
 				<p>
 					<Trans
 						t={t}
-						i18nKey={`list.selfhost.a`}
+						i18nKey="list.selfhost.a"
 						components={[<Obfuscated />, <WebsiteAIOLink />]}
 					/>
 				</p>
 			</section>
 			<section>
 				<h1>
-					<Obfuscated>{t(`list.morelinks.q`)}</Obfuscated>
+					<Obfuscated>{t('list.morelinks.q')}</Obfuscated>
 				</h1>
 				<p>
 					<Trans
 						t={t}
-						i18nKey={`list.morelinks.a`}
+						i18nKey="list.morelinks.a"
 						components={[<Obfuscated />, <TNInviteLink />]}
 					/>
 				</p>
 			</section>
 			<section>
 				<h1>
-					<Obfuscated>{t(`list.source.q`)}</Obfuscated>
+					<Obfuscated>{t('list.source.q')}</Obfuscated>
 				</h1>
 				<p>
 					<Trans
 						t={t}
-						i18nKey={`list.source.a`}
+						i18nKey="list.source.a"
 						components={[<Obfuscated />, <GitLink />]}
 					/>
 				</p>
 			</section>
 			<section>
 				<h1>
-					<Obfuscated>{t(`list.secure.q`)}</Obfuscated>
+					<Obfuscated>{t('list.secure.q')}</Obfuscated>
 				</h1>
 				<p>
 					<Trans
 						t={t}
-						i18nKey={`list.secure.a`}
+						i18nKey="list.secure.a"
 						components={[<Obfuscated />, <PrivacyLink />]}
 					/>
 				</p>
 			</section>
 			<p style={{ marginTop: 30, opacity: 0.75 }}>
-				<Trans t={t} i18nKey={`contact`} components={[<ContactLink />]} />
+				<Trans t={t} i18nKey="contact" components={[<ContactLink />]} />
 			</p>
 		</main>
 	);
