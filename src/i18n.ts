@@ -30,9 +30,9 @@ i18n
 		ns: [],
 		backend: {
 			resources: {
-				dev: async () => (await import('./locales/en')).default,
-				en: async () => (await import('./locales/en')).default,
-				fr: async () => (await import('./locales/fr')).default,
+				dev: () => import('./locales/en'),
+				en: () => import('./locales/en'),
+				fr: () => import('./locales/fr'),
 			},
 		} as AsyncBackendOptions,
 		lng,
