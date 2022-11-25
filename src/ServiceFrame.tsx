@@ -3,6 +3,7 @@ import { isDatabaseError } from './DatabaseAPI';
 import { useGlobalSettings } from './Layout';
 import { Notification } from './Notifications';
 import resolveProxy from './ProxyResolver';
+import SearchBuilder from './SearchBuilder';
 import { BARE_API } from './consts';
 import { decryptURL, encryptURL } from './cryptURL';
 import i18n from './i18n';
@@ -40,10 +41,13 @@ const ServiceFrame = forwardRef<
 	const bare = useMemo(() => new BareClient(BARE_API), []);
 	const linksTried = useMemo(() => new WeakMap(), []);
 
-	const src = useMemo(
-		() => (search.has('query') ? decryptURL(search.get('query')!) : ''),
-		[search]
-	);
+	const src = useMemo(() => {
+		if (search.has('query')) return decryptURL(search.get('query')!);
+		// allow querying eg ?search+hello+world
+		else if (search.has('search'))
+			return new SearchBuilder(settings.search).query(search.get('search')!);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [search]);
 	const [title, setTitle] = useState(src);
 	const [icon, setIcon] = useState('');
 	const [settings] = useGlobalSettings();
