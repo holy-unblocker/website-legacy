@@ -41,15 +41,24 @@ const ServiceFrame = forwardRef<
 	const bare = useMemo(() => new BareClient(BARE_API), []);
 	const linksTried = useMemo(() => new WeakMap(), []);
 	const [settings] = useGlobalSettings();
-	const src = useMemo(() => {
-		if (search.has('query')) return decryptURL(search.get('query')!);
-		// allow querying eg ?search+hello+world
-		else if (search.has('search'))
-			return new SearchBuilder(settings.search).query(search.get('search')!);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [search]);
+	const [src, setSrc] = useState('');
 	const [title, setTitle] = useState(src);
 	const [icon, setIcon] = useState('');
+
+	useEffect(() => {
+		if (search.has('query')) setSrc(decryptURL(search.get('query')!));
+		// allow querying eg ?search+hello+world
+		else if (search.has('search')) {
+			const newQuery = encryptURL(
+				new SearchBuilder(settings.search).query(search.get('search')!)
+			);
+			search.delete('search');
+			setSearch({
+				...Object.fromEntries(search),
+				query: newQuery,
+			});
+		}
+	}, [search, setSearch, settings.search]);
 
 	useEffect(() => {
 		if (src) {
