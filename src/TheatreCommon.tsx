@@ -121,6 +121,7 @@ export function Item({ id, name }: { id: string; name: string }) {
 		<Link
 			className={styles.item}
 			to={`${getHot('theatre player').path}?id=${id}`}
+			title={name}
 		>
 			<div className={styles.thumbnail} data-loaded={Number(loaded)}>
 				<img

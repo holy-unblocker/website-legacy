@@ -85,6 +85,7 @@ export function MenuTab({
 				to={route}
 				data-selected={Number(selected)}
 				className={clsx(styles.entry, className)}
+				title={name}
 				onClick={onClick}
 			>
 				{content}
@@ -150,11 +151,16 @@ const MainLayout = forwardRef<
 				<Link
 					to={PUBLIC_PATH + '/'}
 					className={clsx(styles.entry, styles.logo)}
+					title="Home"
 				>
 					<Hat />
 				</Link>
 				<div className={styles.shiftRight}></div>
-				<Link className={styles.button} to={getHot('settings appearance').path}>
+				<Link
+					className={styles.button}
+					to={getHot('settings appearance').path}
+					title="Home"
+				>
 					<Settings />
 				</Link>
 			</nav>
@@ -168,6 +174,7 @@ const MainLayout = forwardRef<
 						<Link
 							to={PUBLIC_PATH + '/'}
 							className={clsx(styles.entry, styles.logo)}
+							title="Home"
 							onClick={closeMenu}
 						>
 							<Hat />
@@ -237,6 +244,11 @@ const MainLayout = forwardRef<
 									to={`${getHot('theatre games category').path}?id=${
 										category.id
 									}`}
+									title={t(
+										`gameCategory:${
+											(category.id + (category.short ? '_' : '')) as categoryKey
+										}`
+									)}
 									className={clsx(styles.entry, styles.text)}
 									onClick={() => setExpanded(false)}
 								>

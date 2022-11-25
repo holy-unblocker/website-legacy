@@ -166,6 +166,7 @@ const SearchBar = ({
 							onClick={() => setInputFocused(false)}
 							onMouseOver={() => setLastSelect(i)}
 							to={`${getHot('theatre player').path}?id=${entry.id}`}
+							title={entry.name}
 							className={clsx(styles.option, i === lastSelect && styles.hover)}
 						>
 							<div className={styles.name}>
