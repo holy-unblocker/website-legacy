@@ -1,5 +1,6 @@
 import type { HolyPage } from '../../../App';
 import CommonError from '../../../CommonError';
+import Meta from '../../../Meta';
 import type {
 	CategoryData,
 	LoadingCategoryData,
@@ -37,6 +38,10 @@ for (const category of categories)
 
 const categoryQuery = categories.map((category) => category.id).join(',');
 
+const PopularMeta = () => (
+	<Meta title="Popular Games" description="Popular games on Holy Unblocker." />
+);
+
 const Popular: HolyPage = () => {
 	const { t } = useTranslation(['theatre', 'gameCategory']);
 
@@ -73,10 +78,13 @@ const Popular: HolyPage = () => {
 
 	if (error) {
 		return (
-			<CommonError
-				error={error}
-				message={t('theatre:error.popularGamesLoad')}
-			/>
+			<>
+				<PopularMeta />
+				<CommonError
+					error={error}
+					message={t('theatre:error.popularGamesLoad')}
+				/>
+			</>
 		);
 	}
 
@@ -95,39 +103,42 @@ const Popular: HolyPage = () => {
 		_categories[item.category[0]].entries.push(item);
 
 	return (
-		<main className={styles.main}>
-			<SearchBar
-				showCategory
-				category={categoryQuery}
-				placeholder={t('theatre:searchByGame')}
-			/>
-			{Object.values(_categories).map((section) => {
-				return (
-					<section className={styles.expand} key={section.category.id}>
-						<div className={styles.name}>
-							<h1>
-								{t(
-									`gameCategory:${section.category.id as categoryKey}`
-								).toString()}
-							</h1>
-							<ThemeLink
-								to={`${getHot('theatre games category').path}?id=${
-									section.category.id
-								}`}
-								className={styles.seeAll}
-							>
-								{t('theatre:seeAll')}
-								<ArrowForward />
-							</ThemeLink>
-						</div>
-						<ItemList
-							className={clsx(styles.items, styles.flex)}
-							items={section.entries}
-						/>
-					</section>
-				);
-			})}
-		</main>
+		<>
+			<PopularMeta />{' '}
+			<main className={styles.main}>
+				<SearchBar
+					showCategory
+					category={categoryQuery}
+					placeholder={t('theatre:searchByGame')}
+				/>
+				{Object.values(_categories).map((section) => {
+					return (
+						<section className={styles.expand} key={section.category.id}>
+							<div className={styles.name}>
+								<h1>
+									{t(
+										`gameCategory:${section.category.id as categoryKey}`
+									).toString()}
+								</h1>
+								<ThemeLink
+									to={`${getHot('theatre games category').path}?id=${
+										section.category.id
+									}`}
+									className={styles.seeAll}
+								>
+									{t('theatre:seeAll')}
+									<ArrowForward />
+								</ThemeLink>
+							</div>
+							<ItemList
+								className={clsx(styles.items, styles.flex)}
+								items={section.entries}
+							/>
+						</section>
+					);
+				})}
+			</main>
+		</>
 	);
 };
 

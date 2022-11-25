@@ -168,8 +168,6 @@ const Layout = forwardRef<LayoutRef>(function Layout(props, ref) {
 
 		if (!icon) return;
 
-		document.title = cloak.title === '' ? 'Holy Unblocker' : cloak.title;
-
 		let href: string;
 
 		switch (cloak.icon) {

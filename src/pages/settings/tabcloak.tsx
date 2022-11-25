@@ -1,5 +1,6 @@
 import type { HolyPage } from '../../App';
 import { useGlobalCloakSettings } from '../../Layout';
+import Meta from '../../Meta';
 import { Notification } from '../../Notifications';
 import { ThemeButton, ThemeInputBar, themeStyles } from '../../ThemeElements';
 import { BARE_API } from '../../consts';
@@ -91,6 +92,8 @@ async function blobToDataURL(blob: Blob) {
 	});
 }
 
+const TabCloakMeta = () => <Meta title="Tab Cloak Settings" />;
+
 const TabCloak: HolyPage = ({ layout }) => {
 	const { t } = useTranslation(['settings', 'commonError']);
 	const [cloak, setCloak] = useGlobalCloakSettings();
@@ -153,57 +156,60 @@ const TabCloak: HolyPage = ({ layout }) => {
 	}
 
 	return (
-		<section>
-			<p>
-				<Obfuscated>{t('settings:tabCloak.description')}</Obfuscated>
-			</p>
-			<div>
+		<>
+			<TabCloakMeta />
+			<section>
 				<p>
-					<Obfuscated>{t('settings:tabCloak.urlField')}</Obfuscated>:
+					<Obfuscated>{t('settings:tabCloak.description')}</Obfuscated>
 				</p>
-				<form
-					onSubmit={(event) => {
-						event.preventDefault();
-						onSubmit();
-					}}
-				>
-					<ThemeInputBar className={styles.ThemeInputBar}>
-						<input
-							className={themeStyles.themePadRight}
-							defaultValue={cloak.url}
-							placeholder="https://example.org/"
-							ref={input}
-						/>
-						<Check
-							onClick={onSubmit}
-							className={clsx(themeStyles.button, themeStyles.right)}
-						/>
-					</ThemeInputBar>
-				</form>
-			</div>
-			<div>
-				<ThemeButton
-					onClick={() => {
-						setCloak({
-							title: '',
-							icon: '',
-							url: '',
-						});
-
-						input.current!.value = '';
-
-						layout.current!.notifications.current!.add(
-							<Notification
-								description={t('settings:tabCloak.notification.reset')}
-								type="info"
+				<div>
+					<p>
+						<Obfuscated>{t('settings:tabCloak.urlField')}</Obfuscated>:
+					</p>
+					<form
+						onSubmit={(event) => {
+							event.preventDefault();
+							onSubmit();
+						}}
+					>
+						<ThemeInputBar className={styles.ThemeInputBar}>
+							<input
+								className={themeStyles.themePadRight}
+								defaultValue={cloak.url}
+								placeholder="https://example.org/"
+								ref={input}
 							/>
-						);
-					}}
-				>
-					<Obfuscated>{t('settings:tabCloak.resetButton')}</Obfuscated>
-				</ThemeButton>
-			</div>
-		</section>
+							<Check
+								onClick={onSubmit}
+								className={clsx(themeStyles.button, themeStyles.right)}
+							/>
+						</ThemeInputBar>
+					</form>
+				</div>
+				<div>
+					<ThemeButton
+						onClick={() => {
+							setCloak({
+								title: '',
+								icon: '',
+								url: '',
+							});
+
+							input.current!.value = '';
+
+							layout.current!.notifications.current!.add(
+								<Notification
+									description={t('settings:tabCloak.notification.reset')}
+									type="info"
+								/>
+							);
+						}}
+					>
+						<Obfuscated>{t('settings:tabCloak.resetButton')}</Obfuscated>
+					</ThemeButton>
+				</div>
+			</section>
+		</>
 	);
 };
 

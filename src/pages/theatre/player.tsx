@@ -1,6 +1,7 @@
 import type { HolyPage } from '../../App';
 import CommonError from '../../CommonError';
 import { useGlobalSettings } from '../../Layout';
+import Meta from '../../Meta';
 import resolveProxy from '../../ProxyResolver';
 import { TheatreAPI } from '../../TheatreCommon';
 import type { TheatreEntry } from '../../TheatreCommon';
@@ -55,6 +56,15 @@ async function resolveSrc(
 			throw new TypeError(`Unrecognized target: ${type}`);
 	}
 }
+
+// Play ... may not be appropiate for apps
+// Play TikTok
+const PlayerMeta = ({ name }: { name?: string }) => (
+	<Meta
+		title={name || 'Player'}
+		description={name ? `${name} on Holy Unblocker.` : undefined}
+	/>
+);
 
 const Player: HolyPage = () => {
 	const { t } = useTranslation('theatre');
@@ -186,32 +196,38 @@ const Player: HolyPage = () => {
 
 	if (error)
 		return (
-			<CommonError
-				error={errorCause.current || error}
-				message={t('error.playerEntryLoad')}
-			/>
+			<>
+				<PlayerMeta />
+				<CommonError
+					error={errorCause.current || error}
+					message={t('error.playerEntryLoad')}
+				/>
+			</>
 		);
 
 	if (!data) {
 		return (
-			<main
-				className={clsx(styles.main, styles.loading)}
-				data-panorama={Number(panorama)}
-				data-controls={Number(controlsExpanded)}
-			>
-				<div className={styles.frame}></div>
-				<div className={styles.title}>
-					{
-						// eslint-disable-next-line jsx-a11y/heading-has-content
-						<h3 className={styles.name} />
-					}
-					<div className={styles.shiftRight}></div>
-					<div className={styles.button} />
-					<div className={styles.button} />
-					<div className={styles.button} />
-					<div className={styles.button} />
-				</div>
-			</main>
+			<>
+				<PlayerMeta />
+				<main
+					className={clsx(styles.main, styles.loading)}
+					data-panorama={Number(panorama)}
+					data-controls={Number(controlsExpanded)}
+				>
+					<div className={styles.frame}></div>
+					<div className={styles.title}>
+						{
+							// eslint-disable-next-line jsx-a11y/heading-has-content
+							<h3 className={styles.name} />
+						}
+						<div className={styles.shiftRight}></div>
+						<div className={styles.button} />
+						<div className={styles.button} />
+						<div className={styles.button} />
+						<div className={styles.button} />
+					</div>
+				</main>
+			</>
 		);
 	}
 
@@ -264,105 +280,108 @@ const Player: HolyPage = () => {
 	}
 
 	return (
-		<main
-			className={styles.main}
-			data-panorama={Number(panorama)}
-			data-controls={Number(controlsExpanded)}
-		>
-			<div className={styles.frame}>
-				<div className={styles.iframeContainer}>
+		<>
+			<PlayerMeta name={data.name} />
+			<main
+				className={styles.main}
+				data-panorama={Number(panorama)}
+				data-controls={Number(controlsExpanded)}
+			>
+				<div className={styles.frame}>
+					<div className={styles.iframeContainer}>
+						<div
+							className={styles.iframeCover}
+							title={t('click')}
+							onClick={(event) => {
+								event.stopPropagation();
+								setIFrameFocused(true);
+							}}
+						/>
+						<iframe ref={iframe} title="Embed" src={resolvedSrc || undefined} />
+					</div>
 					<div
-						className={styles.iframeCover}
-						title={t('click')}
-						onClick={(event) => {
-							event.stopPropagation();
-							setIFrameFocused(true);
+						tabIndex={0}
+						className={styles.controls}
+						ref={controlsPopup}
+						onBlur={(event) => {
+							if (
+								!event.target.contains(event.relatedTarget) &&
+								!controlsOpen.current!.contains(event.relatedTarget)
+							) {
+								setControlsExpanded(false);
+							}
 						}}
-					/>
-					<iframe ref={iframe} title="Embed" src={resolvedSrc || undefined} />
+					>
+						<Close
+							className={styles.close}
+							onClick={() => setControlsExpanded(false)}
+						/>
+						<div className={styles.controls}>{controls}</div>
+					</div>
 				</div>
-				<div
-					tabIndex={0}
-					className={styles.controls}
-					ref={controlsPopup}
-					onBlur={(event) => {
-						if (
-							!event.target.contains(event.relatedTarget) &&
-							!controlsOpen.current!.contains(event.relatedTarget)
-						) {
-							setControlsExpanded(false);
-						}
-					}}
-				>
-					<Close
-						className={styles.close}
-						onClick={() => setControlsExpanded(false)}
-					/>
-					<div className={styles.controls}>{controls}</div>
-				</div>
-			</div>
-			<div className={styles.title}>
-				<h3 className={styles.name}>
-					<Obfuscated>{data.name}</Obfuscated>
-				</h3>
-				<div className={styles.shiftRight}></div>
-				<div
-					className={styles.button}
-					onClick={() => {
-						iframe.current!.requestFullscreen();
-					}}
-					title={t('fullscreen')}
-				>
-					<Fullscreen />
-				</div>
-				{controls.length !== 0 && (
+				<div className={styles.title}>
+					<h3 className={styles.name}>
+						<Obfuscated>{data.name}</Obfuscated>
+					</h3>
+					<div className={styles.shiftRight}></div>
 					<div
 						className={styles.button}
-						tabIndex={0}
-						ref={controlsOpen}
-						onClick={async () => {
-							setControlsExpanded(!controlsExpanded);
-							controlsPopup.current!.focus();
+						onClick={() => {
+							iframe.current!.requestFullscreen();
 						}}
-						title={t('controls')}
+						title={t('fullscreen')}
 					>
-						<VideogameAsset />
+						<Fullscreen />
 					</div>
-				)}
-				<div
-					className={styles.button}
-					onClick={() => {
-						const favorites = settings.favorites;
-						const i = favorites.indexOf(id);
+					{controls.length !== 0 && (
+						<div
+							className={styles.button}
+							tabIndex={0}
+							ref={controlsOpen}
+							onClick={async () => {
+								setControlsExpanded(!controlsExpanded);
+								controlsPopup.current!.focus();
+							}}
+							title={t('controls')}
+						>
+							<VideogameAsset />
+						</div>
+					)}
+					<div
+						className={styles.button}
+						onClick={() => {
+							const favorites = settings.favorites;
+							const i = favorites.indexOf(id);
 
-						if (i === -1) {
-							favorites.push(id);
-						} else {
-							favorites.splice(i, 1);
-						}
+							if (i === -1) {
+								favorites.push(id);
+							} else {
+								favorites.splice(i, 1);
+							}
 
-						setSettings({
-							...settings,
-							favorites,
-						});
+							setSettings({
+								...settings,
+								favorites,
+							});
 
-						setFavorited(favorites.includes(id));
-					}}
-					title={t('favorite')}
-				>
-					{favorited ? <Star /> : <StarBorder />}
+							setFavorited(favorites.includes(id));
+						}}
+						title={t('favorite')}
+					>
+						{favorited ? <Star /> : <StarBorder />}
+					</div>
+					<div
+						className={styles.button}
+						onClick={async () => {
+							setPanorama(!panorama);
+						}}
+						title={t('panorama')}
+					>
+						{panorama ? <ChevronLeft /> : <Panorama />}
+					</div>
 				</div>
-				<div
-					className={styles.button}
-					onClick={async () => {
-						setPanorama(!panorama);
-					}}
-					title={t('panorama')}
-				>
-					{panorama ? <ChevronLeft /> : <Panorama />}
-				</div>
-			</div>
-		</main>
+			</main>
+		</>
 	);
 };
 

@@ -1,5 +1,6 @@
 import type { HolyPage, LayoutDump } from '../App';
 import { useGlobalSettings } from '../Layout';
+import Meta from '../Meta';
 import resolveProxy from '../ProxyResolver';
 import SearchBuilder from '../SearchBuilder';
 import ServiceFrame from '../ServiceFrame';
@@ -259,16 +260,34 @@ const FAQLink = ({ children }: { children?: ReactNode }) => (
 	</ThemeLink>
 );
 
+const ProxyMeta = () => (
+	<Meta
+		title="Proxy"
+		description="Bypass blocks on your internet traffic with our web proxy."
+		faq={[
+			{
+				name: 'What web proxies does Holy Unblocker have?',
+				acceptedAnswer: {
+					text: 'Ultraviolet, Rammerhead, and Stomp. You can change the default proxy in your settings.',
+				},
+			},
+		]}
+	/>
+);
+
 const Proxies: HolyPage = ({ layout }) => {
 	const { t } = useTranslation('proxy');
 
 	return (
-		<main className={styles.main}>
-			<SearchBar layout={layout} />
-			<p>
-				<Trans t={t} i18nKey="faq" components={[<FAQLink />]} />
-			</p>
-		</main>
+		<>
+			<ProxyMeta />
+			<main className={styles.main}>
+				<SearchBar layout={layout} />
+				<p>
+					<Trans t={t} i18nKey="faq" components={[<FAQLink />]} />
+				</p>
+			</main>
+		</>
 	);
 };
 
