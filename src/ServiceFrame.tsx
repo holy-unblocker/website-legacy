@@ -41,20 +41,20 @@ const ServiceFrame = forwardRef<
 	const bare = useMemo(() => new BareClient(BARE_API), []);
 	const linksTried = useMemo(() => new WeakMap(), []);
 	const [settings] = useGlobalSettings();
-	const src = search.has('query') ? decryptURL(search.get('query')!) : '';
+	const src = search.has('src') ? decryptURL(search.get('src')!) : '';
 	const [title, setTitle] = useState(src);
 	const [icon, setIcon] = useState('');
 
 	useEffect(() => {
-		// allow querying eg ?search+hello+world
-		if (search.has('search')) {
+		// allow querying eg ?q+hello+world
+		if (search.has('q')) {
 			const newQuery = encryptURL(
-				new SearchBuilder(settings.search).query(search.get('search')!)
+				new SearchBuilder(settings.search).query(search.get('q')!)
 			);
-			search.delete('search');
+			search.delete('q');
 			setSearch({
 				...Object.fromEntries(search),
-				query: newQuery,
+				src: newQuery,
 			});
 		}
 	}, [search, setSearch, settings.search]);
@@ -101,7 +101,7 @@ const ServiceFrame = forwardRef<
 		proxy: (src: string) => {
 			setSearch({
 				...Object.fromEntries(search),
-				query: encryptURL(src),
+				src: encryptURL(src),
 			});
 		},
 	}));
