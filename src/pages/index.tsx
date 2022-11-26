@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 const HomeMeta = () => (
 	<Meta
 		title="Holy Unblocker"
-		description="Ho­ly Unbl­o­c­ker is a we­b pr­ox­y se­rvi­ce with sup­po­rt for many sit­es. By­pa­ss fi­l­ter­s and enj­oy a saf­er pr­iva­te b­rowsi­ng expe­ri­ence. Unblock websites on Chromebooks at school and work."
+		description="Ho­ly Unbl­o­c­ker is a we­b pr­ox­y se­rvi­ce with sup­po­rt for many sit­es. Unblock websites on Chromebooks at school and work."
 		faq={[
 			{
 				name: 'How do I unblock websites?',
