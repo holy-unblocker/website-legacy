@@ -41,14 +41,13 @@ const ServiceFrame = forwardRef<
 	const bare = useMemo(() => new BareClient(BARE_API), []);
 	const linksTried = useMemo(() => new WeakMap(), []);
 	const [settings] = useGlobalSettings();
-	const [src, setSrc] = useState('');
+	const src = search.has('query') ? decryptURL(search.get('query')!) : '';
 	const [title, setTitle] = useState(src);
 	const [icon, setIcon] = useState('');
 
 	useEffect(() => {
-		if (search.has('query')) setSrc(decryptURL(search.get('query')!));
 		// allow querying eg ?search+hello+world
-		else if (search.has('search')) {
+		if (search.has('search')) {
 			const newQuery = encryptURL(
 				new SearchBuilder(settings.search).query(search.get('search')!)
 			);
