@@ -12,6 +12,8 @@ const Privacy: HolyPage = () => {
 		<>
 			<PrivacyMeta />
 			<main>
+				<h1>Privacy Policy</h1>
+				<h2>Contact Us</h2>
 				<p>
 					If you have any questions about our Privacy Policy, please{' '}
 					<ThemeLink to={getHot('contact').path}>Contact Us</ThemeLink>.
