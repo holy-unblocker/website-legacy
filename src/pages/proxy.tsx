@@ -263,7 +263,7 @@ const FAQLink = ({ children }: { children?: ReactNode }) => (
 const ProxyMeta = () => (
 	<Meta
 		title="Proxy"
-		description="Bypass blocks on your internet traffic with our web proxy."
+		description="Bypass blocks on your internet traffic with Holy Unblocker's web proxy."
 		faq={[
 			{
 				name: 'What web proxies does Holy Unblocker have?',

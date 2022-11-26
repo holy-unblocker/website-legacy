@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 const ContactMeta = () => (
 	<Meta
 		title="Contact Us"
-		description="If you need help or need to contact us, you can contact us here."
+		description="If you need help or need to contact Holy Unblocker, you can contact us here."
 		faq={[
 			{
 				name: "What is Holy Unblocker's GitHub?",

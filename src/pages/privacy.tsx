@@ -4,7 +4,7 @@ import { ThemeLink } from '../ThemeElements';
 import { getHot } from '../routes';
 
 const PrivacyMeta = () => (
-	<Meta title="Privacy Policy" description="Our privacy policy." />
+	<Meta title="Privacy Policy" description="Holy Unblocker's privacy policy." />
 );
 
 const Privacy: HolyPage = () => {

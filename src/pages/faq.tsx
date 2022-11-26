@@ -45,7 +45,7 @@ const FAQMeta = () => {
 	return (
 		<Meta
 			title="FAQ"
-			description="Our frequently asked questions."
+			description="Holy Unblocker's frequently asked questions."
 			faq={[
 				{
 					name: t('list.selfhost.q'),

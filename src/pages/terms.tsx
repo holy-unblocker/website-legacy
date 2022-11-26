@@ -4,7 +4,7 @@ import { ThemeLink } from '../ThemeElements';
 import { getHot } from '../routes';
 
 const TermsMeta = () => (
-	<Meta title="Terms of Use" description="Our terms of use." />
+	<Meta title="Terms of Use" description="Holy Unblocker's terms of use." />
 );
 
 const Terms: HolyPage = () => {
