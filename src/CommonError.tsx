@@ -28,9 +28,11 @@ const ContactLink = ({ children }: { children?: ReactNode }) => (
 );
 
 const CommonError = ({
+	cause,
 	error,
 	message,
 }: {
+	cause?: string | null;
 	error: string;
 	message: string;
 }) => {
@@ -39,7 +41,14 @@ const CommonError = ({
 	return (
 		<main className="error">
 			<p>{message}:</p>
-			<pre>{error}</pre>
+			{cause ? (
+				<>
+					<pre>{cause}</pre>
+					<pre>{error}</pre>
+				</>
+			) : (
+				<pre>{error}</pre>
+			)}
 			<p>
 				<Trans t={t} i18nKey="tryAgain" components={[<TryAgainHere />]} />
 				<br />

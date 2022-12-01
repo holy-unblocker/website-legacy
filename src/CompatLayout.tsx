@@ -193,7 +193,8 @@ export default forwardRef<CompatLayoutRef, { children?: ReactNode }>(
 			<>
 				{error ? (
 					<CommonError
-						error={error.cause || error.error}
+						cause={error.cause}
+						error={error.error}
 						message={t('error.generic', { what: error.origin })}
 					/>
 				) : (

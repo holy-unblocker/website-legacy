@@ -113,7 +113,8 @@ const Category = ({
 	if (error)
 		return (
 			<CommonError
-				error={errorCause.current || error}
+				cause={errorCause.current}
+				error={error}
 				message={t('theatre:error.generic')}
 			/>
 		);

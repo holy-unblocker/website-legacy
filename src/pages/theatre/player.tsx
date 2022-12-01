@@ -199,7 +199,8 @@ const Player: HolyPage = () => {
 			<>
 				<PlayerMeta />
 				<CommonError
-					error={errorCause.current || error}
+					cause={errorCause.current}
+					error={error}
 					message={t('error.playerEntryLoad')}
 				/>
 			</>
