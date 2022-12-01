@@ -79,7 +79,7 @@ const ServiceFrame = forwardRef<
 						/>
 					);
 
-					search.delete('query');
+					search.delete('src');
 
 					setSearch({
 						...Object.fromEntries(search),
@@ -184,7 +184,7 @@ const ServiceFrame = forwardRef<
 				<ChevronLeft
 					className={styles.button}
 					onClick={() => {
-						search.delete('query');
+						search.delete('src');
 						setSearch(search);
 					}}
 				/>
