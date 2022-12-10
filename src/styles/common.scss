@@ -3,6 +3,10 @@
  * This file should only contain SCSS mixins and variables
  */
 
+// Fonts and fallbacks
+$MonsterratAlternates: 'Monsterrat Alternates', 'Arial', 'sans-serif';
+$Lato: 'Lato', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif';
+
 $scrollbar-width: 16px;
 $fixed-width: calc(100vw - $scrollbar-width);
 
