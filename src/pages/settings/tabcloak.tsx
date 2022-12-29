@@ -31,7 +31,7 @@ async function extractData(url: string): Promise<ExtractedData> {
 	const dom = parser.parseFromString(`${await response.text()}`, 'text/html');
 
 	const base = document.createElement('base');
-	base.href = url;
+	base.href = response.finalURL;
 
 	dom.head.append(base);
 
@@ -52,13 +52,9 @@ async function extractData(url: string): Promise<ExtractedData> {
 		})
 	);
 
-	const titleSelector = dom.querySelector('title');
+	let title = dom.title;
 
-	let title: string;
-
-	if (titleSelector && titleSelector.textContent !== '')
-		title = titleSelector.textContent!;
-	else {
+	if (!title) {
 		const url = new URL(response.finalURL);
 		title = `${url.host}${url.pathname}${url.search}`;
 	}
