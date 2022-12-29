@@ -1,7 +1,6 @@
 import type { HolyPage } from '../../App';
 import { useGlobalCloakSettings } from '../../Layout';
 import Meta from '../../Meta';
-import { Notification } from '../../Notifications';
 import { ThemeButton, ThemeInputBar, themeStyles } from '../../ThemeElements';
 import { BARE_API } from '../../consts';
 import i18n from '../../i18n';
@@ -110,12 +109,10 @@ const TabCloak: HolyPage = ({ layout }) => {
 					url = 'about:blank';
 					break;
 				default:
-					layout.current!.notifications.current!.add(
-						<Notification
-							description={t('settings:tabMask.notification.fetching')}
-							type="info"
-						/>
-					);
+					layout.current!.notifications.current!({
+						description: t('settings:tabMask.notification.fetching'),
+						type: 'info',
+					});
 
 					({ title, icon, url } = await extractData(resolved));
 
@@ -130,26 +127,21 @@ const TabCloak: HolyPage = ({ layout }) => {
 				url: url!,
 			});
 
-			layout.current!.notifications.current!.add(
-				<Notification
-					description={t('settings:tabMask.notification.set')}
-					type="success"
-				/>
-			);
+			layout.current!.notifications.current!({
+				description: t('settings:tabMask.notification.set'),
+				type: 'success',
+			});
 		} catch (err) {
 			console.error(err);
 
-			layout.current!.notifications.current!.add(
-				<Notification
-					title={t('settings:tabMask.notification.failure')}
-					description={
-						err instanceof Error
-							? err.message
-							: (i18n.t('commonError:unknownError') as string)
-					}
-					type="error"
-				/>
-			);
+			layout.current!.notifications.current!({
+				title: t('settings:tabMask.notification.failure'),
+				description:
+					err instanceof Error
+						? err.message
+						: (i18n.t('commonError:unknownError') as string),
+				type: 'error',
+			});
 		}
 	}
 
@@ -195,12 +187,10 @@ const TabCloak: HolyPage = ({ layout }) => {
 
 							input.current!.value = '';
 
-							layout.current!.notifications.current!.add(
-								<Notification
-									description={t('settings:tabMask.notification.reset')}
-									type="info"
-								/>
-							);
+							layout.current!.notifications.current!({
+								description: t('settings:tabMask.notification.reset'),
+								type: 'info',
+							});
 						}}
 					>
 						<Obfuscated>{t('settings:tabMask.resetButton')}</Obfuscated>

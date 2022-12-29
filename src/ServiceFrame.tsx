@@ -1,7 +1,6 @@
 import type { LayoutDump } from './App';
 import { isDatabaseError } from './DatabaseAPI';
 import { useGlobalSettings } from './Layout';
-import { Notification } from './Notifications';
 import resolveProxy from './ProxyResolver';
 import SearchBuilder from './SearchBuilder';
 import { BARE_API } from './consts';
@@ -71,13 +70,11 @@ const ServiceFrame = forwardRef<
 					setLastSrc(proxiedSrc);
 				} catch (err) {
 					console.error(err);
-					layout.current!.notifications.current!.add(
-						<Notification
-							title={i18n.t('proxy:error.compatibleProxy') as string}
-							description={isDatabaseError(err) ? err.message : String(err)}
-							type="error"
-						/>
-					);
+					layout.current!.notifications.current!({
+						title: i18n.t('proxy:error.compatibleProxy'),
+						description: isDatabaseError(err) ? err.message : String(err),
+						type: 'error',
+					});
 
 					search.delete('src');
 

@@ -6,48 +6,38 @@ import Info from '@mui/icons-material/Info';
 import Warning from '@mui/icons-material/Warning';
 import type SvgIcon from '@mui/material/SvgIcon';
 import clsx from 'clsx';
-import type { ReactElement, ReactNode, RefObject } from 'react';
+import type { ReactNode } from 'react';
 import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 
 const ANIMATION = 0.3e3;
 
-interface NotificationStubProps {
+interface NotificationData {
 	title?: ReactNode;
 	description?: ReactNode;
 	type?: 'warning' | 'error' | 'success' | 'info';
 	duration?: number;
 }
 
-interface RealNotificationProps extends NotificationStubProps {
-	manager: RefObject<NotificationsManagerRef>;
-	id: string;
+interface NotificationProps {
+	data: NotificationData;
+	close: () => void;
 }
 
-function RealNotification({
-	id,
-	title,
-	description,
-	manager,
-	duration,
-	type,
-}: RealNotificationProps) {
+function Notification({ data, close }: NotificationProps) {
 	const [hide, setHide] = useState(false);
-
-	duration ||= 5e3;
+	const duration = data.duration || 5e3;
 
 	useEffect(() => {
 		setTimeout(() => {
 			setHide(true);
-			setTimeout(() => {
-				if (!manager.current) return;
-				manager.current.delete(id);
-			}, ANIMATION);
+			setTimeout(close, ANIMATION);
 		}, duration);
-	}, [duration, id, manager]);
+	}, [close, duration]);
 
 	let Icon: typeof SvgIcon;
+	const type = data.type || 'info';
 
-	switch (type) {
+	switch (data.type) {
 		case 'warning':
 			Icon = Warning;
 			break;
@@ -57,11 +47,11 @@ function RealNotification({
 		case 'success':
 			Icon = CheckCircle;
 			break;
-		default:
 		case 'info':
-			type = 'info';
 			Icon = Info;
 			break;
+		default:
+			throw new Error('Invalid type');
 	}
 
 	return (
@@ -69,19 +59,19 @@ function RealNotification({
 			className={clsx(
 				styles.notification,
 				hide && styles.hide,
-				title && styles.title
+				data.title && styles.title
 			)}
 		>
 			<Icon className={clsx(styles.icon, styles[type])} />
 			<div className={styles.content}>
-				{title && (
+				{data.title && (
 					<div className={styles.title}>
-						<Obfuscated>{title}</Obfuscated>
+						<Obfuscated>{data.title}</Obfuscated>
 					</div>
 				)}
-				{description && (
+				{data.description && (
 					<div className={styles.description}>
-						<Obfuscated>{description}</Obfuscated>
+						<Obfuscated>{data.description}</Obfuscated>
 					</div>
 				)}
 			</div>
@@ -93,62 +83,35 @@ function RealNotification({
 	);
 }
 
-export function Notification(props: NotificationStubProps): JSX.Element {
-	throw new Error(
-		'<Notifications> is an abstract component, it should never be rendered.'
-	);
-}
-
-export interface NotificationsManagerRef {
-	add: (notification: ReactElement<Notification>) => void;
-	delete: (id: string) => void;
-}
+export type NotificationsManagerRef = (notification: NotificationData) => void;
 
 const NotificationsManager = forwardRef<NotificationsManagerRef>(
 	function NotificationsManager(props, ref) {
-		const [notifications, setNotifications] = useState<
-			ReactElement<RealNotificationProps>[]
-		>([]);
+		const [notifications, setNotifications] = useState<NotificationData[]>([]);
 
 		useImperativeHandle(
 			ref,
-			() => ({
-				add: (notification: ReactElement<Notification>) => {
-					const id = Math.random().toString(36);
-					const _notifications = [...notifications];
-
-					_notifications.push(
-						<RealNotification
-							{...notification.props}
-							key={id}
-							id={id}
-							manager={ref as RefObject<NotificationsManagerRef>}
-						/>
-					);
-
-					setNotifications(_notifications);
-				},
-				delete: (id: string) => {
-					const _notifications = [...notifications];
-
-					for (let i = 0; i < _notifications.length; i++) {
-						const notification = _notifications[i];
-
-						if (notification.props.id !== id) continue;
-
-						_notifications.splice(i, 1);
-						setNotifications(_notifications);
-
-						return true;
-					}
-
-					return false;
-				},
-			}),
-			[notifications, ref]
+			() => (notification: NotificationData) => {
+				setNotifications([...notifications, notification]);
+			},
+			[notifications]
 		);
 
-		return <div className={styles.notifications}>{notifications}</div>;
+		return (
+			<div className={styles.notifications}>
+				{notifications.map((data, i) => (
+					<Notification
+						data={data}
+						close={() => {
+							const newNotifications = [...notifications];
+							const i = newNotifications.indexOf(data);
+							if (i !== -1) newNotifications.splice(i, 1);
+						}}
+						key={i}
+					/>
+				))}
+			</div>
+		);
 	}
 );
 
