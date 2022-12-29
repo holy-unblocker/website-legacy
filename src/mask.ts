@@ -4,7 +4,7 @@ import BareClient from '@tomphttp/bare-client';
 
 const bare = new BareClient(BARE_API);
 
-interface ExtractedData {
+export interface ExtractedData {
 	title: string;
 	icon: string;
 	url: string;
