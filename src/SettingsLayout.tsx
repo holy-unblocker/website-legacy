@@ -35,7 +35,7 @@ const SettingsLayout = ({ children }: { children: ReactNode }) => {
 					<MenuTab
 						className={styles.entry}
 						route={getHot('settings tabcloak').path}
-						name={t('settingsTabCloak')}
+						name={t('settingsTabMask')}
 						iconClassName={styles.icon}
 						iconFilled={<DriveFileRenameOutline />}
 						iconOutlined={<DriveFileRenameOutlineOutlined />}

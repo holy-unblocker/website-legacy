@@ -13,19 +13,16 @@
 			"ab": "about:blank"
 		}
 	},
-	"tabCloak": {
-		"description": "Tab Cloaking allows you to disguise Holy Unblocker as any website such as your school's home page, new tab, etc.",
+	"tabMask": {
+		"description": "Tab Masking allows you to disguise Holy Unblocker as any website such as your school's home page, new tab, etc.",
 		"urlField": "URL",
-		"resetButton": "Reset Cloak",
+		"resetButton": "Reset mask",
 		"notification": {
-			"reset": "Cloak reset.",
-			"fetching": "Requesting cloak data...",
-			"failure": "Unable to request cloak data.",
-			"set": "Cloak set."
+			"reset": "Mask reset.",
+			"fetching": "Loading mask...",
+			"failure": "Failure loading mask.",
+			"set": "Mask successfully set."
 		},
-		"error": {
-			"response": "Cloak response was not OK. Got {{status}}.",
-			"validate": "Bad URL."
-		}
+		"validateError": "Invalid URL."
 	}
 }

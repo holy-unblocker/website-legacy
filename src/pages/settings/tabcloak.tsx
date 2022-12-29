@@ -25,9 +25,7 @@ async function extractData(url: string): Promise<ExtractedData> {
 	const response = await bare.fetch(url, { redirect: 'follow' });
 
 	if (!response.ok)
-		throw new Error(
-			i18n.t('settings:tabCloak.error.response', { status: response.status })
-		);
+		throw new Error(`Response was not OK. Got ${response.status}`);
 
 	const parser = new DOMParser();
 
@@ -78,7 +76,7 @@ function resolveURL(input: string) {
 	} else if (input.includes('.') && !input.match(whitespace)) {
 		return `http://${input}`;
 	} else {
-		throw new Error(i18n.t('settings:tabCloak.error.validate'));
+		throw new Error(i18n.t('settings:tabMask.validateError'));
 	}
 }
 
@@ -114,7 +112,7 @@ const TabCloak: HolyPage = ({ layout }) => {
 				default:
 					layout.current!.notifications.current!.add(
 						<Notification
-							description={t('settings:tabCloak.notification.fetching')}
+							description={t('settings:tabMask.notification.fetching')}
 							type="info"
 						/>
 					);
@@ -134,7 +132,7 @@ const TabCloak: HolyPage = ({ layout }) => {
 
 			layout.current!.notifications.current!.add(
 				<Notification
-					description={t('settings:tabCloak.notification.set')}
+					description={t('settings:tabMask.notification.set')}
 					type="success"
 				/>
 			);
@@ -143,7 +141,7 @@ const TabCloak: HolyPage = ({ layout }) => {
 
 			layout.current!.notifications.current!.add(
 				<Notification
-					title={t('settings:tabCloak.notification.failure')}
+					title={t('settings:tabMask.notification.failure')}
 					description={
 						err instanceof Error
 							? err.message
@@ -160,11 +158,11 @@ const TabCloak: HolyPage = ({ layout }) => {
 			<TabCloakMeta />
 			<section>
 				<p>
-					<Obfuscated>{t('settings:tabCloak.description')}</Obfuscated>
+					<Obfuscated>{t('settings:tabMask.description')}</Obfuscated>
 				</p>
 				<div>
 					<p>
-						<Obfuscated>{t('settings:tabCloak.urlField')}</Obfuscated>:
+						<Obfuscated>{t('settings:tabMask.urlField')}</Obfuscated>:
 					</p>
 					<form
 						onSubmit={(event) => {
@@ -199,13 +197,13 @@ const TabCloak: HolyPage = ({ layout }) => {
 
 							layout.current!.notifications.current!.add(
 								<Notification
-									description={t('settings:tabCloak.notification.reset')}
+									description={t('settings:tabMask.notification.reset')}
 									type="info"
 								/>
 							);
 						}}
 					>
-						<Obfuscated>{t('settings:tabCloak.resetButton')}</Obfuscated>
+						<Obfuscated>{t('settings:tabMask.resetButton')}</Obfuscated>
 					</ThemeButton>
 				</div>
 			</section>
