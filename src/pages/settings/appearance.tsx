@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 
 const AppearanceMeta = () => <Meta title="Appearance Settings" />;
 
-const Appearance: HolyPage = ({ layout }) => {
+const Appearance: HolyPage = () => {
 	const { t } = useTranslation('settings');
 	const [settings, setSettings] = useGlobalSettings();
 
