@@ -1,11 +1,11 @@
 import type { LayoutDump } from './App';
-import { isDatabaseError } from './DatabaseAPI';
 import { useGlobalSettings } from './Layout';
 import resolveProxy from './ProxyResolver';
 import SearchBuilder from './SearchBuilder';
 import { BARE_API } from './consts';
 import { decryptURL, encryptURL } from './cryptURL';
 import i18n from './i18n';
+import { isError } from './isAbortError';
 import { Obfuscated } from './obfuscate';
 import styles from './styles/Service.module.scss';
 import ChevronLeft from '@mui/icons-material/ChevronLeft';
@@ -72,7 +72,7 @@ const ServiceFrame = forwardRef<
 					console.error(err);
 					layout.current!.notifications.current!({
 						title: i18n.t('proxy:error.compatibleProxy'),
-						description: isDatabaseError(err) ? err.message : String(err),
+						description: isError(err) ? err.message : String(err),
 						type: 'error',
 					});
 

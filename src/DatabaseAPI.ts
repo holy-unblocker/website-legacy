@@ -1,13 +1,28 @@
-export interface DatabaseError extends Error {
-	statusCode: number;
-	type?: string;
+import i18n from './i18n';
+import { isError } from './isAbortError';
+
+export interface i18nError {
+	i18nError: true;
+	key: string;
+	data: Record<string, string>;
 }
 
-export const isDatabaseError = (error: unknown): error is DatabaseError =>
-	typeof error === 'object' &&
-	error !== null &&
-	error instanceof Error &&
-	'statusCode' in error;
+interface JSONError<T = unknown> extends Error {
+	statusCode: number;
+	json: T;
+}
+
+export const readi18nError = (err: JSONError<i18nError>) =>
+	i18n.t<string>(err.json.key, err.json.data);
+
+export const isJSONError = (err: unknown): err is JSONError =>
+	isError(err) && 'statusCode' in err && 'json' in err;
+
+export const isi18nError = (err: unknown): err is JSONError<i18nError> =>
+	isJSONError(err) &&
+	typeof err.json === 'object' &&
+	err !== null &&
+	'i18nError' in (err.json as object);
 
 export default class DatabaseAPI {
 	private server: string;
@@ -39,8 +54,12 @@ export default class DatabaseAPI {
 		const json = await outgoing.json();
 
 		if (!outgoing.ok) {
-			const error: Partial<DatabaseError> = new Error(json.message);
-			error.statusCode = json.statusCode;
+			const error: Partial<JSONError<unknown>> = new Error(
+				('message' in json && (json as { message: string }).message) ||
+					outgoing.statusText
+			);
+			error.statusCode = outgoing.status;
+			error.json = json;
 			throw error;
 		}
 

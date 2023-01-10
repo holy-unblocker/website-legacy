@@ -1,7 +1,7 @@
 import CompatAPI from './CompatAPI';
-import { isDatabaseError } from './DatabaseAPI';
 import { DB_API, DEFAULT_PROXY } from './consts';
 import { encryptURL } from './cryptURL';
+import { isError } from './isAbortError';
 import { getHot } from './routes';
 
 export default async function resolveProxy(src: string, setting: string) {
@@ -12,7 +12,7 @@ export default async function resolveProxy(src: string, setting: string) {
 		try {
 			setting = (await api.compat(host)).proxy;
 		} catch (err) {
-			if (isDatabaseError(err) && err.message === 'Not Found') {
+			if (isError(err) && err.message === 'Not Found') {
 				setting = DEFAULT_PROXY;
 			} else {
 				console.error(err);
