@@ -14,7 +14,7 @@ interface JSONError<T = unknown> extends Error {
 	json: T;
 }
 
-export const readi18nData = (err: JSONError<i18nData>) =>
+export const readi18nRes = (err: JSONError<i18nRes>) =>
 	i18n.t<string>(err.json.key, err.json.data);
 
 export const isJSONError = (err: unknown): err is JSONError =>
