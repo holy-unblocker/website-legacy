@@ -1,10 +1,12 @@
 import i18n from './i18n';
 import { isError } from './isAbortError';
 
-export interface i18nError {
-	i18nError: true;
+type i18nData = Record<string, string>;
+
+export interface i18nRes {
+	i18n: true;
 	key: string;
-	data: Record<string, string>;
+	data: i18nData;
 }
 
 interface JSONError<T = unknown> extends Error {
@@ -12,13 +14,13 @@ interface JSONError<T = unknown> extends Error {
 	json: T;
 }
 
-export const readi18nError = (err: JSONError<i18nError>) =>
+export const readi18nData = (err: JSONError<i18nData>) =>
 	i18n.t<string>(err.json.key, err.json.data);
 
 export const isJSONError = (err: unknown): err is JSONError =>
 	isError(err) && 'statusCode' in err && 'json' in err;
 
-export const isi18nError = (err: unknown): err is JSONError<i18nError> =>
+export const isi18nRes = (err: unknown): err is JSONError<i18nRes> =>
 	isJSONError(err) &&
 	typeof err.json === 'object' &&
 	err !== null &&
