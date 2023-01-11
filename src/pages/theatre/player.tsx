@@ -29,12 +29,11 @@ import { useSearchParams } from 'react-router-dom';
 
 async function resolveSrc(
 	src: TheatreEntry['src'],
-	type: TheatreEntry['type'],
-	setting: string
+	type: TheatreEntry['type']
 ) {
 	switch (type) {
 		case 'proxy':
-			return await resolveProxy(src, setting);
+			return await resolveProxy(src, 'automatic');
 		case 'embed':
 			return src;
 		case 'flash':
@@ -118,8 +117,7 @@ const Player: HolyPage = () => {
 				errorCause.current = 'Unable to resolve game location';
 				const resolvedSrc = await resolveSrc(
 					new URL(data.src, THEATRE_CDN).toString(),
-					data.type,
-					settings.proxy
+					data.type
 				);
 				errorCause.current = null;
 				setData(data);
