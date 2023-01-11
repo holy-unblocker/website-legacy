@@ -6,7 +6,7 @@ import type { RouteType } from './src/appRoutes.js';
 import { getRoutes } from './src/appRoutes.js';
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import type { JsMinifyOptions } from '@swc/core';
-import stompPath from '@sysce/stomp';
+import { stompPath } from '@sysce/stomp';
 import { uvPath } from '@titaniumnetwork-dev/ultraviolet';
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
