@@ -28,10 +28,12 @@ function Notification({ data, close }: NotificationProps) {
 	const duration = data.duration || 5e3;
 
 	useEffect(() => {
-		setTimeout(() => {
+		const timeout = setTimeout(() => {
 			setHide(true);
 			setTimeout(close, ANIMATION);
 		}, duration);
+
+		return () => clearTimeout(timeout);
 	}, [close, duration]);
 
 	let Icon: typeof SvgIcon;
@@ -106,6 +108,7 @@ const NotificationsManager = forwardRef<NotificationsManagerRef>(
 							const newNotifications = [...notifications];
 							const i = newNotifications.indexOf(data);
 							if (i !== -1) newNotifications.splice(i, 1);
+							setNotifications(newNotifications);
 						}}
 						key={i}
 					/>
