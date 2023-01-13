@@ -19,7 +19,7 @@ const Search: HolyPage = () => {
 			<section>
 				<div>
 					<p>
-						<Obfuscated>{t('link:proxy')}</Obfuscated>:
+						<Obfuscated>{t('settings:proxy.engine')}</Obfuscated>:
 					</p>
 					<ThemeSelect
 						className={styles.ThemeSelect}

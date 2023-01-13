@@ -6,7 +6,8 @@
 	"automaticProxy": "Automatique",
 	"searchEngine": "Moteur de recherche",
 	"proxy": {
-		"mode": "Mode de proxy",
+		"engine": "Moteur",
+		"mode": "Mode",
 		"setting": {
 			"embedded": "Intégré",
 			"redirect": "Redirection",
