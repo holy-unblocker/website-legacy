@@ -104,7 +104,7 @@ const Popular: HolyPage = () => {
 
 	return (
 		<>
-			<PopularMeta />{' '}
+			<PopularMeta />
 			<main className={styles.main}>
 				<SearchBar
 					showCategory
