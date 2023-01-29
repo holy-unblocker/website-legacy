@@ -1,9 +1,6 @@
 import type { LayoutDump } from './App';
 import { useGlobalSettings } from './Layout';
-import resolveProxy from './ProxyResolver';
-import SearchBuilder from './SearchBuilder';
 import { BARE_API } from './consts';
-import { decryptURL, encryptURL } from './cryptURL';
 import i18n from './i18n';
 import { isError } from './isAbortError';
 import { Obfuscated } from './obfuscate';
@@ -14,94 +11,58 @@ import OpenInNew from '@mui/icons-material/OpenInNew';
 import Public from '@mui/icons-material/Public';
 import BareClient from '@tomphttp/bare-client';
 import { useRef } from 'react';
-import {
-	forwardRef,
-	useCallback,
-	useEffect,
-	useImperativeHandle,
-	useMemo,
-	useState,
-} from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
-export interface ServiceFrameRef {
-	proxy: (src: string) => void;
-}
+export type ServiceFrameSrc = [src: string, proxySrc: string];
 
-const ServiceFrame = forwardRef<
-	ServiceFrameRef,
-	{ layout: LayoutDump['layout'] }
->(function ServiceFrame({ layout }, ref) {
+const ServiceFrame = ({
+	layout,
+	src,
+	close,
+}: {
+	layout: LayoutDump['layout'];
+	src: ServiceFrameSrc | null;
+	/**
+	 * Callback to handle closing the ServiceFrame.
+	 * Logic should be:
+	 * 	- Clear the src attribute
+	 */
+	close: () => void;
+}) => {
 	const iframe = useRef<HTMLIFrameElement | null>(null);
-	const [search, setSearch] = useSearchParams();
 	const [firstLoad, setFirstLoad] = useState(false);
 	const [revokeIcon, setRevokeIcon] = useState(false);
 	const [lastSrc, setLastSrc] = useState('');
 	const bare = useMemo(() => new BareClient(BARE_API), []);
 	const linksTried = useMemo(() => new WeakMap(), []);
 	const [settings] = useGlobalSettings();
-	const src = search.has('src') ? decryptURL(search.get('src')!) : '';
-	const [title, setTitle] = useState(src);
+	const [title, setTitle] = useState<string | null>(src?.[0] || null);
 	const [icon, setIcon] = useState('');
 
 	useEffect(() => {
-		// allow querying eg ?q+hello+world
-		if (search.has('q')) {
-			const newQuery = encryptURL(
-				new SearchBuilder(settings.search).query(search.get('q')!)
-			);
-			search.delete('q');
-			setSearch({
-				...Object.fromEntries(search),
-				src: newQuery,
-			});
-		}
-	}, [search, setSearch, settings.search]);
-
-	useEffect(() => {
 		if (src) {
-			(async function () {
-				if (!iframe.current || !iframe.current.contentWindow) return;
-
-				try {
-					const proxiedSrc = await resolveProxy(src, settings.proxy);
-
-					iframe.current.contentWindow.location.href = proxiedSrc;
-					setLastSrc(proxiedSrc);
-				} catch (err) {
-					console.error(err);
-					layout.current!.notifications.current!({
-						title: i18n.t('proxy:error.compatibleProxy'),
-						description: isError(err) ? err.message : String(err),
-						type: 'error',
-					});
-
-					search.delete('src');
-
-					setSearch({
-						...Object.fromEntries(search),
-					});
-				}
-			})();
-		} else {
 			if (!iframe.current || !iframe.current.contentWindow) return;
 
+			try {
+				iframe.current.contentWindow.location.href = src[1];
+				setLastSrc(src[1]);
+			} catch (err) {
+				console.error(err);
+				layout.current!.notifications.current!({
+					title: i18n.t('proxy:error.compatibleProxy'),
+					description: isError(err) ? err.message : String(err),
+					type: 'error',
+				});
+			}
+		} else {
+			if (!iframe.current || !iframe.current.contentWindow) return;
 			setFirstLoad(false);
 			setTitle('');
 			setIcon('');
 			iframe.current.contentWindow.location.href = 'about:blank';
 			setLastSrc('about:blank');
 		}
-	}, [iframe, layout, search, setSearch, settings.proxy, src]);
-
-	useImperativeHandle(ref, () => ({
-		proxy: (src: string) => {
-			setSearch({
-				...Object.fromEntries(search),
-				src: encryptURL(src),
-			});
-		},
-	}));
+	}, [iframe, layout, settings.proxy, src]);
 
 	useEffect(() => {
 		function focusListener() {
@@ -132,7 +93,7 @@ const ServiceFrame = forwardRef<
 
 			const location = new contentWindow.Function('return location')();
 
-			if (location === contentWindow.location) setTitle(src);
+			if (location === contentWindow.location) setTitle(src?.[0] || null);
 			else {
 				const currentTitle = contentWindow.document.title;
 
@@ -178,13 +139,7 @@ const ServiceFrame = forwardRef<
 	return (
 		<div className={styles.service}>
 			<div className={styles.buttons}>
-				<ChevronLeft
-					className={styles.button}
-					onClick={() => {
-						search.delete('src');
-						setSearch(search);
-					}}
-				/>
+				<ChevronLeft className={styles.button} onClick={close} />
 				{icon ? (
 					<img
 						className={styles.icon}
@@ -221,13 +176,13 @@ const ServiceFrame = forwardRef<
 				onLoad={() => {
 					testProxyUpdate();
 
-					if (src !== '') {
+					if (src) {
 						setFirstLoad(true);
 					}
 				}}
 			></iframe>
 		</div>
 	);
-});
+};
 
 export default ServiceFrame;

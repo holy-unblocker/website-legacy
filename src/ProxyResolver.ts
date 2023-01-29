@@ -4,10 +4,14 @@ import { encryptURL } from './cryptURL';
 import { isError } from './isAbortError';
 import { getHot } from './routes';
 
-export default async function resolveProxy(src: string, setting: string) {
+export default async function resolveProxy(
+	src: string,
+	setting: string,
+	signal?: AbortSignal
+) {
 	if (setting === 'automatic') {
 		const { host } = new URL(src);
-		const api = new CompatAPI(DB_API);
+		const api = new CompatAPI(DB_API, signal);
 
 		try {
 			setting = (await api.compat(host)).proxy;

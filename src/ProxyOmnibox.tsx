@@ -2,11 +2,12 @@ import type { LayoutDump } from './App';
 import { useGlobalSettings } from './Layout';
 import resolveProxy from './ProxyResolver';
 import SearchBuilder from './SearchBuilder';
+import type { ServiceFrameSrc } from './ServiceFrame';
 import ServiceFrame from './ServiceFrame';
-import type { ServiceFrameRef } from './ServiceFrame';
 import { ThemeInputBar, themeStyles } from './ThemeElements';
 import presentAboutBlank from './aboutBlank';
 import { BARE_API } from './consts';
+import { decryptURL, encryptURL } from './cryptURL';
 import engines from './engines';
 import isAbortError, { isFailedToFetch } from './isAbortError';
 import styles from './styles/ProxyOmnibox.module.scss';
@@ -15,8 +16,9 @@ import NorthWest from '@mui/icons-material/NorthWest';
 import Search from '@mui/icons-material/Search';
 import BareClient from '@tomphttp/bare-client';
 import clsx from 'clsx';
-import { createRef, useMemo, useRef, useState } from 'react';
+import { createRef, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSearchParams } from 'react-router-dom';
 
 const ProxyOmnibox = ({
 	className,
@@ -34,12 +36,45 @@ const ProxyOmnibox = ({
 	const [lastSelect, setLastSelect] = useState(-1);
 	const [omniboxEntries, setOmniboxEntries] = useState<string[]>([]);
 	const [inputFocused, setInputFocused] = useState(false);
-	const serviceFrame = useRef<ServiceFrameRef | null>(null);
 	const abort = useRef(new AbortController());
 	const bare = useMemo(() => new BareClient(BARE_API), []);
 	const [settings] = useGlobalSettings();
 	const engine =
 		engines.find((engine) => engine.format === settings.search) || engines[0];
+	const [search, setSearch] = useSearchParams();
+	const [src, setSrc] = useState<ServiceFrameSrc | null>(null);
+
+	useEffect(() => {
+		const abort = new AbortController();
+
+		(async () => {
+			// allow querying eg ?q+hello+world
+			if (search.has('q')) {
+				const src = new SearchBuilder(engine.format).query(search.get('q')!);
+				setSrc([src, await resolveProxy(src, settings.proxy, abort.signal)]);
+			}
+		})();
+
+		return () => abort.abort();
+	}, [search, setSearch, engine, settings.proxy]);
+
+	useEffect(() => {
+		// allow reusing src
+		const qSrc = search.get('src');
+		if (qSrc) setSrc(JSON.parse(decryptURL(qSrc)));
+		// only do this on the first load bc search.src is updated later:
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	useEffect(() => {
+		// update search.src
+		// this won't trip the previous hook
+		if (src) search.set('src', encryptURL(JSON.stringify(src)));
+		else search.delete('src');
+
+		setSearch(search);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [src]);
 
 	async function onInput() {
 		if (inputValue.current !== input.current!.value) {
@@ -101,7 +136,7 @@ const ProxyOmnibox = ({
 
 		switch (settings.proxyMode) {
 			case 'embedded':
-				serviceFrame.current!.proxy(src);
+				setSrc([src, await resolveProxy(src, settings.proxy)]);
 				break;
 			case 'redirect':
 				window.location.assign(await resolveProxy(src, settings.proxy));
@@ -121,7 +156,7 @@ const ProxyOmnibox = ({
 
 	return (
 		<>
-			<ServiceFrame ref={serviceFrame} layout={layout} />
+			<ServiceFrame src={src} close={() => setSrc(null)} layout={layout} />
 			<form
 				className={clsx(styles.omnibox, className)}
 				data-suggested={Number(renderSuggested)}
