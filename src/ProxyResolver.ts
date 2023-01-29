@@ -4,6 +4,27 @@ import { encryptURL } from './cryptURL';
 import { isError } from './isAbortError';
 import { getHot } from './routes';
 
+export type FixedProxy = 'stomp' | 'ultraviolet' | 'rammerhead';
+
+export function resolveProxyFixed(src: string, setting: FixedProxy) {
+	let route;
+
+	switch (setting) {
+		case 'stomp':
+			route = getHot('compat stomp').path;
+			break;
+		case 'ultraviolet':
+			route = getHot('compat ultraviolet').path;
+			break;
+		default:
+		case 'rammerhead':
+			route = getHot('compat rammerhead').path;
+			break;
+	}
+
+	return `${route}#${encryptURL(src)}`;
+}
+
 export default async function resolveProxy(
 	src: string,
 	setting: string,
@@ -25,20 +46,5 @@ export default async function resolveProxy(
 		}
 	}
 
-	let route;
-
-	switch (setting) {
-		case 'stomp':
-			route = getHot('compat stomp').path;
-			break;
-		case 'ultraviolet':
-			route = getHot('compat ultraviolet').path;
-			break;
-		default:
-		case 'rammerhead':
-			route = getHot('compat rammerhead').path;
-			break;
-	}
-
-	return `${route}#${encryptURL(src)}`;
+	return resolveProxyFixed(src, setting as FixedProxy);
 }
