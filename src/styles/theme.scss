@@ -1,5 +1,6 @@
 @use 'sass:map';
 @import './nord.scss';
+@import './common.scss';
 
 /*
 Design for dark theme first.
@@ -7,40 +8,7 @@ Design for dark theme first.
 https://www.nordtheme.com/
 */
 
-$night: (
-	background: $nord0,
-	background-accent: $nord1,
-	background-accent-disabled: #282d38,
-	text: #fff,
-	text-secondary: #aaa,
-	text-accent: #bbb,
-	text-placeholder: #9aa0a6,
-	text-disabled: #717171,
-	border: #555,
-	link: $nord8,
-	shadow: #000a,
-);
-
-$day: (
-	background: $nord4,
-	background-accent: $nord5,
-	background-accent-disabled: #d6dadf,
-	text: #000,
-	text-secondary: #f0f8ff,
-	text-accent: #222,
-	text-placeholder: #9aa0a6,
-	text-disabled: #909090,
-	border: #ccc,
-	link: $nord10,
-	shadow: #0004,
-);
-
-@function offsetHex($color, $ness) {
-	@return 'rgb(' + (red($color) + $ness) + ', ' + (green($color) + $ness) + ', ' +
-		(blue($color) + $ness) + ')';
-}
-
-@mixin theme-rules($theme, $contrast) {
+@mixin globalThemeRules($theme, $contrast) {
 	--background: #{map.get($theme, 'background')};
 	--contrast-background: #{map.get($contrast, 'background')};
 	--text: #{map.get($theme, 'text')};
@@ -74,20 +42,48 @@ $day: (
 	--success: #a3be8c;
 }
 
+$globalNight: (
+	background: $nord0,
+	background-accent: $nord1,
+	background-accent-disabled: #282d38,
+	text: #fff,
+	text-secondary: #aaa,
+	text-accent: #bbb,
+	text-placeholder: #9aa0a6,
+	text-disabled: #717171,
+	border: #555,
+	link: $nord8,
+	shadow: #000a,
+);
+
+$globalDay: (
+	background: $nord4,
+	background-accent: $nord5,
+	background-accent-disabled: #d6dadf,
+	text: #000,
+	text-secondary: #f0f8ff,
+	text-accent: #222,
+	text-placeholder: #9aa0a6,
+	text-disabled: #909090,
+	border: #ccc,
+	link: $nord10,
+	shadow: #0004,
+);
+
 html {
 	@media (prefers-color-scheme: light) {
-		@include theme-rules($day, $night);
+		@include globalThemeRules($globalDay, $globalNight);
 	}
 
 	@media (prefers-color-scheme: dark) {
-		@include theme-rules($night, $day);
+		@include globalThemeRules($globalNight, $globalDay);
 	}
 
 	&[data-theme='day'] {
-		@include theme-rules($day, $night);
+		@include globalThemeRules($globalDay, $globalNight);
 	}
 
 	&[data-theme='night'] {
-		@include theme-rules($night, $day);
+		@include globalThemeRules($globalNight, $globalDay);
 	}
 }

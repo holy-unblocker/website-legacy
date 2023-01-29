@@ -13,8 +13,19 @@ $fixed-width: calc(100vw - $scrollbar-width);
 $nav-height: 70px;
 $nav-height-border: 71px;
 
+@function offsetHex($color, $ness) {
+	@return 'rgb(' + (red($color) + $ness) + ', ' + (green($color) + $ness) + ', ' +
+		(blue($color) + $ness) + ')';
+}
+
 @mixin screenMobile {
 	@media only screen and (max-width: 650px) {
+		@content;
+	}
+}
+
+@mixin screenDesktop {
+	@media only screen and (min-width: 650px) {
 		@content;
 	}
 }

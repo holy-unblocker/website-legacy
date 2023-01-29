@@ -1,9 +1,11 @@
 import type { HolyPage } from '../App';
 import Meta from '../Meta';
+import ProxyOmnibox from '../ProxyOmnibox';
 import { ThemeButton } from '../ThemeElements';
 import { Obfuscated } from '../obfuscate';
 import styles from '../styles/Home.module.scss';
-import { useTranslation } from 'react-i18next';
+import type { ReactNode } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 
 const HomeMeta = () => (
 	<Meta
@@ -32,25 +34,34 @@ const HomeMeta = () => (
 	/>
 );
 
-const Home: HolyPage = ({ mainLayout }) => {
+const Pretty = ({ children }: { children?: ReactNode }) => (
+	<span className={styles.pretty}>{children}</span>
+);
+
+const Home: HolyPage = ({ layout, mainLayout }) => {
 	const { t } = useTranslation('landing');
 
 	return (
 		<>
 			<HomeMeta />
 			<main className={styles.main}>
-				<h1>
-					<Obfuscated>{t('title')}</Obfuscated>
-				</h1>
-				<h2>
-					<Obfuscated>{t('caption')}</Obfuscated>
-				</h2>
-				<ThemeButton
-					className={styles.button}
-					onClick={() => mainLayout.current!.setExpanded(true)}
-				>
-					<Obfuscated>{t('getStarted')}</Obfuscated>
-				</ThemeButton>
+				<div className={styles.title}>
+					<h1>
+						<Trans t={t} components={[<Pretty />]} i18nKey="title" />
+					</h1>
+					<h3>
+						<Obfuscated>{t('caption')}</Obfuscated>
+					</h3>
+				</div>
+				<div className={styles.focus}>
+					<ThemeButton
+						className={styles.button}
+						onClick={() => mainLayout.current!.setExpanded(true)}
+					>
+						<Obfuscated>{t('getStarted')}</Obfuscated>
+					</ThemeButton>
+					<ProxyOmnibox className={styles.omnibox} layout={layout} />
+				</div>
 			</main>
 		</>
 	);

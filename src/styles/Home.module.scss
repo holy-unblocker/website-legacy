@@ -1,9 +1,48 @@
+@use 'sass:map';
+@import './common.scss';
+@import './nord.scss';
+@import url('https://fonts.googleapis.com/css2?family=Catamaran:wght@500&display=swap');
+
+$homeNight: (
+	home-pretty: #bfd1f3,
+	home-start: #576178,
+);
+
+$homeDay: (
+	home-pretty: #5689ea,
+	home-start: #9fb3c8,
+);
+
+@mixin homeThemeRules($theme, $contrast) {
+	--home-pretty: #{map.get($theme, 'home-pretty')};
+	--home-start: #{map.get($theme, 'home-start')};
+	--home-start-hover: #{offsetHex(map.get($theme, 'home-start'), -10)};
+	--home-start-active: #{offsetHex(map.get($theme, 'home-start'), -20)};
+}
+
+html {
+	@media (prefers-color-scheme: light) {
+		@include homeThemeRules($homeDay, $homeNight);
+	}
+
+	@media (prefers-color-scheme: dark) {
+		@include homeThemeRules($homeNight, $homeDay);
+	}
+
+	&[data-theme='day'] {
+		@include homeThemeRules($homeDay, $homeNight);
+	}
+
+	&[data-theme='night'] {
+		@include homeThemeRules($homeNight, $homeDay);
+	}
+}
+
 .main {
 	margin: auto;
 	display: flex;
 	flex-direction: column;
-
-	text-align: center;
+	align-items: center;
 
 	> h1 {
 		margin: 0px 0px 10px 0px;
@@ -13,7 +52,85 @@
 		margin: 0px 0px 20px 0px;
 	}
 
-	.button {
-		margin: 0 auto;
+	.title {
+		// with or without text-align: centered, h1 will always be in the center because it causes the block to expand
+		display: block;
+
+		h1,
+		h3 {
+			font-family: 'Catamaran', sans-serif;
+			font-weight: 500;
+		}
+
+		h1 {
+			margin-bottom: 0;
+			font-size: 53px;
+			line-height: 40px;
+			word-spacing: 3px;
+
+			@include screenMobile {
+				line-height: 50px;
+			}
+		}
+
+		h3 {
+			font-size: 22px;
+			margin-top: 3px;
+			margin-left: 10px;
+
+			@include screenMobile {
+				margin-left: 0px;
+				line-height: 50px;
+			}
+		}
+
+		h3,
+		.pretty {
+			color: var(--home-pretty);
+		}
+
+		margin-top: 9vh;
+		margin-bottom: 10px;
+	}
+
+	.focus {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+		gap: 20px;
+		width: 100%;
+		height: 64px;
+
+		.omnibox {
+			margin: 0;
+
+			@include screenDesktop {
+				width: 400px;
+			}
+
+			::placeholder {
+				font-weight: 600;
+			}
+		}
+
+		.button {
+			background-color: var(--home-start);
+			color: var(--text);
+			font-weight: 600;
+			height: 44px;
+
+			&:hover {
+				background-color: var(--home-start-hover);
+			}
+
+			&:active {
+				background-color: var(--home-start-active);
+			}
+
+			@include screenMobile {
+				display: none;
+			}
+		}
 	}
 }
