@@ -1,5 +1,6 @@
 import './env.js';
 import HotHTMLPlugin from './HotHTMLPlugin.js';
+import InjectEnvPlugin from './InjectEnvPlugin.js';
 import type { CSSLoaderOptions } from './css-loader.js';
 import { envRaw, envRawHash, envRawStringified, PUBLIC_PATH } from './env.js';
 import type { RouteType } from './src/appRoutes.js';
@@ -25,14 +26,7 @@ import ModuleNotFoundPlugin from 'react-dev-utils/ModuleNotFoundPlugin.js';
 import getCSSModuleLocalIdent from 'react-dev-utils/getCSSModuleLocalIdent.js';
 import TerserPlugin from 'terser-webpack-plugin';
 import { promisify } from 'util';
-import type {
-	Compiler,
-	Compilation,
-	AssetInfo,
-	Configuration,
-	RuleSetRule,
-	WebpackPluginInstance,
-} from 'webpack';
+import type { Configuration, RuleSetRule } from 'webpack';
 import webpack from 'webpack';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import type { Configuration as WebpackDevServerConfiguration } from 'webpack-dev-server';
@@ -199,34 +193,6 @@ for (const pattern of copyPluginPatterns) {
 	for (const x of await globA(join(fromRes, '{*.mjs,*.js}'))) {
 		const xRel = relative(fromRes, x);
 		terserPluginExclude.push(relative(distPath, join(toRes, xRel)));
-	}
-}
-
-class DefineUVPlugin implements WebpackPluginInstance {
-	apply(compiler: Compiler) {
-		compiler.hooks.compilation.tap('DefineUV', (compilation: Compilation) => {
-			compilation.hooks.processAssets.tap(
-				{
-					name: 'DefineUV',
-					stage: webpack.Compilation.PROCESS_ASSETS_STAGE_ADDITIONS,
-				},
-				(assets: AssetInfo) => {
-					const config = assets['uv/uv.config.js'];
-
-					if (!config) return;
-
-					const content = config.buffer().toString();
-
-					assets['uv/uv.config.js'] = new webpack.sources.RawSource(
-						content.replace(
-							/process\.env\.(\w+)/g,
-							(match: string, target: string) =>
-								target in envRaw ? JSON.stringify(envRaw[target]) : 'undefined'
-						)
-					);
-				}
-			);
-		});
 	}
 }
 
@@ -505,7 +471,7 @@ const webpackConfig: Configuration = {
 			}),
 			new InterpolateHtmlPlugin(HtmlWebpackPlugin, envRaw),
 			// Define process.env constants in uv.config.js
-			new DefineUVPlugin(),
+			new InjectEnvPlugin(['uv/uv.config.js']),
 			// Inlines the webpack runtime script. This script is too small to warrant
 			// a network request.
 			// https://github.com/facebook/create-react-app/issues/5358
