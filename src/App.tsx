@@ -1,6 +1,6 @@
 import './styles/root.scss';
-import './styles/fonts/Lato.scss';
-import './styles/fonts/MontserratAlternates.scss';
+import '@fontsource/lato';
+import '@fontsource/montserrat-alternates';
 import './styles/theme.scss';
 import './styles/TheatrePlayer.scss';
 import './styles/ThemeElements.scss';
