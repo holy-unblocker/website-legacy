@@ -11,6 +11,7 @@
 	"dependencies": {
 		"@emotion/react": "^11.10.5",
 		"@emotion/styled": "^11.10.5",
+		"@fontsource/catamaran": "^4.5.10",
 		"@mui/icons-material": "^5.11.0",
 		"@swc/helpers": "^0.4.14",
 		"@tomphttp/bare-client": "^1.1.2-beta.2",

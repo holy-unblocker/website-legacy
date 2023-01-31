@@ -1,7 +1,7 @@
 @use 'sass:map';
 @import './common.scss';
 @import './nord.scss';
-@import url('https://fonts.googleapis.com/css2?family=Catamaran:wght@500&display=swap');
+@import '@fontsource/catamaran';
 
 $homeNight: (
 	home-pretty: #bfd1f3,
