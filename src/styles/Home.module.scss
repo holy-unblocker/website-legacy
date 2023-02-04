@@ -70,6 +70,8 @@ html {
 
 			@include screenMobile {
 				line-height: 50px;
+				// underline:
+				margin-bottom: 35px;
 			}
 		}
 
@@ -87,6 +89,17 @@ html {
 		h3,
 		.pretty {
 			color: var(--home-pretty);
+		}
+
+		.pretty {
+			position: relative;
+
+			.prettyUnderline {
+				position: absolute;
+				top: calc(100% - 11px);
+				left: 0px;
+				width: 100%;
+			}
 		}
 
 		margin-top: 9vh;

@@ -2,6 +2,7 @@ import type { HolyPage } from '../App';
 import Meta from '../Meta';
 import ProxyOmnibox from '../ProxyOmnibox';
 import { ThemeButton } from '../ThemeElements';
+import { ReactComponent as Underline } from '../assets/underline.svg';
 import { Obfuscated } from '../obfuscate';
 import styles from '../styles/Home.module.scss';
 import type { ReactNode } from 'react';
@@ -35,7 +36,10 @@ const HomeMeta = () => (
 );
 
 const Pretty = ({ children }: { children?: ReactNode }) => (
-	<span className={styles.pretty}>{children}</span>
+	<span className={styles.pretty}>
+		{children}
+		<Underline className={styles.prettyUnderline} />
+	</span>
 );
 
 const Home: HolyPage = ({ layout, mainLayout }) => {
