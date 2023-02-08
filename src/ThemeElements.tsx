@@ -163,16 +163,8 @@ export function ThemeSelect({
 
 		if (!i) return;
 
-		i.value = options[selected]?.value || '';
-
-		let timer: ReturnType<typeof setTimeout> | void = setTimeout(() => {
-			if (onChange) onChange({ target: i });
-			timer = undefined;
-		});
-
-		return () => {
-			if (timer) clearTimeout(timer);
-		};
+		i.value = options[value]?.value || '';
+		if (onChange) onChange({ target: i });
 	}
 
 	return (
