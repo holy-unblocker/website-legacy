@@ -144,7 +144,7 @@ const Category = ({
 						}}
 					>
 						<option value="mostPopular">{t('theatre:mostPopular')}</option>
-						<option value="Least Popular">{t('theatre:leastPopular')}</option>
+						<option value="leastPopular">{t('theatre:leastPopular')}</option>
 						<option value="nameASC">{t('theatre:nameASC')}</option>
 						<option value="nameDES">{t('theatre:nameDES')}</option>
 					</ThemeSelect>
