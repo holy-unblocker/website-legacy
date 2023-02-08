@@ -83,29 +83,10 @@ const Player: HolyPage = () => {
 	const controlsOpen = useRef<HTMLDivElement | null>(null);
 	const [resolvedSrc, setResolvedSrc] = useState<string | null>(null);
 	const controlsPopup = useRef<HTMLDivElement | null>(null);
-	const [seen, _setSeen] = useState(() => settings.seenGames.includes(id));
 	const [iframeFocused, setIFrameFocused] = useState(true);
 
 	useEffect(() => {
 		const abort = new AbortController();
-
-		async function setSeen(value: boolean) {
-			const seen = settings.seenGames;
-
-			if (value) {
-				seen.push(id);
-			} else {
-				const i = seen.indexOf(id);
-				seen.splice(i, 1);
-			}
-
-			setSettings({
-				...settings,
-				seenGames: seen,
-			});
-
-			_setSeen(value);
-		}
 
 		(async function () {
 			const api = new TheatreAPI(DB_API, abort.signal);
@@ -123,21 +104,28 @@ const Player: HolyPage = () => {
 				setData(data);
 				setResolvedSrc(resolvedSrc);
 
-				if (!seen) {
+				if (!settings.seenGames.includes(id)) {
 					errorCause.current = 'Unable to update plays';
 					await api.plays(id);
-					setSeen(true);
+					const { seenGames } = settings;
+					seenGames.push(id);
+					setSettings({
+						...settings,
+						seenGames,
+					});
+
 					errorCause.current = null;
 				}
 			} catch (err) {
 				if (!isAbortError(err)) {
+					console.error(err);
 					setError(String(err));
 				}
 			}
 		})();
 
 		return () => abort.abort();
-	}, [seen, id, settings, setSettings]);
+	}, [id, settings, setSettings]);
 
 	useEffect(() => {
 		function focusListener() {
