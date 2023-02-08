@@ -22,6 +22,13 @@ h3 {
 	outline: none;
 }
 
+html[data-tab='1'] {
+	a:not([tabIndex='-1']):focus {
+		outline: var(--action) solid 1px;
+		border-radius: 5px;
+	}
+}
+
 * {
 	scrollbar-color: var(--text-placeholder);
 

@@ -32,8 +32,13 @@
 	}
 }
 
-.nav > .button,
-.content > .menu > .top > .button {
+html[data-tab='1'] {
+	.button:not([tabIndex='-1']):focus {
+		outline: var(--action) solid 2px;
+	}
+}
+
+.button {
 	box-sizing: content-box;
 	border: none;
 	background: none;
@@ -159,6 +164,12 @@
 			flex-shrink: 0;
 			position: relative;
 		}
+	}
+}
+
+html[data-tab='1'] {
+	.menuList > .entry:focus {
+		outline: var(--action) solid 2px;
 	}
 }
 

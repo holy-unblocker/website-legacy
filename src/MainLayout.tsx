@@ -44,6 +44,7 @@ export function MenuTab({
 	iconClassName,
 	iconFilled,
 	iconOutlined,
+	tabIndex,
 }: {
 	route?: string;
 	href?: string;
@@ -53,6 +54,7 @@ export function MenuTab({
 	iconClassName?: string;
 	iconFilled: ReactNode;
 	iconOutlined?: ReactNode;
+	tabIndex?: number;
 }) {
 	const location = useLocation();
 	const selected = location.pathname === route;
@@ -75,6 +77,7 @@ export function MenuTab({
 				className={clsx(styles.entry, className)}
 				onClick={onClick}
 				title={name}
+				tabIndex={tabIndex}
 			>
 				{content}
 			</ObfuscatedA>
@@ -87,6 +90,7 @@ export function MenuTab({
 				className={clsx(styles.entry, className)}
 				title={name}
 				onClick={onClick}
+				tabIndex={tabIndex}
 			>
 				{content}
 			</Link>
@@ -142,12 +146,20 @@ const MainLayout = forwardRef<
 
 	const { t } = useTranslation(['link', 'gameCategory']);
 
+	const menuTabIndex = expanded ? undefined : -1;
+
 	return (
 		<>
 			<nav className={styles.nav}>
-				<div className={styles.button} onClick={() => setExpanded(true)}>
+				<button
+					className={styles.button}
+					onClick={() =>
+						// user may toggle this button again when using tab
+						setExpanded(!expanded)
+					}
+				>
 					<Menu />
-				</div>
+				</button>
 				<Link
 					to={PUBLIC_PATH + '/'}
 					className={clsx(styles.entry, styles.logo)}
@@ -156,19 +168,31 @@ const MainLayout = forwardRef<
 					<Hat />
 				</Link>
 				<div className={styles.shiftRight}></div>
+				{/* we want the user to tab into the button, not the link so it looks right */}
 				<Link
-					className={styles.button}
 					to={getHot('settings appearance').path}
 					title="Home"
+					tabIndex={-1}
 				>
-					<Settings />
+					<button className={styles.button}>
+						<Settings />
+					</button>
 				</Link>
 			</nav>
 			<div className={styles.content}>
-				<div className={clsx(styles.cover)} onClick={closeMenu}></div>
-				<div tabIndex={0} className={styles.menu}>
+				{/* previous button is already visible and tabbable, so tabbing this is redundant */}
+				<div
+					tabIndex={-1}
+					className={clsx(styles.cover)}
+					onClick={() => setExpanded(!expanded)}
+				></div>
+				<div className={styles.menu}>
 					<div className={styles.top}>
-						<div className={styles.button} onClick={closeMenu}>
+						<div
+							className={styles.button}
+							onClick={closeMenu}
+							tabIndex={expanded ? -1 : undefined}
+						>
 							<Menu />
 						</div>
 						<Link
@@ -176,6 +200,7 @@ const MainLayout = forwardRef<
 							className={clsx(styles.entry, styles.logo)}
 							title="Home"
 							onClick={closeMenu}
+							tabIndex={menuTabIndex}
 						>
 							<Hat />
 						</Link>
@@ -187,18 +212,21 @@ const MainLayout = forwardRef<
 							iconFilled={<Home />}
 							iconOutlined={<HomeOutlined />}
 							onClick={closeMenu}
+							tabIndex={menuTabIndex}
 						/>
 						<MenuTab
 							route={getHot('proxy').path}
 							name={t('link:proxy')}
 							iconFilled={<WebAsset />}
 							onClick={closeMenu}
+							tabIndex={menuTabIndex}
 						/>
 						<MenuTab
 							route={getHot('faq').path}
 							name={t('link:faq')}
 							iconFilled={<QuestionMark />}
 							onClick={closeMenu}
+							tabIndex={menuTabIndex}
 						/>
 
 						<div className={styles.bar} />
@@ -208,6 +236,7 @@ const MainLayout = forwardRef<
 							name={t('link:theatreApps')}
 							iconFilled={<Apps />}
 							onClick={closeMenu}
+							tabIndex={menuTabIndex}
 						/>
 
 						<MenuTab
@@ -216,6 +245,7 @@ const MainLayout = forwardRef<
 							iconFilled={<StarRounded />}
 							iconOutlined={<StarOutlineRounded />}
 							onClick={closeMenu}
+							tabIndex={menuTabIndex}
 						/>
 
 						<div className={styles.bar} />
@@ -229,12 +259,14 @@ const MainLayout = forwardRef<
 							name={t('link:theatreGamesPopular')}
 							iconFilled={<SortRounded />}
 							onClick={closeMenu}
+							tabIndex={menuTabIndex}
 						/>
 						<MenuTab
 							route={getHot('theatre games all').path}
 							name={t('link:theatreGamesAll')}
 							iconFilled={<List />}
 							onClick={closeMenu}
+							tabIndex={menuTabIndex}
 						/>
 						<div className={styles.title}>{t('link:nav.genre')}</div>
 						<div className={styles.genres}>
@@ -251,6 +283,7 @@ const MainLayout = forwardRef<
 									)}
 									className={clsx(styles.entry, styles.text)}
 									onClick={() => setExpanded(false)}
+									tabIndex={menuTabIndex}
 								>
 									<Obfuscated>
 										{t(

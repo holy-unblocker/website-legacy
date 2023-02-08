@@ -1,9 +1,8 @@
-import './styles/root.scss';
 import '@fontsource/lato';
 import '@fontsource/montserrat-alternates';
+import './styles/root.scss';
 import './styles/theme.scss';
 import './styles/TheatrePlayer.scss';
-import './styles/ThemeElements.scss';
 import './styles/Service.scss';
 import type { CompatLayoutRef } from './CompatLayout';
 import CompatLayout from './CompatLayout';
