@@ -4,7 +4,7 @@ import styles from './styles/ThemeElements.module.scss';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import clsx from 'clsx';
 import type { AnchorHTMLAttributes, ReactElement, ReactNode } from 'react';
-import { forwardRef, useState } from 'react';
+import { useRef, forwardRef, useState } from 'react';
 import type { LinkProps } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
@@ -98,6 +98,12 @@ export const ThemeInput = forwardRef<
 
 // <select ref={dummy_ref} forwardRef={ref}>
 
+interface Option {
+	name: string;
+	value: string;
+	disabled: boolean;
+}
+
 export function ThemeSelect({
 	className,
 	onChange,
@@ -115,81 +121,58 @@ export function ThemeSelect({
 	defaultValue?: string;
 }) {
 	// ref target
-	const [input, setInput] = useState<HTMLInputElement | null>(null);
-	const [container, setContainer] = useState<HTMLDivElement | null>(null);
+	const input = useRef<HTMLInputElement | null>(null);
+	const container = useRef<HTMLDivElement | null>(null);
 	const [lastSelect, setLastSelect] = useState(-1);
 	const [open, setOpen] = useState(false);
-
-	const list = [];
-
-	interface Option {
-		name: string;
-		value: string;
-		disabled: boolean;
-	}
 
 	const options: Option[] = [];
 	const availableOptions: number[] = [];
 
 	let defaultSelected = 0;
 
-	if (!children) children = [];
-	else if (!Array.isArray(children)) children = [children];
+	const c = children ? (Array.isArray(children) ? children : [children]) : [];
 
-	for (const child of children) {
-		if (child.type === 'option') {
-			const option: Option = {
-				name: child.props.children as string,
-				value: child.props.value as string,
-				disabled: child.props.disabled === true,
-			};
+	for (const child of c) {
+		if (child.type !== 'option') continue;
 
-			if (option.value === (value || defaultValue)) {
-				defaultSelected = options.length;
-			}
+		const option: Option = {
+			name: child.props.children as string,
+			value: child.props.value as string,
+			disabled: child.props.disabled === true,
+		};
 
-			if (!option.disabled) {
-				availableOptions.push(options.length);
-			}
-
-			options.push(option);
+		if (option.value === (value || defaultValue)) {
+			defaultSelected = options.length;
 		}
+
+		if (!option.disabled) {
+			availableOptions.push(options.length);
+		}
+
+		options.push(option);
 	}
 
-	const [selected, _setSelected] = useState(defaultSelected);
+	const [selected, setSelected] = useState(defaultSelected);
 
-	function setSelected(value: number) {
-		_setSelected(value);
+	function setSelectedCB(value: number) {
+		setSelected(value);
 		setOpen(false);
 
-		if (onChange) setTimeout(() => onChange({ target: input! }));
-	}
+		const i = input.current;
 
-	for (let i = 0; i < options.length; i++) {
-		const option = options[i];
+		if (!i) return;
 
-		list.push(
-			<div
-				className={clsx(
-					styles.plainOption,
-					i === lastSelect && styles.hover,
-					option.disabled && styles.disabled
-				)}
-				key={i}
-				onClick={() => {
-					if (!option.disabled) {
-						setSelected(i);
-					}
-				}}
-				onMouseOver={() => {
-					if (!option.disabled) {
-						setLastSelect(i);
-					}
-				}}
-			>
-				{option.name}
-			</div>
-		);
+		i.value = options[selected]?.value || '';
+
+		let timer: ReturnType<typeof setTimeout> | void = setTimeout(() => {
+			if (onChange) onChange({ target: i });
+			timer = undefined;
+		});
+
+		return () => {
+			if (timer) clearTimeout(timer);
+		};
 	}
 
 	return (
@@ -198,7 +181,7 @@ export function ThemeSelect({
 			tabIndex={0}
 			className={clsx(styles.ThemeSelect, className)}
 			data-open={Number(open)}
-			ref={setContainer}
+			ref={container}
 			onKeyDown={(event) => {
 				let preventDefault = true;
 
@@ -243,11 +226,11 @@ export function ThemeSelect({
 
 							setLastSelect(nextI);
 
-							if (!open) setSelected(nextI);
+							if (!open) setSelectedCB(nextI);
 						}
 						break;
 					case 'Enter':
-						if (open) setSelected(lastSelect);
+						if (open) setSelectedCB(lastSelect);
 						else setOpen(true);
 						break;
 					case 'Space':
@@ -267,13 +250,13 @@ export function ThemeSelect({
 				if (!event.target.contains(event.relatedTarget)) setOpen(false);
 			}}
 		>
-			<input ref={setInput} value={options[selected]?.value} readOnly hidden />
+			<input ref={input} readOnly hidden />
 			<div
 				className={styles.toggle}
 				onClick={() => {
 					setOpen(!open);
 					setLastSelect(selected);
-					container!.focus();
+					container.current?.focus();
 				}}
 			>
 				{options[selected]?.name}
@@ -285,7 +268,28 @@ export function ThemeSelect({
 					setLastSelect(-1);
 				}}
 			>
-				{list}
+				{options.map((option, i) => (
+					<div
+						className={clsx(
+							styles.plainOption,
+							i === lastSelect && styles.hover,
+							option.disabled && styles.disabled
+						)}
+						key={i}
+						onClick={() => {
+							if (!option.disabled) {
+								setSelectedCB(i);
+							}
+						}}
+						onMouseOver={() => {
+							if (!option.disabled) {
+								setLastSelect(i);
+							}
+						}}
+					>
+						{option.name}
+					</div>
+				))}
 			</div>
 		</div>
 	);
