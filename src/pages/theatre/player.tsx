@@ -147,7 +147,7 @@ const Player: HolyPage = () => {
 	useEffect(() => {
 		if (!iframe.current) return;
 
-		function clickListener(event: Event) {
+		function clickListener() {
 			if (iframeFocused) setIFrameFocused(false);
 		}
 
