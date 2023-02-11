@@ -1,4 +1,5 @@
 import '@fontsource/lato';
+import '@fontsource/lato/700.css';
 import '@fontsource/montserrat-alternates';
 import './styles/root.scss';
 import './styles/theme.scss';
