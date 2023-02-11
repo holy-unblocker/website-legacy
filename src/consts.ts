@@ -1,6 +1,10 @@
 const { host, hostname, protocol } = global.location;
 
-export const BARE_API = /*#__PURE__*/ format(process.env.REACT_APP_BARE_API!);
+export const BARE_APIS = /*#__PURE__*/ process.env
+	.REACT_APP_BARE_APIS!.split(',')
+	.map(format);
+// TODO: pick a random API based on the location
+export const BARE_API = BARE_APIS[0];
 export const RH_API = /*#__PURE__*/ format(process.env.REACT_APP_RH_API!);
 export const DB_API = /*#__PURE__*/ format(process.env.REACT_APP_DB_API!);
 export const THEATRE_CDN = /*#__PURE__*/ format(

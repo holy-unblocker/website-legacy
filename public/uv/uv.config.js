@@ -40,7 +40,7 @@
 	 */
 	const config = {
 		prefix: `${process.env.PUBLIC_PATH}/${process.env.REACT_APP_UV_DIR}/service/`,
-		bare: format(process.env.REACT_APP_BARE_API),
+		bare: process.env.REACT_APP_BARE_APIS.split(',').map(format),
 		encodeUrl: Ultraviolet.codec.xor.encode,
 		decodeUrl: Ultraviolet.codec.xor.decode,
 		handler: `${process.env.PUBLIC_PATH}/${process.env.REACT_APP_UV_DIR}/uv.handler.js`,
