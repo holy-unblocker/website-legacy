@@ -39,13 +39,11 @@ const Category = ({
 	name,
 	category,
 	placeholder,
-	id,
 	showCategory,
 }: {
 	name: string;
 	category: string;
 	placeholder?: string;
-	id: string;
 	showCategory?: boolean;
 }) => {
 	const { t } = useTranslation(['theatre', 'commonError']);
@@ -53,13 +51,14 @@ const Category = ({
 	let page = parseInt(search.get('page')!);
 	if (isNaN(page)) page = 0;
 	const [lastTotal, setLastTotal] = useState(LIMIT * 2);
-	const [data, setData] = useState<LoadingCategoryData | CategoryData>(() =>
-		createLoading(lastTotal)
-	);
-	const maxPage = Math.floor(data.total / LIMIT);
+	const [data, setData] = useState<CategoryData | null>(null);
+	const foundData = data || createLoading(lastTotal);
+	const maxPage = Math.floor(foundData.total / LIMIT);
 	const [error, setError] = useState<string | null>(null);
 
 	useEffect(() => {
+		setData(null);
+
 		const abort = new AbortController();
 
 		(async function () {
@@ -130,7 +129,6 @@ const Category = ({
 						className={styles.sort}
 						defaultValue={search.get('sort')!}
 						onChange={(event) => {
-							setData(createLoading(lastTotal));
 							search.delete('page');
 							setSearch({
 								...Object.fromEntries(search),
@@ -144,29 +142,27 @@ const Category = ({
 						<option value="nameDES">{t('theatre:nameDES')}</option>
 					</ThemeSelect>
 				</div>
-				<ItemList className={styles.items} items={data.entries} />
+				<ItemList className={styles.items} items={foundData.entries} />
 			</section>
 			<div className={clsx(styles.pages, maxPage === 0 && styles.useless)}>
 				<ChevronLeft
 					className={clsx(styles.button, !page && styles.disabled)}
 					onClick={() => {
-						if (!isLoading(data) && page) {
+						if (!isLoading(foundData) && page)
 							setSearch({
 								...Object.fromEntries(search),
 								page: Math.max(page - 1, 0).toString(),
 							});
-						}
 					}}
 				/>
 				<ChevronRight
 					className={clsx(styles.button, page >= maxPage && styles.disabled)}
 					onClick={() => {
-						if (!isLoading(data) && page < maxPage) {
+						if (!isLoading(foundData) && page < maxPage)
 							setSearch({
 								...Object.fromEntries(search),
 								page: (page + 1).toString(),
 							});
-						}
 					}}
 				/>
 			</div>

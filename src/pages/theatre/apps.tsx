@@ -16,7 +16,6 @@ const AllApps: HolyPage = (props) => {
 			<TheatreCategory
 				{...props}
 				name={t('apps')}
-				id="apps"
 				key="apps"
 				category="app"
 				placeholder={t('searchByApp')}

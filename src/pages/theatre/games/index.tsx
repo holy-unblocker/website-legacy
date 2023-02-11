@@ -22,19 +22,6 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 const entryLimit = 8;
-const loadingCategories: LoadingCategoryData = {
-	total: 0,
-	entries: [],
-	loading: true,
-};
-
-for (const category of categories)
-	for (let i = 0; i < entryLimit; i++)
-		loadingCategories.entries.push({
-			id: i.toString(),
-			loading: true,
-			category: [category.id],
-		});
 
 const categoryQuery = categories.map((category) => category.id).join(',');
 
@@ -45,11 +32,9 @@ const PopularMeta = () => (
 const Popular: HolyPage = () => {
 	const { t } = useTranslation(['theatre', 'gameCategory']);
 
-	const [data, setData] = useState<LoadingCategoryData | CategoryData>(
-		loadingCategories
-	);
-
+	const [data, setData] = useState<CategoryData | null>(null);
 	const [error, setError] = useState<string | null>(null);
+	const foundData = data || getPopularLoadingCategories();
 
 	useEffect(() => {
 		const abort = new AbortController();
@@ -99,7 +84,7 @@ const Popular: HolyPage = () => {
 			category: category,
 		};
 
-	for (const item of data.entries)
+	for (const item of foundData.entries)
 		_categories[item.category[0]].entries.push(item);
 
 	return (
@@ -143,3 +128,21 @@ const Popular: HolyPage = () => {
 };
 
 export default Popular;
+
+function getPopularLoadingCategories() {
+	const loadingCategories: LoadingCategoryData = {
+		total: 0,
+		entries: [],
+		loading: true,
+	};
+
+	for (const category of categories)
+		for (let i = 0; i < entryLimit; i++)
+			loadingCategories.entries.push({
+				id: i.toString(),
+				loading: true,
+				category: [category.id],
+			});
+
+	return loadingCategories;
+}

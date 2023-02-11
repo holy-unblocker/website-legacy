@@ -28,7 +28,6 @@ const Category: HolyPage = (props) => {
 				key={id}
 				name={name}
 				category={id}
-				id={id}
 				placeholder={t('theatre:searchByGame')}
 			/>
 		</>

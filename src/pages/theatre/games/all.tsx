@@ -16,7 +16,6 @@ const AllGames: HolyPage = (props) => {
 			<AllGamesMeta />
 			<Category
 				name={t('allGames')}
-				id="all"
 				key="all"
 				showCategory
 				category={categories.map((category) => category.id).join(',')}
