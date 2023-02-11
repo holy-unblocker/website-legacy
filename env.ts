@@ -33,6 +33,9 @@ const envRequired: string[] = [
 	'REACT_APP_RH_API',
 	'REACT_APP_DB_API',
 	'REACT_APP_THEATRE_CDN',
+	'REACT_APP_UV_DIR',
+	'REACT_APP_STOMP_DIR',
+	'REACT_APP_RUFFLE_DIR',
 ];
 
 // We support configuring the sockjs pathname during development.

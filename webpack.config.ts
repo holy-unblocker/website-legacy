@@ -155,21 +155,27 @@ const copyPluginPatterns: {
 }[] = [
 	{
 		from: './public',
-		filter: (file) => file !== resolve('public/index.html'),
+		filter: (file) =>
+			!file.startsWith(resolve('public/uv')) &&
+			file !== resolve('public/index.html'),
+	},
+	{
+		from: resolve('public/uv'),
+		to: process.env.REACT_APP_UV_DIR,
 	},
 	{
 		from: stompPath,
-		to: 'stomp',
+		to: process.env.REACT_APP_STOMP_DIR,
 	},
 	{
 		from: uvPath,
-		to: 'uv',
+		to: process.env.REACT_APP_UV_DIR,
 	},
 	{
 		from: resolve('node_modules/@ruffle-rs/ruffle'),
 		// don't filter licenses!
 		filter: (file) => !['package.json', 'README.md'].includes(basename(file)),
-		to: 'ruffle',
+		to: process.env.REACT_APP_RUFFLE_DIR,
 	},
 ];
 
@@ -467,7 +473,7 @@ const webpackConfig: Configuration = {
 			}),
 			new InterpolateHtmlPlugin(HtmlWebpackPlugin, envRaw),
 			// Define process.env constants in uv.config.js
-			new InjectEnvPlugin(['uv/uv.config.js']),
+			new InjectEnvPlugin([`${process.env.REACT_APP_UV_DIR}/uv.config.js`]),
 			// Inlines the webpack runtime script. This script is too small to warrant
 			// a network request.
 			// https://github.com/facebook/create-react-app/issues/5358

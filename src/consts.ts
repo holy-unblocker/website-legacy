@@ -36,4 +36,12 @@ export const SUPPORT_EMAIL = /*#__PURE__*/ format(
 	process.env.REACT_APP_SUPPORT_EMAIL!
 );
 
+export const UV_DIR = /*#__PURE__*/ format(process.env.REACT_APP_UV_DIR!);
+
+export const STOMP_DIR = /*#__PURE__*/ format(process.env.REACT_APP_STOMP_DIR!);
+
+export const RUFFLE_DIR = /*#__PURE__*/ format(
+	process.env.REACT_APP_RUFFLE_DIR!
+);
+
 export const OBFUSCATE = true;

@@ -176,11 +176,11 @@ export default forwardRef<CompatLayoutRef, { children?: ReactNode }>(
 		useImperativeHandle(
 			ref,
 			() => ({
-				report: (error: unknown, cause: string | undefined, origin: string) => {
-					console.error(error);
+				report: (err: unknown, cause: string | undefined, origin: string) => {
+					console.error(err);
 
 					setError({
-						error: String(error),
+						error: String(err),
 						cause: cause || 'unknown',
 						origin,
 					});
