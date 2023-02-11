@@ -1,10 +1,13 @@
 import type { Hot, RouteType, SomeAlias } from './appRoutes';
 import { getRoutes } from './appRoutes';
+import { OFFICIAL } from './consts';
 
 // should NOT be set when running the dev server
 export const PUBLIC_PATH = process.env.PUBLIC_PATH || '';
 
-export const routeType = process.env.REACT_APP_ROUTER! as RouteType;
+export const routeType = OFFICIAL
+	? 'file'
+	: (process.env.REACT_APP_ROUTER! as RouteType);
 
 export const hotRoutes = getRoutes(routeType, PUBLIC_PATH);
 
