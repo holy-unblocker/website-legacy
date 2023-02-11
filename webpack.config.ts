@@ -1,7 +1,5 @@
-import './env.js';
 import HotHTMLPlugin from './HotHTMLPlugin.js';
 import InjectEnvPlugin from './InjectEnvPlugin.js';
-import type { CSSLoaderOptions } from './css-loader.js';
 import { envRaw, envRawHash, envRawStringified, PUBLIC_PATH } from './env.js';
 import type { RouteType } from './src/appRoutes.js';
 import { getRoutes } from './src/appRoutes.js';
@@ -9,16 +7,16 @@ import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import type { JsMinifyOptions } from '@swc/core';
 import { stompPath } from '@sysce/stomp';
 import { uvPath } from '@titaniumnetwork-dev/ultraviolet';
-import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
+import CaseSensitivePathsPlugin from '@umijs/case-sensitive-paths-webpack-plugin';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import CopyPlugin from 'copy-webpack-plugin';
+import type { CSSLoaderOptions } from 'css-loader';
 import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 import ESLintWebpackPlugin from 'eslint-webpack-plugin';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import glob from 'glob';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import { createRequire } from 'node:module';
 import { relative, basename, resolve, join } from 'node:path';
 import InlineChunkHtmlPlugin from 'react-dev-utils/InlineChunkHtmlPlugin.js';
 import InterpolateHtmlPlugin from 'react-dev-utils/InterpolateHtmlPlugin.js';
@@ -26,26 +24,24 @@ import ModuleNotFoundPlugin from 'react-dev-utils/ModuleNotFoundPlugin.js';
 import getCSSModuleLocalIdent from 'react-dev-utils/getCSSModuleLocalIdent.js';
 import TerserPlugin from 'terser-webpack-plugin';
 import { promisify } from 'util';
-import type { Configuration, RuleSetRule } from 'webpack';
+import type {
+	Compiler,
+	Configuration,
+	RuleSetRule,
+	WebpackPluginInstance,
+} from 'webpack';
 import webpack from 'webpack';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
-import type { Configuration as WebpackDevServerConfiguration } from 'webpack-dev-server';
+import 'webpack-dev-server';
+import { createRequire } from 'node:module';
 
 const globA = promisify(glob);
 
 const require = createRequire(import.meta.url);
 
-type ArrElement<ArrType> = ArrType extends readonly (infer ElementType)[]
-	? ElementType
-	: never;
-
-type PluginEntry = ArrElement<Required<Configuration>['plugins']>;
-
-declare module 'webpack' {
-	interface Configuration {
-		devServer?: WebpackDevServerConfiguration;
-	}
-}
+type PluginEntry =
+	| ((this: Compiler, compiler: Compiler) => void)
+	| WebpackPluginInstance;
 
 const routeType = process.env.REACT_APP_ROUTER! as RouteType;
 

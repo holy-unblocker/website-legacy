@@ -12,5 +12,5 @@
 		"typeRoots": ["node_modules/@types", "types"],
 		"resolveJsonModule": true
 	},
-	"include": ["src/react-env.d.ts", "src/**/*"]
+	"include": ["types/**/*", "src/**/*", "*.ts"]
 }

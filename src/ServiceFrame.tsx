@@ -1,7 +1,6 @@
 import type { LayoutDump } from './App';
 import { useGlobalSettings } from './Layout';
 import { BARE_API } from './consts';
-import i18n from './i18n';
 import { isError } from './isAbortError';
 import { Obfuscated } from './obfuscate';
 import styles from './styles/Service.module.scss';
@@ -12,6 +11,7 @@ import Public from '@mui/icons-material/Public';
 import BareClient from '@tomphttp/bare-client';
 import { useRef } from 'react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export type ServiceFrameSrc = [src: string, proxySrc: string];
 
@@ -38,6 +38,7 @@ const ServiceFrame = ({
 	const [settings] = useGlobalSettings();
 	const [title, setTitle] = useState<string | null>(src?.[0] || null);
 	const [icon, setIcon] = useState('');
+	const { t } = useTranslation();
 
 	useEffect(() => {
 		if (src) {
@@ -49,7 +50,7 @@ const ServiceFrame = ({
 			} catch (err) {
 				console.error(err);
 				layout.current!.notifications.current!({
-					title: i18n.t('proxy:error.compatibleProxy'),
+					title: t('error.compatibleProxy'),
 					description: isError(err) ? err.message : String(err),
 					type: 'error',
 				});
@@ -62,7 +63,7 @@ const ServiceFrame = ({
 			iframe.current.contentWindow.location.href = 'about:blank';
 			setLastSrc('about:blank');
 		}
-	}, [iframe, layout, settings.proxy, src]);
+	}, [iframe, layout, settings.proxy, src, t]);
 
 	useEffect(() => {
 		function focusListener() {

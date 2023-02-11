@@ -1,5 +1,5 @@
 import './initEnv.ts';
-import { createHash } from 'crypto';
+import { createHash } from 'node:crypto';
 
 export const PUBLIC_PATH = process.env.PUBLIC_PATH || '';
 

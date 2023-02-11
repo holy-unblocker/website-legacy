@@ -2,7 +2,6 @@ import type { HolyPage } from '../../App';
 import { useGlobalCloakSettings } from '../../Layout';
 import Meta from '../../Meta';
 import { ThemeButton, ThemeInputBar, themeStyles } from '../../ThemeElements';
-import i18n from '../../i18n';
 import { extractData } from '../../mask';
 import { Obfuscated } from '../../obfuscate';
 import styles from '../../styles/Settings.module.scss';
@@ -41,7 +40,7 @@ const TabCloak: HolyPage = ({ layout }) => {
 				description:
 					err instanceof Error
 						? err.message
-						: (i18n.t('commonError:unknownError') as string),
+						: (t('commonError:unknownError') as string),
 				type: 'error',
 			});
 		}

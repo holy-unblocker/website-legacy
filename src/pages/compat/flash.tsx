@@ -1,7 +1,6 @@
 import type { HolyPage } from '../../App';
 import type { ScriptRef } from '../../CompatLayout';
 import { getDestination, Script } from '../../CompatLayout';
-import i18n from '../../i18n';
 import { PUBLIC_PATH } from '../../routes';
 import styles from '../../styles/CompatFlash.module.scss';
 import { useEffect, useRef, useState } from 'react';
@@ -35,7 +34,7 @@ const Flash: HolyPage = ({ compatLayout }) => {
 			let errorCause: string | undefined;
 
 			try {
-				errorCause = i18n.t('compat:error.generic');
+				errorCause = t('error.generic');
 				await ruffleBundle.current.promise;
 				errorCause = undefined;
 
@@ -62,7 +61,7 @@ const Flash: HolyPage = ({ compatLayout }) => {
 		return () => {
 			player?.remove();
 		};
-	}, [compatLayout, location, ruffleBundle]);
+	}, [compatLayout, location, ruffleBundle, t]);
 
 	return (
 		<main

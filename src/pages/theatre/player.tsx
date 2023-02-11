@@ -76,8 +76,10 @@ const Player: HolyPage = () => {
 	);
 	const [panorama, setPanorama] = useState(false);
 	const [controlsExpanded, setControlsExpanded] = useState(false);
-	const [error, setError] = useState<string | null>(null);
-	const errorCause = useRef<string | null>(null);
+	const [error, setError] = useState<{
+		cause?: string;
+		message: string;
+	} | null>(null);
 	const [data, setData] = useState<TheatreEntry | null>(null);
 	const iframe = useRef<HTMLIFrameElement | null>(null);
 	const controlsOpen = useRef<HTMLDivElement | null>(null);
@@ -89,23 +91,25 @@ const Player: HolyPage = () => {
 		const abort = new AbortController();
 
 		(async function () {
+			let errorCause: string | undefined;
+
 			const api = new TheatreAPI(DB_API, abort.signal);
 
 			try {
-				errorCause.current = 'Unable to fetch game info';
+				errorCause = t('error.player.fetch');
 				const data = await api.show(id);
-				errorCause.current = null;
-				errorCause.current = 'Unable to resolve game location';
+				errorCause = undefined;
+				errorCause = t('error.player.resolve');
 				const resolvedSrc = await resolveSrc(
 					new URL(data.src, THEATRE_CDN).toString(),
 					data.type
 				);
-				errorCause.current = null;
+				errorCause = undefined;
 				setData(data);
 				setResolvedSrc(resolvedSrc);
 
 				if (!settings.seenGames.includes(id)) {
-					errorCause.current = 'Unable to update plays';
+					errorCause = t('error.player.plays');
 					await api.plays(id);
 					const { seenGames } = settings;
 					seenGames.push(id);
@@ -114,18 +118,21 @@ const Player: HolyPage = () => {
 						seenGames,
 					});
 
-					errorCause.current = null;
+					errorCause = undefined;
 				}
 			} catch (err) {
 				if (!isAbortError(err)) {
 					console.error(err);
-					setError(String(err));
+					setError({
+						cause: errorCause,
+						message: String(err),
+					});
 				}
 			}
 		})();
 
 		return () => abort.abort();
-	}, [id, settings, setSettings]);
+	}, [id, settings, setSettings, t]);
 
 	useEffect(() => {
 		function focusListener() {
@@ -185,9 +192,9 @@ const Player: HolyPage = () => {
 			<>
 				<PlayerMeta />
 				<CommonError
-					cause={errorCause.current}
-					error={error}
-					message={t('error.playerEntryLoad')}
+					cause={error.cause}
+					error={error.message}
+					message={t('error.player.errorMessage')}
 				/>
 			</>
 		);

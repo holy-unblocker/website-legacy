@@ -15,9 +15,16 @@
 	"controls": "Controls",
 	"fullscreen": "Fullscreen mode",
 	"error": {
-		"generic": "An error occurred while loading the category",
-		"playerEntryLoad": "An error occurred while loading the app/game",
-		"popularGamesLoad": "An error occurred while loading popular games",
-		"categoryData": "Unable to fetch the category data."
+		"player": {
+			"errorMessage": "An error occurred while loading the app/game",
+			"fetch": "Unable to fetch information",
+			"resolve": "Unable to determine proxy/location",
+			"plays": "Unable to tick plays counter"
+		},
+		"category": {
+			"generic": "An error occurred while loading the category",
+			"popularGames": "An error occurred while loading popular games",
+			"fetch": "Unable to fetch the category data."
+		}
 	}
 }

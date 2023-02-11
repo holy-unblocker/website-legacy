@@ -82,7 +82,7 @@ const Popular: HolyPage = () => {
 				<PopularMeta />
 				<CommonError
 					error={error}
-					message={t('theatre:error.popularGamesLoad')}
+					message={t('theatre:error.category.popularGames')}
 				/>
 			</>
 		);

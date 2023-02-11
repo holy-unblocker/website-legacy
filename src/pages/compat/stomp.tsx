@@ -3,7 +3,6 @@ import type { ScriptRef } from '../../CompatLayout';
 import { getDestination } from '../../CompatLayout';
 import { Script } from '../../CompatLayout';
 import { BARE_API, SERVICEWORKERS } from '../../consts';
-import i18n from '../../i18n';
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
@@ -42,16 +41,16 @@ const Stomp: HolyPage = ({ compatLayout }) => {
 
 			try {
 				if (!SERVICEWORKERS) {
-					errorCause = i18n.t('compat:error.swHTTPS');
+					errorCause = t('error.swHTTPS');
 					throw new Error(errorCause);
 				}
 
 				if (!navigator.serviceWorker) {
-					errorCause = i18n.t('compat:error.swSupport');
+					errorCause = t('error.swSupport');
 					throw new Error(errorCause);
 				}
 
-				errorCause = i18n.t('compat:error.generic');
+				errorCause = t('error.generic');
 				await bootstrapper.current.promise;
 				errorCause = undefined;
 
@@ -71,11 +70,11 @@ const Stomp: HolyPage = ({ compatLayout }) => {
 
 				const boot = new StompBoot(config as StompBootConfig);
 
-				errorCause = i18n.t('compat:error.registeringSW');
+				errorCause = t('error.registeringSW');
 				await boot.ready;
 				errorCause = undefined;
 
-				errorCause = i18n.t('compat:error.unreachable', { what: 'Bare' });
+				errorCause = t('error.unreachable', { what: 'Bare' });
 				{
 					const bare = await fetch(BARE_API);
 					if (!bare.ok) {
@@ -89,7 +88,7 @@ const Stomp: HolyPage = ({ compatLayout }) => {
 				compatLayout.current.report(err, errorCause, 'Stomp');
 			}
 		})();
-	}, [compatLayout, bootstrapper, location]);
+	}, [compatLayout, bootstrapper, location, t]);
 
 	return (
 		<main>
