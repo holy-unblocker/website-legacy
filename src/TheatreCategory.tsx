@@ -57,17 +57,12 @@ const Category = ({
 		createLoading(lastTotal)
 	);
 	const maxPage = Math.floor(data.total / LIMIT);
-	const [error, setError] = useState<{
-		cause?: string;
-		message: string;
-	} | null>(null);
+	const [error, setError] = useState<string | null>(null);
 
 	useEffect(() => {
 		const abort = new AbortController();
 
 		(async function () {
-			let errorCause: string | undefined;
-
 			let leastGreatest = false;
 			let sort;
 
@@ -88,8 +83,6 @@ const Category = ({
 
 			const api = new TheatreAPI(DB_API, abort.signal);
 
-			errorCause = t('theatre:error.category.fetch');
-
 			try {
 				const data = await api.category({
 					category,
@@ -99,16 +92,12 @@ const Category = ({
 					limit: LIMIT,
 				});
 
-				errorCause = undefined;
 				setData(data);
 				setLastTotal(data.total);
 			} catch (err) {
 				if (!isAbortError(err)) {
 					console.error(err);
-					setError({
-						cause: errorCause,
-						message: String(err),
-					});
+					setError(String(err));
 				}
 			}
 		})();
@@ -119,8 +108,8 @@ const Category = ({
 	if (error)
 		return (
 			<CommonError
-				cause={error.cause}
-				error={error.message}
+				cause={t('theatre:error.category.fetch')}
+				error={error}
 				message={t('theatre:error.category.generic')}
 			/>
 		);
