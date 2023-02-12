@@ -180,12 +180,11 @@ const MainLayout = forwardRef<
 				</Link>
 			</nav>
 			<div className={styles.content}>
-				{/* previous button is already visible and tabbable, so tabbing this is redundant */}
 				<div
 					tabIndex={-1}
 					className={clsx(styles.cover)}
-					onClick={() => setExpanded(!expanded)}
-				></div>
+					onClick={() => setExpanded(false)}
+				/>
 				<div className={styles.menu}>
 					<div className={styles.top}>
 						<div
