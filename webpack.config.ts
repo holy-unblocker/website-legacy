@@ -483,11 +483,7 @@ const webpackConfig: Configuration = {
 			// Generates an `index.html` file with the <script> injected.
 			// Relevant to hotRoutes
 			new HotHTMLPlugin((outputName) =>
-				hotRoutes.find(
-					(hot) =>
-						hot.file ===
-						(outputName.startsWith('one/') ? outputName.slice(4) : outputName)
-				)
+				hotRoutes.find((hot) => hot.file === outputName)
 			),
 			...hotRoutes.map(
 				(hot) =>
