@@ -24,7 +24,7 @@ const TNInviteLink = ({ children }: { children?: ReactNode }) => (
 
 const GitLink = ({ children }: { children?: ReactNode }) => (
 	<ObfuscatedThemeA
-		href="https://github.com/holy-unblocker/holy/website"
+		href="https://github.com/holy-unblocker/website"
 		title="Git repository"
 	>
 		{children}
