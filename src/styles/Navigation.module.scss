@@ -301,3 +301,13 @@ html[data-expanded='1'] {
 		}
 	}
 }
+
+.new {
+	line-height: 1em;
+	padding: 2px 5px;
+	margin-left: 5px;
+	border-radius: 10px;
+	background-color: var(--error);
+	color: white;
+	font-size: 12px;
+}

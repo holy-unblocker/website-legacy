@@ -45,6 +45,7 @@ export function MenuTab({
 	iconFilled,
 	iconOutlined,
 	tabIndex,
+	isNew,
 }: {
 	route?: string;
 	href?: string;
@@ -55,6 +56,7 @@ export function MenuTab({
 	iconFilled: ReactNode;
 	iconOutlined?: ReactNode;
 	tabIndex?: number;
+	isNew?: boolean;
 }) {
 	const location = useLocation();
 	const selected = location.pathname === route;
@@ -66,6 +68,7 @@ export function MenuTab({
 			<span className={styles.name}>
 				<Obfuscated ellipsis>{name}</Obfuscated>
 			</span>
+			{isNew && <span className={styles.new}>new</span>}
 		</>
 	);
 
