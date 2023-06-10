@@ -1,8 +1,3 @@
-/**
- * This module is used in both the compiler and the website. Don't use any JSX modules unless its for typedefs or in imports.
- */
-import type { HolyPage } from './App';
-
 export type LayoutID = 'main' | 'compat' | 'settings';
 
 export interface Hot {
@@ -12,11 +7,6 @@ export interface Hot {
 	 * used to resolve path names
 	 */
 	alias: SomeAlias;
-	/**
-	 * import the page
-	 * default should be HolyPage
-	 */
-	import: () => Promise<{ default: HolyPage }>;
 	src: string;
 	layout: LayoutID;
 }
@@ -78,151 +68,121 @@ export function getRoutes(routeType: RouteType, publicPath: string) {
 		{
 			...lazyLoc('/'),
 			alias: 'home',
-			import: () => import(/* webpackPrefetch: true */ './pages/index'),
-			src: './pages/index',
+			src: './pages/index.tsx',
 			layout: 'main',
 		},
 		{
 			...lazyLoc('/faq'),
 			alias: 'faq',
-			import: () => import(/* webpackPrefetch: true */ './pages/faq'),
-			src: './pages/faq',
+			src: './pages/faq.tsx',
 			layout: 'main',
 		},
 		{
 			...lazyLoc('/contact'),
 			alias: 'contact',
-			import: () => import(/* webpackPrefetch: true */ './pages/contact'),
-			src: './pages/contact',
+			src: './pages/contact.tsx',
 			layout: 'main',
 		},
 		{
 			...lazyLoc('/privacy'),
 			alias: 'privacy',
-			import: () => import(/* webpackPrefetch: true */ './pages/privacy'),
-			src: './pages/privacy',
+			src: './pages/privacy.tsx',
 			layout: 'main',
 		},
 		{
 			...lazyLoc('/terms'),
 			alias: 'terms',
-			import: () => import(/* webpackPrefetch: true */ './pages/terms'),
-			src: './pages/terms',
+			src: './pages/terms.tsx',
 			layout: 'main',
 		},
 		{
 			...lazyLoc(routeType === 'id' ? '/' + i++ : '/credits'),
 			alias: 'credits',
-			import: () => import(/* webpackPrefetch: true */ './pages/credits'),
-			src: './pages/credits',
+			src: './pages/credits.tsx',
 			layout: 'main',
 		},
 		{
 			...lazyLoc(routeType === 'id' ? '/' + i++ : '/proxy'),
 			alias: 'proxy',
-			import: () => import(/* webpackPrefetch: true */ './pages/proxy'),
-			src: './pages/proxy',
+			src: './pages/proxy.tsx',
 			layout: 'main',
 		},
 		{
 			...lazyLoc(routeType === 'id' ? '/' + i++ : '/compat/ultraviolet'),
 			alias: 'compat ultraviolet',
-			import: () =>
-				import(/* webpackPrefetch: true */ './pages/compat/ultraviolet'),
-			src: './pages/compat/ultraviolet',
+			src: './pages/compat/ultraviolet.tsx',
 			layout: 'compat',
 		},
 		{
 			...lazyLoc(routeType === 'id' ? '/' + i++ : '/compat/rammerhead'),
 			alias: 'compat rammerhead',
-			import: () =>
-				import(/* webpackPrefetch: true */ './pages/compat/rammerhead'),
-			src: './pages/compat/rammerhead',
+			src: './pages/compat/rammerhead.tsx',
 			layout: 'compat',
 		},
 		{
 			...lazyLoc(routeType === 'id' ? '/' + i++ : '/compat/stomp'),
 			alias: 'compat stomp',
-			import: () => import(/* webpackPrefetch: true */ './pages/compat/stomp'),
-			src: './pages/compat/stomp',
+			src: './pages/compat/stomp.tsx',
 			layout: 'compat',
 		},
 		{
 			...lazyLoc(routeType === 'id' ? '/' + i++ : '/compat/flash'),
 			alias: 'compat flash',
-			import: () => import(/* webpackPrefetch: true */ './pages/compat/flash'),
-			src: './pages/compat/flash',
+			src: './pages/compat/flash.tsx',
 			layout: 'compat',
 		},
 		{
 			...lazyLoc(routeType === 'id' ? '/' + i++ : '/settings/proxy'),
 			alias: 'settings proxy',
-			import: () =>
-				import(/* webpackPrefetch: true */ './pages/settings/proxy'),
-			src: './pages/settings/proxy',
+			src: './pages/settings/proxy.tsx',
 			layout: 'settings',
 		},
 		{
 			...lazyLoc(routeType === 'id' ? '/' + i++ : '/settings/appearance'),
 			alias: 'settings appearance',
-			import: () =>
-				import(/* webpackPrefetch: true */ './pages/settings/appearance'),
-			src: './pages/settings/appearance',
+			src: './pages/settings/appearance.tsx',
 			layout: 'settings',
 		},
 		{
 			...lazyLoc(routeType === 'id' ? '/' + i++ : '/settings/tabcloak'),
 			alias: 'settings tabcloak',
-			import: () =>
-				import(/* webpackPrefetch: true */ './pages/settings/tabcloak'),
-			src: './pages/settings/tabcloak',
+			src: './pages/settings/tabcloak.tsx',
 			layout: 'settings',
 		},
 		{
 			...lazyLoc(routeType === 'id' ? '/' + i++ : '/theatre/favorites'),
 			alias: 'theatre favorites',
-			import: () =>
-				import(/* webpackPrefetch: true */ './pages/theatre/favorites'),
-			src: './pages/theatre/favorites',
+			src: './pages/theatre/favorites.tsx',
 			layout: 'main',
 		},
 		{
 			...lazyLoc(routeType === 'id' ? '/' + i++ : '/theatre/apps'),
 			alias: 'theatre apps',
-			import: () => import(/* webpackPrefetch: true */ './pages/theatre/apps'),
-			src: './pages/theatre/apps',
+			src: './pages/theatre/apps.tsx',
 			layout: 'main',
 		},
 		{
 			...lazyLoc(routeType === 'id' ? '/' + i++ : '/theatre/player'),
 			alias: 'theatre player',
-			import: () =>
-				import(/* webpackPrefetch: true */ './pages/theatre/player'),
-			src: './pages/theatre/player',
+			src: './pages/theatre/player.tsx',
 			layout: 'main',
 		},
 		{
 			...lazyLoc(routeType === 'id' ? '/' + i++ : '/theatre/category'),
 			alias: 'theatre games category',
-			import: () =>
-				import(/* webpackPrefetch: true */ './pages/theatre/category'),
-			src: './pages/theatre/category',
+			src: './pages/theatre/category.tsx',
 			layout: 'main',
 		},
 		{
 			...lazyLoc(routeType === 'id' ? '/' + i++ : '/theatre/games/'),
 			alias: 'theatre games popular',
-			import: () =>
-				import(/* webpackPrefetch: true */ './pages/theatre/games/index'),
-			src: './pages/theatre/games/index',
+			src: './pages/theatre/games/index.tsx',
 			layout: 'main',
 		},
 		{
 			...lazyLoc(routeType === 'id' ? '/' + i++ : '/theatre/games/all'),
 			alias: 'theatre games all',
-			import: () =>
-				import(/* webpackPrefetch: true */ './pages/theatre/games/all'),
-			src: './pages/theatre/games/all',
+			src: './pages/theatre/games/all.tsx',
 			layout: 'main',
 		},
 		{
@@ -232,8 +192,7 @@ export function getRoutes(routeType: RouteType, publicPath: string) {
 			// needs to be manually configured in NGINX: `error_page 404 /404.html;`
 			file: '404.html',
 			alias: '404',
-			import: () => import(/* webpackPrefetch: true */ './pages/404'),
-			src: './pages/404',
+			src: './pages/404.tsx',
 			layout: 'main',
 		},
 	] as Hot[];

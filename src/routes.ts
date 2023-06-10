@@ -1,5 +1,7 @@
-import type { Hot, RouteType, SomeAlias } from './appRoutes';
+// @ts-ignore
 import { getRoutes } from './appRoutes';
+// @ts-ignore
+import type { Hot, RouteType, SomeAlias } from './appRoutes';
 import { OFFICIAL } from './consts';
 
 // should NOT be set when running the dev server

@@ -7,5 +7,5 @@
 		"moduleResolution": "bundler",
 		"allowSyntheticDefaultImports": true
 	},
-	"include": ["appRoutesNode.mts", "vite.config.ts"]
+	"include": ["src/appRoutes.ts", "vite.config.ts"]
 }

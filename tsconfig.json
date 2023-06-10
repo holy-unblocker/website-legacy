@@ -20,5 +20,6 @@
 		"noUnusedParameters": true
 	},
 	"include": ["src"],
+	"exclude": ["src/appRoutes.ts"],
 	"references": [{ "path": "./tsconfig.node.json" }]
 }

@@ -1,4 +1,5 @@
-import type { RouteType } from './appRoutesNode.mjs';
+import type { RouteType } from './src/appRoutes.js';
+import { getRoutes } from './src/appRoutes.js';
 import { stompPath } from '@sysce/stomp';
 import { uvPath } from '@titaniumnetwork-dev/ultraviolet';
 import react from '@vitejs/plugin-react-swc';
@@ -21,8 +22,6 @@ export default defineConfig({
 				{
 					name: 'copy index.html to all the hot routes',
 					async generateBundle(options, bundle) {
-						const { getRoutes } = await import('./appRoutesNode.mjs');
-
 						const routes = getRoutes(
 							process.env.VITE_ROUTER as RouteType,
 							process.env.VITE_PUBLIC_PATH
