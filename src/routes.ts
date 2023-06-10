@@ -3,13 +3,13 @@ import { getRoutes } from './appRoutes';
 import { OFFICIAL } from './consts';
 
 // should NOT be set when running the dev server
-export const PUBLIC_PATH = process.env.PUBLIC_PATH || '';
+export const VITE_PUBLIC_PATH = import.meta.env.VITE_PUBLIC_PATH || '';
 
 export const routeType = OFFICIAL
 	? 'file'
-	: (process.env.REACT_APP_ROUTER! as RouteType);
+	: (import.meta.env.REACT_APP_ROUTER! as RouteType);
 
-export const hotRoutes = getRoutes(routeType, PUBLIC_PATH);
+export const hotRoutes = getRoutes(routeType, VITE_PUBLIC_PATH);
 
 export function getHot(alias: SomeAlias): Hot {
 	for (const hot of hotRoutes) {

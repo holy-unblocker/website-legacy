@@ -8,7 +8,7 @@ const TryAgainHere = ({ children }: { children?: ReactNode }) => (
 		href="i:"
 		onClick={(event) => {
 			event.preventDefault();
-			global.location.reload();
+			window.location.reload();
 		}}
 	>
 		{children}

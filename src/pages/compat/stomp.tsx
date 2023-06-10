@@ -2,7 +2,7 @@ import type { HolyPage } from '../../App';
 import type { ScriptRef } from '../../CompatLayout';
 import { getDestination } from '../../CompatLayout';
 import { Script } from '../../CompatLayout';
-import { BARE_API, SERVICEWORKERS, STOMP_DIR } from '../../consts';
+import { BARE_API, SERVICEWORKERS } from '../../consts';
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
@@ -57,10 +57,10 @@ const Stomp: HolyPage = ({ compatLayout }) => {
 				const config = {
 					// eslint-disable-next-line camelcase
 					bare_server: BARE_API,
-					directory: `/${STOMP_DIR}/`,
+					directory: `/stomp/`,
 				} as Partial<StompBootConfig>;
 
-				if (process.env.NODE_ENV === 'development') {
+				if (import.meta.env.NODE_ENV === 'development') {
 					config.loglevel = StompBoot.LOG_TRACE;
 					config.codec = StompBoot.CODEC_PLAIN;
 				} else {
@@ -83,7 +83,7 @@ const Stomp: HolyPage = ({ compatLayout }) => {
 				}
 				errorCause = undefined;
 
-				global.location.replace(boot.html(getDestination(location)));
+				globalThis.location.replace(boot.html(getDestination(location)));
 			} catch (err) {
 				compatLayout.current.report(err, errorCause, 'Stomp');
 			}
@@ -93,7 +93,7 @@ const Stomp: HolyPage = ({ compatLayout }) => {
 	return (
 		<main>
 			<Script
-				src={`${process.env.PUBLIC_PATH}/${STOMP_DIR}/bootstrapper.js`}
+				src={`${import.meta.env.VITE_PUBLIC_PATH}/stomp/bootstrapper.js`}
 				ref={bootstrapper}
 			/>
 			{t('loading', { what: 'Stomp' })}

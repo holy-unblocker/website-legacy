@@ -139,7 +139,7 @@ export const useGlobalCloakSettings = (): [
 		icon: '',
 	}));
 
-const Layout = forwardRef<LayoutRef>(function Layout(props, ref) {
+const Layout = forwardRef<LayoutRef>(function Layout(_props, ref) {
 	const notifications = useRef<NotificationsManagerRef | null>(null);
 
 	const [settings] = useGlobalSettings();

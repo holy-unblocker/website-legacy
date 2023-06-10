@@ -5,7 +5,7 @@ import { create } from 'random-seed';
 import type { HTMLAttributes, MouseEventHandler, ReactNode } from 'react';
 import { memo } from 'react';
 
-const rand = create(navigator.userAgent + global.location.origin);
+const rand = create(navigator.userAgent + globalThis.location.origin);
 
 const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
@@ -60,7 +60,7 @@ export const ObfuscateLayout = () => {
 class ObfuscateContext {
 	rand: RandomSeed;
 	constructor(seed: string) {
-		this.rand = create(seed + navigator.userAgent + global.location.origin);
+		this.rand = create(seed + navigator.userAgent + globalThis.location.origin);
 	}
 	ellipsisClass() {
 		return ellipsisClasses[this.rand(ellipsisClasses.length)];

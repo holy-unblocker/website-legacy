@@ -88,7 +88,7 @@ function Notification({ data, close }: NotificationProps) {
 export type NotificationsManagerRef = (notification: NotificationData) => void;
 
 const NotificationsManager = forwardRef<NotificationsManagerRef>(
-	function NotificationsManager(props, ref) {
+	function NotificationsManager(_props, ref) {
 		const [notifications, setNotifications] = useState<NotificationData[]>([]);
 
 		useImperativeHandle(

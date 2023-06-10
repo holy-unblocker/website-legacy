@@ -5,7 +5,7 @@ import { ReactComponent as HatPlain } from './assets/hat.svg';
 import type { categoryKey } from './gameCategories';
 import categories from './gameCategories';
 import { Obfuscated, ObfuscatedA } from './obfuscate';
-import { PUBLIC_PATH, getHot } from './routes';
+import { VITE_PUBLIC_PATH, getHot } from './routes';
 import styles from './styles/Navigation.module.scss';
 import Apps from '@mui/icons-material/Apps';
 import Home from '@mui/icons-material/Home';
@@ -25,7 +25,7 @@ import { useTranslation } from 'react-i18next';
 import { Link, useLocation } from 'react-router-dom';
 
 function Hat(props: SVGAttributes<{}>) {
-	switch (process.env.REACT_APP_HAT_BADGE) {
+	switch (import.meta.env.REACT_APP_HAT_BADGE) {
 		case 'DEV':
 			return <HatDev {...props} />;
 		case 'BETA':
@@ -164,7 +164,7 @@ const MainLayout = forwardRef<
 					<Menu />
 				</button>
 				<Link
-					to={PUBLIC_PATH + '/'}
+					to={VITE_PUBLIC_PATH + '/'}
 					className={clsx(styles.entry, styles.logo)}
 					title="Home"
 				>
@@ -198,7 +198,7 @@ const MainLayout = forwardRef<
 							<Menu />
 						</div>
 						<Link
-							to={PUBLIC_PATH + '/'}
+							to={VITE_PUBLIC_PATH + '/'}
 							className={clsx(styles.entry, styles.logo)}
 							title="Home"
 							onClick={closeMenu}

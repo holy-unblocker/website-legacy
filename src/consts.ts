@@ -1,36 +1,28 @@
-const { host, hostname, protocol } = global.location;
+const { host, hostname, protocol } = window.location;
 
-export const BARE_APIS = /*#__PURE__*/ process.env
-	.REACT_APP_BARE_APIS!.split(',')
+export const BARE_APIS = /*#__PURE__*/ import.meta.env
+	.VITE_BARE_APIS!.split(',')
 	.map(format);
 // TODO: pick a random API based on the location
 export const BARE_API = BARE_APIS[0];
-export const RH_API = /*#__PURE__*/ format(process.env.REACT_APP_RH_API!);
-export const DB_API = /*#__PURE__*/ format(process.env.REACT_APP_DB_API!);
+export const RH_API = /*#__PURE__*/ format(import.meta.env.VITE_RH_API!);
+export const DB_API = /*#__PURE__*/ format(import.meta.env.VITE_DB_API!);
 export const THEATRE_CDN = /*#__PURE__*/ format(
-	process.env.REACT_APP_THEATRE_CDN!
+	import.meta.env.VITE_THEATRE_CDN!
 );
 
 export const DEFAULT_PROXY = /*#__PURE__*/ format(
-	process.env.REACT_APP_DEFAULT_PROXY!
+	import.meta.env.VITE_DEFAULT_PROXY!
 );
 export const TN_DISCORD_URL = /*#__PURE__*/ format(
-	process.env.REACT_APP_TN_DISCORD_URL!
+	import.meta.env.VITE_TN_DISCORD_URL!
 );
 export const HU_DISCORD_URL = /*#__PURE__*/ format(
-	process.env.REACT_APP_HU_DISCORD_URL!
+	import.meta.env.VITE_HU_DISCORD_URL!
 );
 
 export const SUPPORT_EMAIL = /*#__PURE__*/ format(
-	process.env.REACT_APP_SUPPORT_EMAIL!
-);
-
-export const UV_DIR = /*#__PURE__*/ format(process.env.REACT_APP_UV_DIR!);
-
-export const STOMP_DIR = /*#__PURE__*/ format(process.env.REACT_APP_STOMP_DIR!);
-
-export const RUFFLE_DIR = /*#__PURE__*/ format(
-	process.env.REACT_APP_RUFFLE_DIR!
+	import.meta.env.VITE_SUPPORT_EMAIL!
 );
 
 export const OFFICIAL = false; // hostname === 'holyubofficial.net';
@@ -38,7 +30,7 @@ export const OFFICIAL = false; // hostname === 'holyubofficial.net';
 export const OBFUSCATE = !OFFICIAL;
 
 export const SERVICEWORKERS =
-	process.env.NODE_ENV !== 'production' ||
+	import.meta.env.NODE_ENV !== 'production' ||
 	protocol === 'https:' ||
 	hostname === 'localhost' ||
 	hostname === '127.0.0.1';

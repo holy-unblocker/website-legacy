@@ -19,11 +19,11 @@ const Rammerhead: HolyPage = ({ compatLayout }) => {
 				const api = new RammerheadAPI(RH_API);
 
 				// according to our NGINX config
-				if (process.env.NODE_ENV === 'production')
+				if (import.meta.env.NODE_ENV === 'production')
 					Cookies.set('auth_proxy', '1', {
-						domain: `.${global.location.host}`,
+						domain: `.${globalThis.location.host}`,
 						expires: 1000 * 60 * 60 * 24 * 7, // 1 week
-						secure: global.location.protocol === 'https:',
+						secure: globalThis.location.protocol === 'https:',
 						sameSite: 'lax',
 					});
 
@@ -66,7 +66,7 @@ const Rammerhead: HolyPage = ({ compatLayout }) => {
 
 				const shuffler = new StrShuffler(dict);
 
-				global.location.replace(
+				globalThis.location.replace(
 					new URL(
 						`${session}/${shuffler.shuffle(getDestination(location))}`,
 						RH_API

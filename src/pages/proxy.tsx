@@ -30,7 +30,7 @@ const ProxyMeta = () => (
 			{
 				target: {
 					urlTemplate:
-						new URL(getHot('proxy').path, global.location.toString()) +
+						new URL(getHot('proxy').path, globalThis.location.toString()) +
 						'?q={search_term_string}',
 				},
 				'query-input': 'required name=search_term_string',

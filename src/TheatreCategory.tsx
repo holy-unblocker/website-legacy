@@ -68,13 +68,13 @@ const Category = ({
 			switch (search.get('sort')) {
 				case 'leastPopular':
 					leastGreatest = true;
-				// falls through
+				// fallthrough
 				case 'mostPopular':
 					sort = 'plays';
 					break;
 				case 'nameASC':
 					leastGreatest = true;
-				// falls through
+				// fallthrough
 				case 'nameDES':
 					sort = 'name';
 					break;

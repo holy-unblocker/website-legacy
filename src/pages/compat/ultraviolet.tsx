@@ -1,8 +1,8 @@
 import type { HolyPage } from '../../App';
 import type { ScriptsRef } from '../../CompatLayout';
 import { getDestination, Script, Scripts } from '../../CompatLayout';
-import { BARE_API, SERVICEWORKERS, UV_DIR } from '../../consts';
-import { PUBLIC_PATH } from '../../routes';
+import { BARE_API, SERVICEWORKERS } from '../../consts';
+import { VITE_PUBLIC_PATH } from '../../routes';
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
@@ -54,13 +54,10 @@ const Ultraviolet: HolyPage = ({ compatLayout }) => {
 
 				// register sw
 				errorCause = t('error.registeringSW');
-				await navigator.serviceWorker.register(
-					`${PUBLIC_PATH}/${UV_DIR}/sw.js`,
-					{
-						scope: config.prefix,
-						updateViaCache: 'none',
-					}
-				);
+				await navigator.serviceWorker.register(`${VITE_PUBLIC_PATH}/uv/sw.js`, {
+					scope: config.prefix,
+					updateViaCache: 'none',
+				});
 				errorCause = undefined;
 
 				errorCause = t('error.unreachable', { what: 'Bare' });
@@ -72,10 +69,10 @@ const Ultraviolet: HolyPage = ({ compatLayout }) => {
 				}
 				errorCause = undefined;
 
-				global.location.replace(
+				globalThis.location.replace(
 					new URL(
 						config.encodeUrl(getDestination(location)),
-						new URL(config.prefix, global.location.toString())
+						new URL(config.prefix, globalThis.location.toString())
 					)
 				);
 			} catch (err) {
@@ -87,8 +84,8 @@ const Ultraviolet: HolyPage = ({ compatLayout }) => {
 	return (
 		<main>
 			<Scripts ref={uvBundle}>
-				<Script src={`${process.env.PUBLIC_PATH}/${UV_DIR}/uv.bundle.js`} />
-				<Script src={`${process.env.PUBLIC_PATH}/${UV_DIR}/uv.config.js`} />
+				<Script src={`${import.meta.env.VITE_PUBLIC_PATH}/uv/uv.bundle.js`} />
+				<Script src={`${import.meta.env.VITE_PUBLIC_PATH}/uv/uv.config.js`} />
 			</Scripts>
 			{t('loading', { what: 'Ultraviolet' })}
 		</main>

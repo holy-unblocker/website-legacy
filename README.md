@@ -61,16 +61,16 @@ In the project directory, you can run:
 
 ### **npm run dev**
 
-> Starts the React development server.
+> Starts the Vite development server.
 
-By default, the development server listens on [http://localhost:3000](http://localhost:3000).
+You need to run the dev command again in order to rebuilt the proxy configs because they're built before the vite dev server starts.
 
 ### **npm run build**
 
-> Builds the React app.
+> Builds the Vite app.
 
 ### **npm start**
 
 > Starts the static webserver.
 
-Output is found in the `build` folder.
+Output is found in the `dist` folder.
