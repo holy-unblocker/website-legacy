@@ -13,6 +13,11 @@ process.env.VITE_PUBLIC_PATH ??= '';
 
 const require = createRequire(import.meta.url);
 
+const routes = getRoutes(
+	process.env.VITE_ROUTER as RouteType,
+	process.env.VITE_PUBLIC_PATH
+);
+
 // https://vitejs.dev/config/
 export default defineConfig({
 	build: {
@@ -22,11 +27,6 @@ export default defineConfig({
 				{
 					name: 'copy index.html to all the hot routes',
 					async generateBundle(options, bundle) {
-						const routes = getRoutes(
-							process.env.VITE_ROUTER as RouteType,
-							process.env.VITE_PUBLIC_PATH
-						);
-
 						const index = bundle['index.html'];
 
 						for (const file of routes)
@@ -40,6 +40,19 @@ export default defineConfig({
 		},
 	},
 	plugins: [
+		{
+			name: 'serve index.html for all the hot routes',
+			configureServer(server) {
+				server.middlewares.use((req, _res, next) => {
+					let url = req.url;
+					const search = url.indexOf('?');
+					if (search !== -1) url = url.slice(0, search);
+					if (routes.some((route) => route.path === url))
+						req.url = '/index.html';
+					next();
+				});
+			},
+		},
 		react(),
 		svgr(),
 		viteStaticCopy({
