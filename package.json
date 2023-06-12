@@ -61,7 +61,7 @@
 	"scripts": {
 		"buildConfig": "node buildConfig.js",
 		"dev": "npm run buildConfig && vite",
-		"build": "npm run buildConfig && tsc && vite build",
+		"build": "npm run buildConfig -- --prod && tsc && vite build",
 		"lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
 		"preview": "vite preview"
 	},

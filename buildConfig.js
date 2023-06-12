@@ -6,7 +6,9 @@ import { expand } from 'dotenv-expand';
 import { config } from 'dotenv-flow';
 import { build } from 'esbuild';
 
-process.env.NODE_ENV ??= 'development';
+process.env.NODE_ENV ??= process.argv.includes('--prod')
+	? 'production'
+	: 'development';
 process.env.VITE_PUBLIC_PATH ??= '';
 
 expand(config());
