@@ -10,51 +10,6 @@ If you are a developer, this repository is ideal for testing commits and buildin
 
 If you are just looking to self-host/deploy Holy Unblocker, check out [website-aio](https://github.com/holy-unblocker/website-aio).
 
-This repository (was 200 MB before we ran poor cleaning tools) is 500 MB. Poor usage of git and storing binary files led to this large repository size. Tools to clean the git history of repositories suck and we have made no further attempt to do so.
-
-## Prerequisites
-
-## APIs
-
-This project depends on the following APIs/scripts:
-
-- [DB server](https://github.com/holy-unblocker/db-server) (ran on port 3001)
-- [Theatre](https://github.com/holy-unblocker/theatre) (webserver on `public`, ran on port 3002)
-- [Bare Server Node](https://github.com/tomphttp/bare-server-node) (ran on port 8001)
-- [Rammerhead](https://github.com/binary-person/rammerhead) (ran on port 8002)
-
-### Rammerhead config
-
-`src/config.js`:
-
-```js
-// ...
-	port: 8002,
-	crossDomainPort: 8003,
-// ...
-// ON PRODUCTION SERVER (SSL) (PROXY PASSED BY NGINX)
-	getServerInfo: (req) => {
-		return { hostname: new URL(`https://${req.headers.host}`).hostname, port: 443, crossDomainPort: 443, protocol: 'https:' };
-	},
-// ON DEVELOPMENT SERVER
-	getServerInfo: () => ({ hostname: new URL(`https://${req.headers.host}`).hostname, port: 8002, crossDomainPort: 8002, protocol: 'http:' }),
-// ...
-	password: null,
-// ...
-```
-
-### Recommended VSC Extensions
-
-- [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
-- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
-
-### Recommended Chromium extensions
-
-Protections against clickjacking and CORS prevents the website running locally from interacting with other scripts such as Rammerhead. These extensions will circumvent these protections for development.
-
-- [CORS unblock](https://chrome.google.com/webstore/detail/cors-unblock/lfhmikememgdcahcdlaciloancbhjino)
-- [Ignore X-Frame headers](https://chrome.google.com/webstore/detail/ignore-x-frame-headers/gleekbfjekiniecknbkamfmkohkpodhe)
-
 ## Scripts
 
 In the project directory, you can run:
@@ -74,3 +29,28 @@ You need to run the dev command again in order to rebuilt the proxy configs beca
 > Starts the static webserver.
 
 Output is found in the `dist` folder.
+
+## Prerequisites
+
+## APIs
+
+This project depends on the following APIs/scripts:
+
+- [DB server](https://github.com/holy-unblocker/db-server)
+- [Theatre](https://github.com/holy-unblocker/theatre)
+- [Bare Server Node](https://github.com/tomphttp/bare-server-node)
+- [Rammerhead](https://github.com/binary-person/rammerhead)
+
+Everything with the exception of Rammerhead are either automatically setup in the Vite dev server or proxied to the official holyubofficial.net instance.
+
+### Recommended VSC Extensions
+
+- [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+
+### Recommended Chromium extensions
+
+Protections against clickjacking and CORS prevents the website running locally from interacting with other scripts such as Rammerhead. These extensions will circumvent these protections for development.
+
+- [CORS unblock](https://chrome.google.com/webstore/detail/cors-unblock/lfhmikememgdcahcdlaciloancbhjino)
+- [Ignore X-Frame headers](https://chrome.google.com/webstore/detail/ignore-x-frame-headers/gleekbfjekiniecknbkamfmkohkpodhe)
