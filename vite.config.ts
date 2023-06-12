@@ -39,6 +39,12 @@ export default function viteConfig({ mode }: ConfigEnv) {
 	);
 
 	return defineConfig({
+		server: {
+			proxy: {
+				'/cdn/': 'https://holyubofficial.net/',
+				'/db/': 'https://holyubofficial.net/',
+			},
+		},
 		build: {
 			sourcemap: true,
 			rollupOptions: {
