@@ -9,7 +9,7 @@ export const VITE_PUBLIC_PATH = import.meta.env.VITE_PUBLIC_PATH || '';
 
 export const routeType = OFFICIAL
 	? 'file'
-	: (import.meta.env.REACT_APP_ROUTER! as RouteType);
+	: (import.meta.env.VITE_ROUTER! as RouteType);
 
 export const hotRoutes = getRoutes(routeType, VITE_PUBLIC_PATH);
 

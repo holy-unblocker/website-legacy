@@ -25,7 +25,7 @@ import { useTranslation } from 'react-i18next';
 import { Link, useLocation } from 'react-router-dom';
 
 function Hat(props: SVGAttributes<{}>) {
-	switch (import.meta.env.REACT_APP_HAT_BADGE) {
+	switch (import.meta.env.VITE_HAT_BADGE) {
 		case 'DEV':
 			return <HatDev {...props} />;
 		case 'BETA':
