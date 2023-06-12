@@ -88,12 +88,17 @@ export default function viteConfig({ mode }: ConfigEnv) {
 						else next();
 					});
 
-					// there can only be one ws server listening on the upgrade event
-					server.ws.close();
+					const upgraders = server.httpServer.listeners(
+						'upgrade'
+					) as Parameters<(typeof server)['httpServer']['on']>[1][];
+
+					// remover other listeners
+					for (const upgrader of upgraders)
+						server.httpServer.off('upgrade', upgrader);
 
 					server.httpServer.on('upgrade', (req, socket, head) => {
 						if (bare.shouldRoute(req)) bare.routeUpgrade(req, socket, head);
-						else socket.end();
+						else for (const upgrader of upgraders) upgrader(req, socket, head);
 					});
 				},
 			},
