@@ -8,6 +8,7 @@ import { createRequire } from 'node:module';
 import { resolve } from 'node:path';
 import type { ConfigEnv } from 'vite';
 import { defineConfig, loadEnv } from 'vite';
+import { ViteMinifyPlugin } from 'vite-plugin-minify';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 import svgr from 'vite-plugin-svgr';
 
@@ -118,6 +119,8 @@ export default function viteConfig({ mode }: ConfigEnv) {
 					},
 				],
 			}),
+			// minify the output HTML
+			ViteMinifyPlugin(),
 		],
 	});
 }
