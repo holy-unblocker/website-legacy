@@ -2,6 +2,7 @@ import type { RouteType } from './src/appRoutes.js';
 import { getRoutes } from './src/appRoutes.js';
 import { stompPath } from '@sysce/stomp';
 import { uvPath } from '@titaniumnetwork-dev/ultraviolet';
+import { createBareServer } from '@tomphttp/bare-server-node';
 import react from '@vitejs/plugin-react-swc';
 import { createRequire } from 'node:module';
 import { resolve } from 'node:path';
@@ -68,6 +69,24 @@ export default function viteConfig({ mode }: ConfigEnv) {
 						if (routes.some((route) => route.path === url))
 							req.url = '/index.html';
 						next();
+					});
+				},
+			},
+			{
+				name: 'bare server',
+				configureServer(server) {
+					const bare = createBareServer('/bare/', { blockLocal: false });
+					server.middlewares.use((req, res, next) => {
+						if (bare.shouldRoute(req)) bare.routeRequest(req, res);
+						else next();
+					});
+
+					// there can only be one ws server listening on the upgrade event
+					server.ws.close();
+
+					server.httpServer.on('upgrade', (req, socket, head) => {
+						if (bare.shouldRoute(req)) bare.routeUpgrade(req, socket, head);
+						else socket.end();
 					});
 				},
 			},
