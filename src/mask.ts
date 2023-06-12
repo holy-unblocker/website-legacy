@@ -1,6 +1,6 @@
 import { BARE_API } from './consts';
 import i18n from './i18n';
-import BareClient from '@tomphttp/bare-client';
+import { BareClient } from '@tomphttp/bare-client';
 
 const bare = new BareClient(BARE_API);
 

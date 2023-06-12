@@ -14,7 +14,7 @@ import styles from './styles/ProxyOmnibox.module.scss';
 import textContent from './textContent';
 import NorthWest from '@mui/icons-material/NorthWest';
 import Search from '@mui/icons-material/Search';
-import BareClient from '@tomphttp/bare-client';
+import { BareClient } from '@tomphttp/bare-client';
 import clsx from 'clsx';
 import { createRef, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';

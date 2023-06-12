@@ -8,7 +8,7 @@ import ChevronLeft from '@mui/icons-material/ChevronLeft';
 import Fullscreen from '@mui/icons-material/Fullscreen';
 import OpenInNew from '@mui/icons-material/OpenInNew';
 import Public from '@mui/icons-material/Public';
-import BareClient from '@tomphttp/bare-client';
+import { BareClient } from '@tomphttp/bare-client';
 import { useRef } from 'react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
