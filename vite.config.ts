@@ -82,7 +82,7 @@ export default function viteConfig({ mode }: ConfigEnv) {
 			{
 				name: 'bare server',
 				configureServer(server) {
-					const bare = createBareServer('/bare/', { blockLocal: false });
+					const bare = createBareServer('/bare/');
 					server.middlewares.use((req, res, next) => {
 						if (bare.shouldRoute(req)) bare.routeRequest(req, res);
 						else next();
