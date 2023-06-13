@@ -24,8 +24,9 @@ const defineEnv = Object.fromEntries(
 
 await build({
 	target: 'ES2020',
-	entryPoints: ['config/uv/uv.config.js'],
+	format: 'iife',
+	entryPoints: ['./config/uv/uv.config.ts'],
 	minify: true,
 	define: defineEnv,
-	outfile: 'public/uv/uv.config.js',
+	outfile: './public/uv/uv.config.js',
 });

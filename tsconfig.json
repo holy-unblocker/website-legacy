@@ -19,7 +19,7 @@
 		"noUnusedLocals": true,
 		"noUnusedParameters": true
 	},
-	"include": ["src"],
+	"include": ["src", "./config/uv/uv.config.ts"],
 	"exclude": ["src/appRoutes.ts"],
 	"references": [{ "path": "./tsconfig.node.json" }]
 }
