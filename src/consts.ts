@@ -36,7 +36,6 @@ export const SERVICEWORKERS =
 	hostname === '127.0.0.1';
 
 function format(env: string) {
-	// eslint-disable-next-line no-template-curly-in-string
 	return env
 		.replace('%{location.host}', host)
 		.replace('%{location.hostname}', hostname)

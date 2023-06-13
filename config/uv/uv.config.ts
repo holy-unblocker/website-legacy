@@ -1,12 +1,3 @@
-const format = (env: string) => {
-	const { host, hostname, protocol } = globalThis.location;
-
-	return env
-		.replace('%{location.host}', host)
-		.replace('%{location.hostname}', hostname)
-		.replace('%{location.protocol}', protocol);
-};
-
 const config = {
 	prefix: `${import.meta.env.VITE_PUBLIC_PATH}/uv/service/`,
 	bare: import.meta.env.VITE_BARE_APIS.split(',').map(format),
@@ -20,3 +11,12 @@ const config = {
 };
 
 globalThis.__uv$config = config;
+
+function format(env: string) {
+	const { host, hostname, protocol } = globalThis.location;
+
+	return env
+		.replace('%{location.host}', host)
+		.replace('%{location.hostname}', hostname)
+		.replace('%{location.protocol}', protocol);
+}
