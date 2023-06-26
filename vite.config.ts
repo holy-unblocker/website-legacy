@@ -49,6 +49,9 @@ export default function viteConfig({ mode }: ConfigEnv) {
 		build: {
 			sourcemap: true,
 			rollupOptions: {
+				output: {
+					chunkFileNames: "[hash].js",
+				},
 				plugins: [
 					{
 						name: 'copy index.html to all the hot routes',
