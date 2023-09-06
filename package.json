@@ -32,7 +32,6 @@
 	"devDependencies": {
 		"@ianvs/prettier-plugin-sort-imports": "^3.7.2",
 		"@ruffle-rs/ruffle": "^0.1.0-nightly.2023.3.24",
-		"@sysce/stomp": "^2.0.0",
 		"@titaniumnetwork-dev/ultraviolet": "^2.0.0",
 		"@tomphttp/bare-server-node": "^2.0.0",
 		"@types/crypto-js": "^4.1.1",

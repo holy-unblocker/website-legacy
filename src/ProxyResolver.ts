@@ -4,15 +4,12 @@ import { encryptURL } from './cryptURL';
 import { isError } from './isAbortError';
 import { getHot } from './routes';
 
-export type FixedProxy = 'stomp' | 'ultraviolet' | 'rammerhead';
+export type FixedProxy ='ultraviolet' | 'rammerhead';
 
 export function resolveProxyFixed(src: string, setting: FixedProxy) {
 	let route;
 
 	switch (setting) {
-		case 'stomp':
-			route = getHot('compat stomp').path;
-			break;
 		case 'ultraviolet':
 			route = getHot('compat ultraviolet').path;
 			break;

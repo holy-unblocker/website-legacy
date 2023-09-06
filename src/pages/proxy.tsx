@@ -22,7 +22,7 @@ const ProxyMeta = () => (
 			{
 				name: 'What web proxies does Holy Unblocker have?',
 				acceptedAnswer: {
-					text: 'Ultraviolet, Rammerhead, and Stomp. You can change the default proxy in your settings.',
+					text: 'Ultraviolet and Rammerhead. You can change the default proxy in your settings.',
 				},
 			},
 		]}

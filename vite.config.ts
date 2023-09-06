@@ -1,6 +1,5 @@
 import type { RouteType } from './src/appRoutes.js';
 import { getRoutes } from './src/appRoutes.js';
-import { stompPath } from '@sysce/stomp';
 import { uvPath } from '@titaniumnetwork-dev/ultraviolet';
 import { createBareServer } from '@tomphttp/bare-server-node';
 import react from '@vitejs/plugin-react-swc';
@@ -114,11 +113,6 @@ export default function viteConfig({ mode }: ConfigEnv) {
 						dest: '',
 						rename: 'uv',
 						overwrite: false,
-					},
-					{
-						src: stompPath,
-						dest: '',
-						rename: 'stomp',
 					},
 					{
 						src: resolve(require.resolve('@ruffle-rs/ruffle'), '..'),

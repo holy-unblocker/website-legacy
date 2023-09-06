@@ -23,11 +23,6 @@ const Credits: HolyPage = () => {
 					</li>
 					<li>
 						<Obfuscated>
-							Device - {t('positions.frontendDev')}, Stomp
-						</Obfuscated>
-					</li>
-					<li>
-						<Obfuscated>
 							OlyB - {t('positions.frontendDev')}, WebRetro
 						</Obfuscated>
 					</li>
@@ -67,15 +62,6 @@ const Credits: HolyPage = () => {
 							<Obfuscated>
 								https://github.com/titaniumnetwork-dev/Ultraviolet
 							</Obfuscated>
-						</ObfuscatedThemeA>
-					</li>
-					<li>
-						<Obfuscated>Stomp:</Obfuscated>{' '}
-						<ObfuscatedThemeA
-							href="https://github.com/sysce/stomp"
-							title="Git repository"
-						>
-							<Obfuscated>https://github.com/sysce/stomp</Obfuscated>
 						</ObfuscatedThemeA>
 					</li>
 				</ul>

@@ -24,7 +24,6 @@ export type SomeAlias =
 	| '404'
 	| 'compat ultraviolet'
 	| 'compat rammerhead'
-	| 'compat stomp'
 	| 'compat flash'
 	| 'settings proxy'
 	| 'settings appearance'
@@ -117,12 +116,6 @@ export function getRoutes(routeType: RouteType, publicPath: string) {
 			...lazyLoc(routeType === 'id' ? '/' + i++ : '/compat/rammerhead'),
 			alias: 'compat rammerhead',
 			src: './pages/compat/rammerhead.tsx',
-			layout: 'compat',
-		},
-		{
-			...lazyLoc(routeType === 'id' ? '/' + i++ : '/compat/stomp'),
-			alias: 'compat stomp',
-			src: './pages/compat/stomp.tsx',
 			layout: 'compat',
 		},
 		{
