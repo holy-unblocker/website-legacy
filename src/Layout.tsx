@@ -16,7 +16,7 @@ class Scroll {
 	y: number;
 	constructor(
 		x = document.documentElement.scrollLeft,
-		y = document.documentElement.scrollTop
+		y = document.documentElement.scrollTop,
 	) {
 		this.x = x;
 		this.y = y;
@@ -97,13 +97,13 @@ export interface LayoutRef {
 
 export const useGlobalSettings = (): [
 	settings: ReturnType<typeof useSettings<GlobalSettings>>[0],
-	setSettings: ReturnType<typeof useSettings<GlobalSettings>>[1]
+	setSettings: ReturnType<typeof useSettings<GlobalSettings>>[1],
 ] => {
 	// remove artifact of old casing
 	if ('global settings' in localStorage)
 		try {
 			const parsed = JSON.parse(
-				localStorage['global settings']
+				localStorage['global settings'],
 			) as GlobalSettings & { seen_games?: GlobalSettings['seenGames'] };
 
 			if (parsed.seen_games) {
@@ -131,7 +131,7 @@ export const useGlobalSettings = (): [
 
 export const useGlobalCloakSettings = (): [
 	cloak: ReturnType<typeof useSettings<CloakSettings>>[0],
-	setCloak: ReturnType<typeof useSettings<CloakSettings>>[1]
+	setCloak: ReturnType<typeof useSettings<CloakSettings>>[1],
 ] =>
 	useSettings<CloakSettings>('cloak settings', () => ({
 		url: '',
@@ -150,7 +150,7 @@ const Layout = forwardRef<LayoutRef>(function Layout(_props, ref) {
 		() => ({
 			notifications,
 		}),
-		[notifications]
+		[notifications],
 	);
 
 	useEffect(() => {

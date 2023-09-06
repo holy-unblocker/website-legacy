@@ -100,7 +100,7 @@ const Meta = ({ title, description, faq, actions }: MetaProps) => {
 					{formatWebSite({
 						url: new URL(
 							getHot('home').path,
-							globalThis.location.toString()
+							globalThis.location.toString(),
 						).toString(),
 						potentialAction: actions,
 					})}

@@ -95,7 +95,7 @@ const ProxyOmnibox = ({
 						}),
 					{
 						signal: abort.current.signal,
-					}
+					},
 				);
 
 				if (!outgoing.ok) {
@@ -105,7 +105,7 @@ const ProxyOmnibox = ({
 				const text = await outgoing.text();
 
 				for (const [, phrase] of text.matchAll(
-					/<span class="sa_tm_text">(.*?)<\/span>/g
+					/<span class="sa_tm_text">(.*?)<\/span>/g,
 				))
 					entries.push(phrase);
 			} catch (err) {
@@ -267,7 +267,7 @@ const ProxyOmnibox = ({
 									tabIndex={0}
 									className={clsx(
 										styles.option,
-										i === lastSelect && styles.hover
+										i === lastSelect && styles.hover,
 									)}
 									onClick={() => {
 										lastInput.current = 'select';

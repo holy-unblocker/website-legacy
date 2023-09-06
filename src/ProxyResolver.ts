@@ -4,7 +4,7 @@ import { encryptURL } from './cryptURL';
 import { isError } from './isAbortError';
 import { getHot } from './routes';
 
-export type FixedProxy ='ultraviolet' | 'rammerhead';
+export type FixedProxy = 'ultraviolet' | 'rammerhead';
 
 export function resolveProxyFixed(src: string, setting: FixedProxy) {
 	let route;
@@ -25,7 +25,7 @@ export function resolveProxyFixed(src: string, setting: FixedProxy) {
 export default async function resolveProxy(
 	src: string,
 	setting: string,
-	signal?: AbortSignal
+	signal?: AbortSignal,
 ) {
 	if (setting === 'automatic') {
 		const { host } = new URL(src);

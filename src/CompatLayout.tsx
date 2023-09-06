@@ -13,7 +13,7 @@ import { useTranslation } from 'react-i18next';
 import type { Location } from 'react-router-dom';
 
 function loadScript(
-	src: string
+	src: string,
 ): [load: Promise<void>, script: HTMLScriptElement] {
 	const script = document.createElement('script');
 	script.src = src;
@@ -59,7 +59,7 @@ export const Scripts = forwardRef<ScriptsRef, { children?: ReactNode }>(
 	function Scripts({ children }, ref) {
 		const [promise, promiseExternal] = useMemo(
 			() => createPromiseExternal<void>(),
-			[]
+			[],
 		);
 
 		useImperativeHandle(ref, () => ({
@@ -103,7 +103,7 @@ export const Scripts = forwardRef<ScriptsRef, { children?: ReactNode }>(
 		}, [promise, promiseExternal, children]);
 
 		return <></>;
-	}
+	},
 );
 
 export interface ScriptRef {
@@ -114,35 +114,34 @@ export interface ScriptRef {
  * Load a script
  * For loading multiple scripts (in order), use <Scripts>
  */
-export const Script = forwardRef<ScriptRef, { src: string }>(function Script(
-	props,
-	ref
-) {
-	const [promise, promiseExternal] = useMemo(
-		() => createPromiseExternal<void>(),
-		[]
-	);
+export const Script = forwardRef<ScriptRef, { src: string }>(
+	function Script(props, ref) {
+		const [promise, promiseExternal] = useMemo(
+			() => createPromiseExternal<void>(),
+			[],
+		);
 
-	useImperativeHandle(
-		ref,
-		() => ({
-			promise,
-		}),
-		[promise]
-	);
+		useImperativeHandle(
+			ref,
+			() => ({
+				promise,
+			}),
+			[promise],
+		);
 
-	useEffect(() => {
-		const [promise, script] = loadScript(props.src);
+		useEffect(() => {
+			const [promise, script] = loadScript(props.src);
 
-		promise.then(promiseExternal.resolve).catch(promiseExternal.reject);
+			promise.then(promiseExternal.resolve).catch(promiseExternal.reject);
 
-		return () => {
-			script.remove();
-		};
-	}, [promise, promiseExternal, props.src]);
+			return () => {
+				script.remove();
+			};
+		}, [promise, promiseExternal, props.src]);
 
-	return <></>;
-});
+		return <></>;
+	},
+);
 
 /**
  *
@@ -186,7 +185,7 @@ export default forwardRef<CompatLayoutRef, { children?: ReactNode }>(
 					});
 				},
 			}),
-			[]
+			[],
 		);
 
 		return (
@@ -202,5 +201,5 @@ export default forwardRef<CompatLayoutRef, { children?: ReactNode }>(
 				)}
 			</>
 		);
-	}
+	},
 );

@@ -38,7 +38,7 @@ const Rammerhead: HolyPage = ({ compatLayout }) => {
 					(await api.sessionExists(localStorage.rammerhead_session))
 				) {
 					const test = await fetch(
-						new URL(localStorage.rammerhead_session, RH_API)
+						new URL(localStorage.rammerhead_session, RH_API),
 					);
 
 					await api.deleteSession(localStorage.rammerhead_session);
@@ -69,8 +69,8 @@ const Rammerhead: HolyPage = ({ compatLayout }) => {
 				globalThis.location.replace(
 					new URL(
 						`${session}/${shuffler.shuffle(getDestination(location))}`,
-						RH_API
-					)
+						RH_API,
+					),
 				);
 			} catch (err) {
 				compatLayout.current!.report(err, errorCause, 'Rammerhead');

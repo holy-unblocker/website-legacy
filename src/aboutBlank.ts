@@ -18,7 +18,7 @@ const presentAboutBlank = (src: string) => {
 			newWindow.document.body.append(iframe);
 		},
 		// immediately attempt to dereference iframe
-		{ once: true }
+		{ once: true },
 	);
 };
 

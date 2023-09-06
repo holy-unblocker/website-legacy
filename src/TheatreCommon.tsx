@@ -77,15 +77,15 @@ export interface TheatreEntry {
 	src: string;
 }
 export function isLoading(
-	data: CategoryData | LoadingCategoryData
+	data: CategoryData | LoadingCategoryData,
 ): data is LoadingCategoryData;
 
 export function isLoading(
-	data: TheatreEntry | LoadingTheatreEntry
+	data: TheatreEntry | LoadingTheatreEntry,
 ): data is LoadingTheatreEntry;
 
 export function isLoading(
-	data: TheatreEntry | LoadingTheatreEntry | CategoryData | LoadingCategoryData
+	data: TheatreEntry | LoadingTheatreEntry | CategoryData | LoadingCategoryData,
 ): data is LoadingTheatreEntry | LoadingCategoryData {
 	return 'loading' in data && data.loading === true;
 }
@@ -109,7 +109,7 @@ export class TheatreAPI extends DatabaseAPI {
 		limitPerCategory?: number;
 	}) {
 		return await this.fetch<CategoryData>(
-			'./theatre/?' + new URLSearchParams(this.sortParams(params))
+			'./theatre/?' + new URLSearchParams(this.sortParams(params)),
 		);
 	}
 }

@@ -48,7 +48,7 @@ export default class AsyncBackend
 					callback(null, await fetcher[ns as keyof Resources]());
 				else
 					throw new Error(
-						`Language '${lng}' doesn't contain namespace '${ns};`
+						`Language '${lng}' doesn't contain namespace '${ns};`,
 					);
 			} else {
 				const res = await fetcher();

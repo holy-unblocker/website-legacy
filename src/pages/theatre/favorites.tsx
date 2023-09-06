@@ -21,7 +21,7 @@ const Favorites: HolyPage = ({ layout }) => {
 			loading: true,
 			id,
 			category: [],
-		}))
+		})),
 	);
 
 	useEffect(() => {

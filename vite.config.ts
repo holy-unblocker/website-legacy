@@ -35,7 +35,7 @@ export default function viteConfig({ mode }: ConfigEnv) {
 
 	const routes = getRoutes(
 		process.env.VITE_ROUTER as RouteType,
-		process.env.VITE_PUBLIC_PATH
+		process.env.VITE_PUBLIC_PATH,
 	);
 
 	return defineConfig({
@@ -49,7 +49,7 @@ export default function viteConfig({ mode }: ConfigEnv) {
 			sourcemap: true,
 			rollupOptions: {
 				output: {
-					chunkFileNames: "[hash].js",
+					chunkFileNames: '[hash].js',
 				},
 				plugins: [
 					{
@@ -91,7 +91,7 @@ export default function viteConfig({ mode }: ConfigEnv) {
 					});
 
 					const upgraders = server.httpServer.listeners(
-						'upgrade'
+						'upgrade',
 					) as Parameters<(typeof server)['httpServer']['on']>[1][];
 
 					// remover other listeners

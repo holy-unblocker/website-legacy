@@ -84,7 +84,7 @@ export default class Settings<T> {
 
 export function useSettings<T>(
 	key: string,
-	create: () => T
+	create: () => T,
 ): [T, (state: T | ((prevState: T) => T)) => void] {
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const settings = useMemo(() => new Settings(key, create()), []);

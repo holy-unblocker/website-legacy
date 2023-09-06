@@ -176,8 +176,8 @@ const SearchBar = ({
 								<div className={styles.category}>
 									{t(
 										categories.find(
-											(category) => category.id === entry.category[0]
-										)?.id as categoryKey
+											(category) => category.id === entry.category[0],
+										)?.id as categoryKey,
 									)}
 								</div>
 							)}

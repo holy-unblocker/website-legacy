@@ -184,8 +184,8 @@ export function ThemeSelect({
 							const lastI = lastSelect;
 							const lastIAvailable = availableOptions.indexOf(
 								[...availableOptions].sort(
-									(a, b) => Math.abs(a - lastI) - Math.abs(b - lastI)
-								)[0]
+									(a, b) => Math.abs(a - lastI) - Math.abs(b - lastI),
+								)[0],
 							);
 
 							let next;
@@ -265,7 +265,7 @@ export function ThemeSelect({
 						className={clsx(
 							styles.plainOption,
 							i === lastSelect && styles.hover,
-							option.disabled && styles.disabled
+							option.disabled && styles.disabled,
 						)}
 						key={i}
 						onClick={() => {

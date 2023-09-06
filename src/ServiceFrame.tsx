@@ -100,7 +100,7 @@ const ServiceFrame = ({
 
 				setTitle(currentTitle || location.toString());
 				const selector = contentWindow.document.querySelector(
-					'link[rel*="icon"]'
+					'link[rel*="icon"]',
 				) as HTMLLinkElement | null;
 
 				const icon =
@@ -120,7 +120,7 @@ const ServiceFrame = ({
 				}
 			}
 		},
-		[bare, iframe, linksTried, src]
+		[bare, iframe, linksTried, src],
 	);
 
 	useEffect(() => {

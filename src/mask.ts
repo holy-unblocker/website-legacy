@@ -37,7 +37,7 @@ export async function extractData(address: string): Promise<ExtractedData> {
 	let icon: string;
 
 	const iconSelector = dom.querySelector(
-		'link[rel*="icon"]'
+		'link[rel*="icon"]',
 	) as HTMLLinkElement | null;
 
 	if (iconSelector && iconSelector.href !== '') icon = iconSelector.href;
@@ -48,7 +48,7 @@ export async function extractData(address: string): Promise<ExtractedData> {
 	icon = await blobToDataURL(
 		new Blob([await outgoing.arrayBuffer()], {
 			type: outgoing.headers.get('content-type')!,
-		})
+		}),
 	);
 
 	let title = dom.title;

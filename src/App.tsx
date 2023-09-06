@@ -73,7 +73,7 @@ export default function App() {
 						<MainLayout ref={mainLayout}>{suspended}</MainLayout>
 					)
 				}
-			/>
+			/>,
 		);
 	}
 

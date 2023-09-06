@@ -72,8 +72,8 @@ const Ultraviolet: HolyPage = ({ compatLayout }) => {
 				globalThis.location.replace(
 					new URL(
 						config.encodeUrl(getDestination(location)),
-						new URL(config.prefix, globalThis.location.toString())
-					)
+						new URL(config.prefix, globalThis.location.toString()),
+					),
 				);
 			} catch (err) {
 				compatLayout.current.report(err, errorCause, 'Ultraviolet');

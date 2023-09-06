@@ -102,7 +102,7 @@ const Popular: HolyPage = () => {
 							<div className={styles.name}>
 								<h1>
 									{t(
-										`gameCategory:${section.category.id as categoryKey}`
+										`gameCategory:${section.category.id as categoryKey}`,
 									).toString()}
 								</h1>
 								<ThemeLink

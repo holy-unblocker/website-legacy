@@ -26,7 +26,7 @@ export class RammerheadAPI {
 				return await request.text();
 			} else {
 				throw new Error(
-					`unexpected server response to not match "200". Server says "${await request.text()}"`
+					`unexpected server response to not match "200". Server says "${await request.text()}"`,
 				);
 			}
 		} catch (err) {
@@ -43,14 +43,14 @@ export class RammerheadAPI {
 	async editSession(
 		id: string,
 		httpProxy: string | false,
-		enableShuffling: boolean
+		enableShuffling: boolean,
 	) {
 		const res = await this.get(
 			'editsession?id=' +
 				encodeURIComponent(id) +
 				(httpProxy ? '&httpProxy=' + encodeURIComponent(httpProxy) : '') +
 				'&enableShuffling=' +
-				(enableShuffling ? '1' : '0')
+				(enableShuffling ? '1' : '0'),
 		);
 
 		if (res !== 'Success') {
@@ -117,7 +117,7 @@ export class StrShuffler {
 			} else if (idx === -1) shuffledStr += char;
 			else
 				shuffledStr += this.dictionary.charAt(
-					this.mod(idx + i, this.baseDictionary.length)
+					this.mod(idx + i, this.baseDictionary.length),
 				);
 		}
 		return this.shuffledIndicator + shuffledStr;
@@ -138,7 +138,7 @@ export class StrShuffler {
 			} else if (idx === -1) unshuffledStr += char;
 			else
 				unshuffledStr += this.baseDictionary.charAt(
-					this.mod(idx - i, this.baseDictionary.length)
+					this.mod(idx - i, this.baseDictionary.length),
 				);
 		}
 		return unshuffledStr;

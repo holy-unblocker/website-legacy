@@ -75,7 +75,9 @@
 				height: 100%;
 				opacity: 0;
 				background-color: rgba(0, 0, 0, 0.2);
-				transition: opacity 0.1s, visibility 0.1s;
+				transition:
+					opacity 0.1s,
+					visibility 0.1s;
 				cursor: pointer;
 				visibility: hidden;
 				position: absolute;

@@ -34,7 +34,7 @@ export default class DatabaseAPI {
 		this.signal = signal;
 	}
 	protected sortParams(
-		params: Record<string, unknown>
+		params: Record<string, unknown>,
 	): Record<string, string> {
 		const result: Record<string, string> = {};
 
@@ -58,7 +58,7 @@ export default class DatabaseAPI {
 		if (!outgoing.ok) {
 			const error: Partial<JSONError<unknown>> = new Error(
 				('message' in json && (json as { message: string }).message) ||
-					outgoing.statusText
+					outgoing.statusText,
 			);
 			error.statusCode = outgoing.status;
 			error.json = json;

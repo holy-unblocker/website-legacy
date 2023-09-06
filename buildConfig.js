@@ -19,7 +19,7 @@ expand(config());
 const defineEnv = Object.fromEntries(
 	Object.keys(process.env)
 		.filter((key) => key.startsWith('VITE_'))
-		.map((key) => [`import.meta.env.${key}`, JSON.stringify(process.env[key])])
+		.map((key) => [`import.meta.env.${key}`, JSON.stringify(process.env[key])]),
 );
 
 await build({

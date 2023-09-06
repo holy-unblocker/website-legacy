@@ -29,7 +29,7 @@ import { useSearchParams } from 'react-router-dom';
 
 async function resolveSrc(
 	src: TheatreEntry['src'],
-	type: TheatreEntry['type']
+	type: TheatreEntry['type'],
 ) {
 	switch (type) {
 		case 'proxy':
@@ -49,7 +49,7 @@ async function resolveSrc(
 						rom: src,
 						core: 'autodetect',
 					}),
-				THEATRE_CDN
+				THEATRE_CDN,
 			).toString();
 		default:
 			throw new TypeError(`Unrecognized target: ${type}`);
@@ -72,7 +72,7 @@ const Player: HolyPage = () => {
 	if (!id) throw new Error('Bad ID');
 	const [settings, setSettings] = useGlobalSettings();
 	const [favorited, setFavorited] = useState(() =>
-		settings.favorites.includes(id)
+		settings.favorites.includes(id),
 	);
 	const [panorama, setPanorama] = useState(false);
 	const [controlsExpanded, setControlsExpanded] = useState(false);
@@ -102,7 +102,7 @@ const Player: HolyPage = () => {
 				errorCause = t('error.player.resolve');
 				const resolvedSrc = await resolveSrc(
 					new URL(data.src, THEATRE_CDN).toString(),
-					data.type
+					data.type,
 				);
 				errorCause = undefined;
 				setData(data);
@@ -239,7 +239,7 @@ const Player: HolyPage = () => {
 							<ArrowLeft className={styles.controlKey} />
 							<ArrowDropDown className={styles.controlKey} />
 							<ArrowRight className={styles.controlKey} />
-						</div>
+						</div>,
 					);
 					break;
 				case 'wasd':
@@ -249,7 +249,7 @@ const Player: HolyPage = () => {
 							<div className={styles.controlKey}>A</div>
 							<div className={styles.controlKey}>S</div>
 							<div className={styles.controlKey}>D</div>
-						</div>
+						</div>,
 					);
 					break;
 				default:
@@ -259,7 +259,7 @@ const Player: HolyPage = () => {
 							className={clsx(styles.controlKey, styles[`key${key}`])}
 						>
 							{key}
-						</div>
+						</div>,
 					);
 					break;
 			}
@@ -269,7 +269,7 @@ const Player: HolyPage = () => {
 			<div key={control.label} className={styles.control}>
 				<div className={styles.visuals}>{visuals}</div>
 				<span className={styles.label}>{control.label}</span>
-			</div>
+			</div>,
 		);
 	}
 

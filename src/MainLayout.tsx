@@ -120,7 +120,7 @@ const MainLayout = forwardRef<
 			expanded,
 			setExpanded,
 		}),
-		[expanded, setExpanded]
+		[expanded, setExpanded],
 	);
 
 	useEffect(() => {
@@ -281,7 +281,7 @@ const MainLayout = forwardRef<
 									title={t(
 										`gameCategory:${
 											(category.id + (category.short ? '_' : '')) as categoryKey
-										}`
+										}`,
 									)}
 									className={clsx(styles.entry, styles.text)}
 									onClick={() => setExpanded(false)}
@@ -292,7 +292,7 @@ const MainLayout = forwardRef<
 											`gameCategory:${
 												(category.id +
 													(category.short ? '_' : '')) as categoryKey
-											}`
+											}`,
 										)}
 									</Obfuscated>
 								</Link>

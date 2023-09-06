@@ -61,7 +61,7 @@ function Notification({ data, close }: NotificationProps) {
 			className={clsx(
 				styles.notification,
 				hide && styles.hide,
-				data.title && styles.title
+				data.title && styles.title,
 			)}
 		>
 			<Icon className={clsx(styles.icon, styles[type])} />
@@ -96,7 +96,7 @@ const NotificationsManager = forwardRef<NotificationsManagerRef>(
 			() => (notification: NotificationData) => {
 				setNotifications([...notifications, notification]);
 			},
-			[notifications]
+			[notifications],
 		);
 
 		return (
@@ -115,7 +115,7 @@ const NotificationsManager = forwardRef<NotificationsManagerRef>(
 				))}
 			</div>
 		);
-	}
+	},
 );
 
 export default NotificationsManager;
