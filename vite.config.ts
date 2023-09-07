@@ -24,7 +24,6 @@ export default function viteConfig({ mode }: ConfigEnv) {
 		'VITE_HAT_BADGE',
 		'VITE_DEFAULT_PROXY',
 		'VITE_TN_DISCORD_URL',
-		'VITE_HU_DISCORD_URL',
 		'VITE_BARE_APIS',
 		'VITE_RH_API',
 		'VITE_DB_API',

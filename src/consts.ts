@@ -17,9 +17,6 @@ export const DEFAULT_PROXY = /*#__PURE__*/ format(
 export const TN_DISCORD_URL = /*#__PURE__*/ format(
 	import.meta.env.VITE_TN_DISCORD_URL!,
 );
-export const HU_DISCORD_URL = /*#__PURE__*/ format(
-	import.meta.env.VITE_HU_DISCORD_URL!,
-);
 
 export const SUPPORT_EMAIL = /*#__PURE__*/ format(
 	import.meta.env.VITE_SUPPORT_EMAIL!,

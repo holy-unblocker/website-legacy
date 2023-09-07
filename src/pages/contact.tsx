@@ -1,7 +1,7 @@
 import type { HolyPage } from '../App';
 import Meta from '../Meta';
 import { ObfuscatedThemeA } from '../ThemeElements';
-import { HU_DISCORD_URL, SUPPORT_EMAIL } from '../consts';
+import { SUPPORT_EMAIL } from '../consts';
 import { Obfuscated } from '../obfuscate';
 import { useTranslation } from 'react-i18next';
 
@@ -14,12 +14,6 @@ const ContactMeta = () => (
 				name: "What is Holy Unblocker's GitHub?",
 				acceptedAnswer: {
 					text: 'https://github.com/holy-unblocker',
-				},
-			},
-			{
-				name: "What is Holy Unblocker's Discord?",
-				acceptedAnswer: {
-					text: HU_DISCORD_URL,
 				},
 			},
 		]}
@@ -55,14 +49,6 @@ const Contact: HolyPage = () => {
 									title="Email address"
 								>
 									<Obfuscated>{SUPPORT_EMAIL}</Obfuscated>
-								</ObfuscatedThemeA>
-							</td>
-						</tr>
-						<tr>
-							<td>Discord:</td>
-							<td>
-								<ObfuscatedThemeA href={HU_DISCORD_URL} title="Server invite">
-									<Obfuscated>{HU_DISCORD_URL}</Obfuscated>
 								</ObfuscatedThemeA>
 							</td>
 						</tr>
