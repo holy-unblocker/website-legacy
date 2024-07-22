@@ -1,4 +1,4 @@
-# Holy Unblocker Legacy Website
+# Holy Unblocker Legacy Frontend
 
 > Check out the [new frontend, website2, written in Astro](https://github.com/holywebwork/website2).
 
@@ -7,6 +7,8 @@ All the code provided here is no longer officially supported, and we encourage y
 ## <img src="docs/react-sucks.gif" alt="React sux!!!!!" height="80px">
 
 ## Who/What this repository is for
+
+~~NOBODY SHOULD WILLINGLY USE THIS CODE ANYMORE~~
 
 This repository contains the base Holy Unblocker website. This includes tools and dependencies used to compile the website (Webpack, React) and development tools (ESLint, Prettier).
 
