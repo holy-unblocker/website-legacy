@@ -1,4 +1,4 @@
-# Holy Unblocker Legacy Frontend
+# Holy Unblocker: Legacy Frontend
 
 > Check out the [new frontend, website2, written in Astro](https://github.com/holywebwork/website2).
 
